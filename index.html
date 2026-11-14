@@ -20,9 +20,81 @@
       .no-print { display: none !important; }
       body { background: white !important; color: black !important; }
     }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .animate-shake { animation: shake 0.4s ease-in-out; }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col items-center">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
+
+  <!-- SECURITY LOCK SCREEN OVERLAY -->
+  <div id="lock-screen" class="fixed inset-0 z-[9999] bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center p-4">
+    <div id="lock-modal" class="w-full max-w-sm sm:max-w-md bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-2xl text-center text-white space-y-6">
+      
+      <!-- Icon & Header -->
+      <div class="space-y-2">
+        <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-tr from-amber-500 to-amber-300 text-slate-950 flex items-center justify-center text-3xl shadow-xl font-black">
+          🔒
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-white">
+          חופשת בודפשט 2026
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+          גישה מאובטחת למשפחה בלבד 👑<br/>
+          הזינו את קוד הגישה (6 ספרות) לפתיחת התוכנית:
+        </p>
+      </div>
+
+      <!-- PIN Input Field -->
+      <div class="space-y-3">
+        <div class="relative">
+          <input 
+            type="password" 
+            id="pin-input" 
+            maxlength="6" 
+            inputmode="numeric" 
+            pattern="[0-9]*" 
+            placeholder="••••••" 
+            autocomplete="off"
+            class="w-full bg-black/40 border-2 border-white/20 focus:border-amber-400 focus:outline-none rounded-2xl py-3 px-4 text-center text-3xl tracking-[0.4em] font-mono text-amber-300 shadow-inner transition placeholder:text-white/20"
+            onkeyup="handlePinKeyUp(event)"
+          />
+        </div>
+        
+        <p id="pin-error" class="text-xs text-rose-400 font-bold hidden flex items-center justify-center gap-1">
+          <span>⚠️</span> קוד שגוי, אנא נסו שוב
+        </p>
+      </div>
+
+      <!-- On-Screen Touch Keypad (Perfect for Phones & Tablets) -->
+      <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto text-white">
+        <button onclick="pressKey('1')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">1</button>
+        <button onclick="pressKey('2')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">2</button>
+        <button onclick="pressKey('3')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">3</button>
+        <button onclick="pressKey('4')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">4</button>
+        <button onclick="pressKey('5')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">5</button>
+        <button onclick="pressKey('6')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">6</button>
+        <button onclick="pressKey('7')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">7</button>
+        <button onclick="pressKey('8')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">8</button>
+        <button onclick="pressKey('9')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">9</button>
+        <button onclick="clearPin()" type="button" class="bg-rose-500/20 hover:bg-rose-500/35 text-rose-300 active:scale-95 py-3 rounded-2xl text-sm font-bold transition border border-rose-500/30">מחק</button>
+        <button onclick="pressKey('0')" type="button" class="bg-white/10 hover:bg-white/25 active:scale-95 py-3 rounded-2xl text-xl font-bold font-mono transition border border-white/10">0</button>
+        <button onclick="submitPin()" type="button" class="bg-amber-400 hover:bg-amber-300 text-slate-950 active:scale-95 py-3 rounded-2xl text-sm font-black transition shadow-lg">כניסה ➔</button>
+      </div>
+
+      <!-- Footer Note -->
+      <p class="text-[11px] text-slate-400">
+        🛡️ המכשיר יישמר כמורשה לאחר כניסה מוצלחת
+      </p>
+
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION WRAPPER (HIDDEN UNTIL UNLOCKED) -->
+  <div id="app-content" class="w-full min-h-screen flex flex-col items-center" style="display: none;">
 
   <!-- TOP HERO BAR -->
   <header class="w-full bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white shadow-xl sticky top-0 z-50 border-b border-white/10">
@@ -66,6 +138,10 @@
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
             <span>הדפסה</span>
           </button>
+          <button onclick="lockApp()" title="נעילת התוכנית" class="no-print bg-white/10 hover:bg-rose-500/30 active:scale-95 text-white/90 hover:text-white font-bold px-3 py-1.5 rounded-xl border border-white/15 transition flex items-center gap-1.5 shadow-sm">
+            <span>🔒</span>
+            <span>נעילה</span>
+          </button>
         </div>
       </div>
 
@@ -89,11 +165,7 @@
         </button>
         <button onclick="switchTab('food')" id="tab-btn-food" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
           <span class="text-xl">🥩</span>
-          <span>5 מסעדות הבשר</span>
-        </button>
-        <button onclick="switchTab('fatmama')" id="tab-btn-fatmama" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
-          <span class="text-xl">🔥</span>
-          <span>תפריט Fat Mama בשקלים</span>
+          <span>מסעדות בשר ותפריטים</span>
         </button>
         <button onclick="switchTab('packing')" id="tab-btn-packing" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
           <span class="text-xl">🧳</span>
@@ -103,7 +175,7 @@
           <span class="text-xl">📱</span>
           <span>מדריך סים (eSIM)</span>
         </button>
-        <button onclick="switchTab('hotel')" id="tab-btn-hotel" class="tab-btn col-span-2 md:col-span-4 py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+        <button onclick="switchTab('hotel')" id="tab-btn-hotel" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
           <span class="text-xl">🏨</span>
           <span>מלון 7 Seasons וסביבתו</span>
         </button>
@@ -362,124 +434,85 @@
     </section>
 
 
-    <!-- ==================== TAB: 5 MEAT RESTAURANTS ==================== -->
+    
+    <!-- ==================== TAB: ALL MEAT RESTAURANTS & MENUS (UNIFIED) ==================== -->
     <section id="tab-content-food" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg font-black text-slate-900 flex items-center gap-2">
-          <span class="text-rose-600">🥩</span> 5 מסעדות הבשר הנבחרות – תפריטים, מחירים וניווט
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1">
-          לכל יום שובצה חוויית בשרים ייעודית, משובחת וללא מוצרי חלב.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <!-- Meatology -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">ארוחה 1 (ערב יום ב')</span>
-              <span class="text-xs font-bold font-mono text-emerald-800">~105-145 ₪ לסועד</span>
-            </div>
-            <h3 class="font-black text-slate-900 text-lg">Meatology Budapest</h3>
-            <p class="text-xs text-slate-500 mb-2">📍 מול הבזיליקה (5 דק' מ-7 Seasons)</p>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              סטייקים מיושנים ועסיסיים (Ribeye, Tenderloin), לחמניות עם אסאדו בקר מפורק בבישול ארוך של 12 שעות, והמבורגרים פרימיום.
-            </p>
-          </div>
-          <div class="flex gap-2 pt-2 border-t border-slate-100">
-            <a href="https://meatologybudapest.hu" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר ותפריט</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Meatology+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
-            <a href="https://waze.com/ul?q=Meatology+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
-          </div>
-        </div>
-
-        <!-- Sir Lancelot -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 2 (ערב יום ג')</span>
-              <span class="text-xs font-bold font-mono text-emerald-800">~135-165 ₪ לסועד</span>
-            </div>
-            <h3 class="font-black text-slate-900 text-lg">Sir Lancelot Knights' Tournament</h3>
-            <p class="text-xs text-slate-500 mb-2">📍 Podmaniczky u. 14 (נסיעה של 5 דק' ב-Bolt)</p>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              מסעדת מרתף אבירים מימי הביניים. <strong>אוכלים בידיים בלי מזלגות!</strong> פלטות ענק של שוקי אווז, צלעות בקר פריכות, עופות ונקניקיות על חרבות ענק בליווי קרבות אבירים ולהטוטני אש.
-            </p>
-          </div>
-          <div class="flex gap-2 pt-2 border-t border-slate-100">
-            <a href="http://www.sirlancelot.hu" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר והזמנה</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Sir+Lancelot+Restaurant+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
-            <a href="https://waze.com/ul?q=Sir+Lancelot+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
-          </div>
-        </div>
-
-        <!-- Getto Gulyas -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-xs bg-purple-100 text-purple-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 3 (צהרי יום ד')</span>
-              <span class="text-xs font-bold font-mono text-emerald-800">~68-85 ₪ לסועד</span>
-            </div>
-            <h3 class="font-black text-slate-900 text-lg">Gettó Gulyás</h3>
-            <p class="text-xs text-slate-500 mb-2">📍 Wesselényi u. 18 (4 דק' מ-7 Seasons)</p>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              תבשיל בקר הונגרי מסורתי (Marhapörkölt) בבישול איטי עם פפריקה עשירה ובצקניות נוקרלי, או מרק שעועית עשיר עם בשר מעושן.
-            </p>
-          </div>
-          <div class="flex gap-2 pt-2 border-t border-slate-100">
-            <a href="https://www.facebook.com/Gettogulyas/" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 עמוד המסעדה</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Getto+Gulyas+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
-            <a href="https://waze.com/ul?q=Getto+Gulyas+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
-          </div>
-        </div>
-
-        <!-- Menza -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-xs bg-blue-100 text-blue-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 4 (ערב יום ד')</span>
-              <span class="text-xs font-bold font-mono text-emerald-800">~95-125 ₪ לסועד</span>
-            </div>
-            <h3 class="font-black text-slate-900 text-lg">Menza Restaurant & Café</h3>
-            <p class="text-xs text-slate-500 mb-2">📍 Liszt Ferenc tér 2 (8 דק' הליכה מהמלון)</p>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              שניצל וינאי דק ופריך ענק (הכי טעים בעיר), מרק גולאש בקר הונגרי מנחם, שוק אווז פריכה וסטייק סינטה. חובה להזמין מקום מראש!
-            </p>
-          </div>
-          <div class="flex gap-2 pt-2 border-t border-slate-100">
-            <a href="https://www.menzaetterem.hu" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר והזמנה</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Menza+Etterem+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
-            <a href="https://waze.com/ul?q=Menza+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
-          </div>
-        </div>
-
-        <!-- Trofea Grill -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3 md:col-span-2">
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 5 (ערב סיום יום ה')</span>
-              <span class="text-xs font-black font-mono text-emerald-800">13,999 Ft (~145 ₪ / 35€) מחיר קבוע כולל הכל!</span>
-            </div>
-            <h3 class="font-black text-slate-900 text-lg">Trófea Grill Restaurant (סניף Király utca)</h3>
-            <p class="text-xs text-slate-500 mb-2">📍 Király u. 30-32 (4 דקות הליכה בלבד מ-7 Seasons!)</p>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              בופה בשרים פרימיום "אכול כפי יכולתך". בוחרים נתחי אנטרקוט, סינטה, צלעות כבש, שיפודים ונקניקיות – והשף צולה מולכם על הפלנצ'ה. כולל שתייה, יין ובירה חופשיים במחיר אחד קבוע!
-            </p>
-          </div>
-          <div class="flex gap-2 pt-2 border-t border-slate-100">
-            <a href="https://trofeagrill.com" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר והזמנת שולחן</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Trofea+Grill+Kiraly+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
-            <a href="https://waze.com/ul?q=Trofea+Grill+Kiraly+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== TAB: FAT MAMA TRANSLATED MENU ==================== -->
-    <section id="tab-content-fatmama" class="tab-content hidden space-y-6">
       
-      <!-- HERO BANNER -->
+      <!-- Top Title Card -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-rose-100 text-rose-900 px-3 py-1 rounded-full text-xs font-black mb-2 shadow-xs">
+            🥩 חוויית בשרים משובחת • ללא מוצרי חלב • 4 מבוגרים
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+            מסעדות הבשר הנבחרות של בודפשט והתפריטים המלאים
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">
+            <strong>לחצו על כל מסעדה למטה</strong> כדי לפתוח את פירוט המנות, תפריט מלא מתורגם, מחירים בשקלים וניווט ישיר ב-Google Maps וב-Waze:
+          </p>
+        </div>
+        <div class="shrink-0 bg-slate-50 border border-slate-200 rounded-2xl p-3 text-center sm:text-right">
+          <span class="block text-[11px] text-slate-500">מרחק מ-7 Seasons</span>
+          <span class="block font-black text-slate-900 text-sm">הכל במרחק 4-8 דקות! 🚶</span>
+        </div>
+      </div>
+
+      <!-- RESTAURANT SELECTOR (6 BUTTONS / CARDS) -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 w-full">
+        
+        <!-- 1. Fat Mama -->
+        <button onclick="showRestaurant('fatmama')" id="rest-btn-fatmama" class="rest-btn active p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-slate-950 text-white border-amber-400 shadow-lg ring-2 ring-amber-400/50">
+          <span class="text-2xl">🔥</span>
+          <span class="font-black text-xs sm:text-sm">Fat Mama</span>
+          <span class="text-[10px] text-amber-300 font-bold bg-amber-400/20 px-2 py-0.5 rounded-full">מעשנה + תפריט מלא</span>
+          <span class="text-[10px] text-slate-300">4 דק' הליכה</span>
+        </button>
+
+        <!-- 2. Meatology -->
+        <button onclick="showRestaurant('meatology')" id="rest-btn-meatology" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🥩</span>
+          <span class="font-black text-xs sm:text-sm">Meatology</span>
+          <span class="text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded-full">אסאדו 12 שעות וסטייקים</span>
+          <span class="text-[10px] text-slate-500">מול הבזיליקה</span>
+        </button>
+
+        <!-- 3. Sir Lancelot -->
+        <button onclick="showRestaurant('lancelot')" id="rest-btn-lancelot" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">⚔️</span>
+          <span class="font-black text-xs sm:text-sm">Sir Lancelot</span>
+          <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-full">משתה אבירים מימי הביניים</span>
+          <span class="text-[10px] text-slate-500">אוכלים בידיים!</span>
+        </button>
+
+        <!-- 4. Getto Gulyas -->
+        <button onclick="showRestaurant('getto')" id="rest-btn-getto" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🍲</span>
+          <span class="font-black text-xs sm:text-sm">Gettó Gulyás</span>
+          <span class="text-[10px] text-purple-800 font-bold bg-purple-50 px-2 py-0.5 rounded-full">גולאש ופקרולט בקר</span>
+          <span class="text-[10px] text-slate-500">4 דק' הליכה</span>
+        </button>
+
+        <!-- 5. Menza -->
+        <button onclick="showRestaurant('menza')" id="rest-btn-menza" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🍽️</span>
+          <span class="font-black text-xs sm:text-sm">Menza</span>
+          <span class="text-[10px] text-blue-800 font-bold bg-blue-50 px-2 py-0.5 rounded-full">שניצל ענק ושוק אווז</span>
+          <span class="text-[10px] text-slate-500">כיכר ליסט פרנץ</span>
+        </button>
+
+        <!-- 6. Trofea Grill -->
+        <button onclick="showRestaurant('trofea')" id="rest-btn-trofea" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">👑</span>
+          <span class="font-black text-xs sm:text-sm">Trófea Grill</span>
+          <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">אכול כפי יכולתך + שתייה</span>
+          <span class="text-[10px] text-slate-500">4 דק' ברחוב Király</span>
+        </button>
+
+      </div>
+
+      <!-- ==================== RESTAURANT 1 DETAIL: FAT MAMA (ACTIVE DEFAULT) ==================== -->
+      <div id="rest-detail-fatmama" class="rest-detail space-y-6">
+        <!-- HERO BANNER -->
       <div class="bg-gradient-to-r from-amber-700 via-orange-800 to-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
         <div class="relative z-10">
           <div class="inline-flex items-center gap-2 bg-amber-400 text-stone-950 px-3 py-1 rounded-full text-xs font-black mb-3 shadow">
@@ -1211,8 +1244,225 @@
 
         </div>
       </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 2 DETAIL: MEATOLOGY ==================== -->
+      <div id="rest-detail-meatology" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-rose-950 via-red-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-rose-500 text-white text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">ארוחת ערב יום ב' • מול הבזיליקה</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Meatology Budapest</h3>
+            <p class="text-rose-100 text-xs sm:text-sm leading-relaxed mb-4">
+              גן עדן לחובבי בשר אמיתיים! המקום מתמחה בנתחי פרימיום מיושנים, אסאדו בקר בבישול ארוך של 12 שעות, המבורגרים עסיסיים מנתחים מובחרים, ובירות בוטיק הונגריות צוננות.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-rose-300 font-bold mb-0.5">📍 מיקום ומרחק:</span>
+                <span class="text-white">Bajcsy-Zsilinszky út 15 (מול הבזיליקה, 5 דק' הליכה מ-7 Seasons)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-rose-300 font-bold mb-0.5">💰 מחיר ממוצע לסועד:</span>
+                <span class="text-white">~10,000-14,000 Ft (~105-145 ₪ לאדם)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-rose-300 font-bold mb-0.5">🥩 כשרות לקרניבורים:</span>
+                <span class="text-white">בשרים נקיים ללא גבינות או מוצרי חלב</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://meatologybudapest.hu" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-rose-100">🌐 אתר ותפריט Meatology</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Meatology+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Meatology+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meatology Menu Highlights -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">מנת הדגל</span>
+            <h4 class="font-black text-slate-900 text-base">Slow Cooked Beef Asado (אסאדו 12 שעות)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">נתח אסאדו שומני ורך בבישול של 12 שעות, מתפרק במזלג, מוגש עם תפוחי אדמה צלויים ואיולי שום עשיר.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">~8,500 Ft (~85 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">סטייק פרימיום</span>
+            <h4 class="font-black text-slate-900 text-base">Ribeye Steak 300g (אנטרקוט מיושן)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">נתח אנטרקוט משויש צרוב על גריל לוהט במידת עשייה מדויקת עם מלח ים שחור ורוטב פלפלת עשיר.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">~12,900 Ft (~130 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">בורגר הדגל</span>
+            <h4 class="font-black text-slate-900 text-base">Meatology Double Burger</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">2 קציצות בקר מיושן (320 גרם), בצל מקורמל, בייקון פריך, רוטב ברביקיו מעושן וצ'יפס זהוב.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">~6,200 Ft (~62 ₪)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 3 DETAIL: SIR LANCELOT ==================== -->
+      <div id="rest-detail-lancelot" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-amber-500 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">ארוחת ערב יום ג' • משתה אבירים ומופעים</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Sir Lancelot Knights' Tournament</h3>
+            <p class="text-amber-100 text-xs sm:text-sm leading-relaxed mb-4">
+              חוויה קרניבורית בלתי נשכחת במרתף אבירים אותנטי מימי הביניים! <strong>אוכלים בידיים בלי מזלגות!</strong> פלטות ענק של שוקי אווז, צלעות בקר פריכות, עופות שלמים ונקניקיות על חרבות ענק, בליווי קרבות אבירים בחרבות אמיתיות ולהטוטני אש.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-amber-300 font-bold mb-0.5">📍 מיקום:</span>
+                <span class="text-white">Podmaniczky u. 14 (נסיעה של 5 דק' ב-Bolt)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-amber-300 font-bold mb-0.5">💰 מחיר משתה ממוצע:</span>
+                <span class="text-white">~13,000-16,000 Ft (~135-165 ₪ לאדם)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-amber-300 font-bold mb-0.5">🔥 אטרקציה כלולה:</span>
+                <span class="text-white">מופעי אש, רקדניות בטן וקרבות אבירים!</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="http://www.sirlancelot.hu" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-amber-100">🌐 אתר והזמנת מקום ב-Sir Lancelot</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Sir+Lancelot+Restaurant+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Sir+Lancelot+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-amber-950 text-xs sm:text-sm leading-relaxed space-y-2">
+          <h4 class="font-black text-amber-900 text-base">💡 המלצה ל-4 מבוגרים: להזמין את 'משתה סר לנסלוט' (Platter for 4)!</h4>
+          <p>
+            המגש מוגש במרכז השולחן על מגש עץ ארוך: שוקי אווז צלויות ופריכות, צלעות חזיר בגלייז דבש ופפריקה, שוקי עוף מתובלות, חזה בקר מעושן, תפוחי אדמה אפויים בתנור עם עשבי תיבול, וכרוב כבוש. חוויה של מלך!
+          </p>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 4 DETAIL: GETTO GULYAS ==================== -->
+      <div id="rest-detail-getto" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-purple-500 text-white text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">ארוחת צהריים יום ד' • הרובע היהודי</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Gettó Gulyás</h3>
+            <p class="text-purple-100 text-xs sm:text-sm leading-relaxed mb-4">
+              המסעדה המסורתית המפורסמת ביותר ברובע היהודי למאכלי קדירה ותבשילי בקר הונגריים אותנטיים. המקום מתמחה ב-Pörkölt (תבשילי נתחי בקר בבישול ארוך עם שפע פפריקה מתוקה) ובצקניות נוקרלי ביתיות חמות.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-purple-300 font-bold mb-0.5">📍 מיקום ומרחק:</span>
+                <span class="text-white">Wesselényi u. 18 (4 דקות הליכה בלבד מ-7 Seasons!)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-purple-300 font-bold mb-0.5">💰 מחיר ארוחה ממוצע:</span>
+                <span class="text-white">~6,500-8,500 Ft (~68-85 ₪ לאדם)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-purple-300 font-bold mb-0.5">🍲 מנת חובה:</span>
+                <span class="text-white">Marhapörkölt (תבשיל בקר הונגרי)</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://www.facebook.com/Gettogulyas/" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-purple-100">🌐 עמוד הפייסבוק של Gettó Gulyás</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Getto+Gulyas+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Getto+Gulyas+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <h4 class="font-black text-slate-900 text-base">Marhapörkölt (תבשיל בקר ביין אדום ופפריקה)</h4>
+            <p class="text-xs text-slate-600">קוביות בקר מובחרות בבישול של שעות ארוכות ברוטב פפריקה סמיך ועמוק, מוגש עם נוקרלי (בצקניות הונגריות) וסלט מלפפונים חמוצים.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm">~5,800 Ft (~58 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <h4 class="font-black text-slate-900 text-base">Bableves (מרק שעועית הונגרי עם בשר מעושן)</h4>
+            <p class="text-xs text-slate-600">מרק שעועית עשיר ומשביע עם נתחי שוק חזיר מעושן, נקניקיית פפריקה וירקות שורש. מושלם ליום חורפי!</p>
+            <div class="font-mono font-bold text-amber-700 text-sm">~3,400 Ft (~34 ₪)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 5 DETAIL: MENZA ==================== -->
+      <div id="rest-detail-menza" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-blue-500 text-white text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">ארוחת ערב יום ד' • כיכר ליסט פרנץ</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Menza Restaurant & Café</h3>
+            <p class="text-blue-100 text-xs sm:text-sm leading-relaxed mb-4">
+              אחת המסעדות האהובות והמפורסמות ביותר בקרב ישראלים ומקומיים כאחד. עיצוב רטרו מרהיב, אווירה תוססת והשניצל הווינאי הדק, הפריך והענק הטוב ביותר בבודפשט!
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-blue-300 font-bold mb-0.5">📍 מיקום ומרחק:</span>
+                <span class="text-white">Liszt Ferenc tér 2 (8 דק' הליכה מהמלון ברחוב אנדראשי)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-blue-300 font-bold mb-0.5">💰 מחיר ארוחה ממוצע:</span>
+                <span class="text-white">~9,500-12,500 Ft (~95-125 ₪ לאדם)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-blue-300 font-bold mb-0.5">⚠️ חובה להזמין מראש:</span>
+                <span class="text-white">מקום מבוקש מאוד! להזמין שבוע-שבועיים מראש</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://www.menzaetterem.hu" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-blue-100">🌐 אתר והזמנת שולחן ב-Menza</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Menza+Etterem+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Menza+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <h4 class="font-black text-slate-900 text-base">Wiener Schnitzel (שניצל וינאי ענק)</h4>
+            <p class="text-xs text-slate-600">שניצל עגל/בקר ענק ודק במיוחד, בציפוי פירורי לחם זהוב ופריך להפליא, מוגש עם פירה תפוחי אדמה ולימון.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm">~6,500 Ft (~65 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <h4 class="font-black text-slate-900 text-base">Crispy Duck Leg (כרע אווז פריכה)</h4>
+            <p class="text-xs text-slate-600">שוק אווז שלמה בצלייה איטית עם עור קריספי מתפצח, מוגשת על מצע כרוב סגול מבושל ופירה בצל.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm">~7,400 Ft (~74 ₪)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 6 DETAIL: TROFEA GRILL ==================== -->
+      <div id="rest-detail-trofea" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-emerald-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">ארוחת סיום חגיגית יום ה' • בופה פרימיום</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Trófea Grill Restaurant (סניף Király utca)</h3>
+            <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed mb-4">
+              חגיגת בשרים ללא הגבלה במחיר קבוע מראש! בופה ענק הכולל עמדת גריל פלנצ'ה חיה: אתם בוחרים נתחי אנטרקוט, סינטה, צלעות כבש, שיפודי בקר, עופות ונקניקיות – והשף צולה מולכם במקום. <strong>כולל בירה, יין הונגרי, שתייה קלה וקינוחים ללא הגבלה!</strong>
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-emerald-300 font-bold mb-0.5">📍 מיקום קרוב במיוחד:</span>
+                <span class="text-white">Király u. 30-32 (4 דקות הליכה בלבד מ-7 Seasons!)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-emerald-300 font-bold mb-0.5">💰 מחיר סגור הכל כלול:</span>
+                <span class="text-white">13,999 Ft (~145 ₪ / 35€) לאדם כולל אלכוהול חופשי!</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-emerald-300 font-bold mb-0.5">🥩 צלייה במקום:</span>
+                <span class="text-white">אנטרקוט, סינטה, כבש, שיפודים ונקניקיות</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://trofeagrill.com" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-emerald-100">🌐 אתר והזמנת שולחן ב-Trófea Grill</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Trofea+Grill+Kiraly+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Trofea+Grill+Kiraly+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </section>
+
 
 
     <!-- ==================== TAB: SIM & ESIM ==================== -->
@@ -1250,6 +1500,7 @@
     </section>
 
   </main>
+</div> <!-- /#app-content -->
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
@@ -1671,7 +1922,131 @@
       if (item) { item.done = !item.done; renderPacking(); }
     }
 
+    
+    // --- RESTAURANT SELECTOR INTERACTIVITY ---
+    function showRestaurant(restId) {
+      document.querySelectorAll('.rest-btn').forEach(btn => {
+        btn.classList.remove('bg-slate-950', 'text-white', 'border-amber-400', 'shadow-lg', 'ring-2', 'ring-amber-400/50');
+        btn.classList.add('bg-white', 'text-slate-800', 'border-slate-200', 'hover:border-slate-300', 'shadow-sm');
+      });
+      document.querySelectorAll('.rest-detail').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+
+      const activeBtn = document.getElementById(`rest-btn-${restId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-slate-950', 'text-white', 'border-amber-400', 'shadow-lg', 'ring-2', 'ring-amber-400/50');
+        activeBtn.classList.remove('bg-white', 'text-slate-800', 'border-slate-200', 'hover:border-slate-300', 'shadow-sm');
+      }
+
+      const activePanel = document.getElementById(`rest-detail-${restId}`);
+      if (activePanel) {
+        activePanel.classList.remove('hidden');
+      }
+    }
+
+    // --- PIN AUTHENTICATION LOGIC (PIN: 210776) ---
+    const AUTH_KEY = 'budapest_vacation_auth_2026';
+    const CORRECT_PIN = '210776';
+    const PIN_HASH = '527dae9da8a05018188c87506cffc503049f327ddc4b44b5a3de94fd5ccfbbdd';
+
+    function checkAuth() {
+      const isAuth = localStorage.getItem(AUTH_KEY);
+      if (isAuth === 'unlocked_210776') {
+        unlockApp(false);
+      } else {
+        const lockScreen = document.getElementById('lock-screen');
+        const appContent = document.getElementById('app-content');
+        if (lockScreen) lockScreen.style.display = 'flex';
+        if (appContent) appContent.style.display = 'none';
+        setTimeout(() => {
+          const inp = document.getElementById('pin-input');
+          if (inp) inp.focus();
+        }, 200);
+      }
+    }
+
+    function pressKey(num) {
+      const inp = document.getElementById('pin-input');
+      if (inp.value.length < 6) {
+        inp.value += num;
+        document.getElementById('pin-error').classList.add('hidden');
+        if (inp.value.length === 6) {
+          submitPin();
+        }
+      }
+    }
+
+    function clearPin() {
+      const inp = document.getElementById('pin-input');
+      inp.value = '';
+      document.getElementById('pin-error').classList.add('hidden');
+      inp.focus();
+    }
+
+    function handlePinKeyUp(event) {
+      document.getElementById('pin-error').classList.add('hidden');
+      if (event.key === 'Enter') {
+        submitPin();
+      } else if (event.target.value.length === 6) {
+        submitPin();
+      }
+    }
+
+    async function submitPin() {
+      const pin = document.getElementById('pin-input').value.trim();
+      const errorMsg = document.getElementById('pin-error');
+
+      let isValid = (pin === CORRECT_PIN);
+
+      if (!isValid) {
+        try {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(pin);
+          const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+          if (hashHex === PIN_HASH) {
+            isValid = true;
+          }
+        } catch(e) {}
+      }
+
+      if (isValid) {
+        localStorage.setItem(AUTH_KEY, 'unlocked_210776');
+        unlockApp(true);
+      } else {
+        errorMsg.classList.remove('hidden');
+        const box = document.getElementById('lock-modal');
+        box.classList.add('animate-shake');
+        setTimeout(() => box.classList.remove('animate-shake'), 600);
+        clearPin();
+      }
+    }
+
+    function unlockApp(animate) {
+      const lockScreen = document.getElementById('lock-screen');
+      const appContent = document.getElementById('app-content');
+      if (appContent) appContent.style.display = 'flex';
+      if (animate && lockScreen) {
+        lockScreen.style.transition = 'opacity 0.4s ease-out';
+        lockScreen.style.opacity = '0';
+        setTimeout(() => {
+          lockScreen.style.display = 'none';
+        }, 400);
+      } else if (lockScreen) {
+        lockScreen.style.display = 'none';
+      }
+    }
+
+    function lockApp() {
+      localStorage.removeItem(AUTH_KEY);
+      location.reload();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      showRestaurant('fatmama');
       showDay(1);
       renderPacking();
     });
