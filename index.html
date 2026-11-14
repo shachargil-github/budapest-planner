@@ -419,20 +419,64 @@
 
     <!-- ==================== TAB: PACKING CHECKLIST ==================== -->
     <section id="tab-content-packing" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      
+      <!-- Top Card with Cloud Sync Status -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 class="text-lg font-black text-slate-900 flex items-center gap-2">
-            <span class="text-emerald-600">🧳</span> צ'קליסט אריזה ענק ומפורט ל-4 מבוגרים
-          </h2>
-          <p class="text-xs text-slate-500 mt-0.5">סמנו וי – הכל נשמר אוטומטית בדפדפן!</p>
-        </div>
-        <div class="min-w-[220px] bg-slate-50 p-3 rounded-xl border border-slate-200">
-          <div class="flex justify-between text-xs font-semibold mb-1.5">
-            <span class="text-slate-600">נארזו במזוודה</span>
-            <span id="packing-progress-text" class="text-emerald-700 font-bold">0 מתוך 0</span>
+          <div class="flex items-center gap-2 flex-wrap mb-1">
+            <span class="text-emerald-600 text-xl">🧳</span>
+            <h2 class="text-lg sm:text-xl font-black text-slate-900">
+              צ'קליסט אריזה ענק ומפורט ל-4 מבוגרים
+            </h2>
+            <div id="cloud-sync-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-sm transition-all">
+              <span id="cloud-sync-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span id="cloud-sync-text">🟢 סנכרון ענן פעיל • משותף לכל המכשירים של משפחת שחר</span>
+            </div>
           </div>
-          <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-            <div id="packing-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-300 w-0"></div>
+          <p class="text-xs text-slate-500">
+            כל סימון או הוספת פריט מסונכרנים בענן בזמן אמת! אם תסמנו כאן – מי שייכנס מהטלפון או ממחשב אחר יראה מיד מה נארז.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="fetchCloudSync(true)" title="רענן מצב מהענן עכשיו" class="text-xs bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 px-3.5 py-2.5 rounded-xl border border-slate-300 font-bold transition flex items-center gap-1.5 shadow-sm">
+            <span>🔄</span> סנכרן עכשיו
+          </button>
+          <div class="min-w-[190px] bg-slate-50 p-3 rounded-2xl border border-slate-200">
+            <div class="flex justify-between text-xs font-semibold mb-1.5">
+              <span class="text-slate-600">נארזו במזוודות:</span>
+              <span id="packing-progress-text" class="text-emerald-700 font-bold">0 מתוך 0</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+              <div id="packing-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-300 w-0"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Custom Item Form -->
+      <div class="bg-gradient-to-r from-slate-900 via-emerald-950 to-teal-950 text-white rounded-3xl p-5 shadow-lg border border-emerald-500/30">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div class="flex-1">
+            <label class="block text-xs text-emerald-300 font-bold mb-1.5">➕ רוצים להוסיף ציוד נוסף שיופיע לכולם בענן?</label>
+            <input id="custom-pack-input" type="text" placeholder="הקלידו שם פריט אישי (למשל: מטען נייד נוסף, נעלי ערב לאמא, שפתון לחות...)" 
+                   class="w-full bg-white text-slate-950 text-xs px-4 py-2.5 rounded-xl border-0 focus:ring-2 focus:ring-amber-400 focus:outline-none placeholder-slate-400 font-medium shadow-inner"
+                   onkeydown="if(event.key==='Enter') addCustomItem()">
+          </div>
+          <div class="sm:w-48">
+            <label class="block text-xs text-emerald-300 font-bold mb-1.5">קטגוריה</label>
+            <select id="custom-pack-cat" class="w-full bg-white text-slate-950 text-xs px-3.5 py-2.5 rounded-xl border-0 focus:ring-2 focus:ring-amber-400 focus:outline-none font-medium shadow-inner">
+              <option value="docs">🪪 מסמכים וביטחון</option>
+              <option value="clothes" selected>👟 ביגוד חורפי והנעלה</option>
+              <option value="electronics">📱 אלקטרוניקה וטעינה</option>
+              <option value="health">💊 בריאות ותרופות</option>
+              <option value="shopping">🛍️ ציוד שופינג ואריזות</option>
+            </select>
+          </div>
+          <div class="sm:self-end">
+            <button onclick="addCustomItem()" class="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 active:scale-95 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-1.5">
+              <span>➕</span> הוסף לרשימה
+            </button>
           </div>
         </div>
       </div>
@@ -464,11 +508,22 @@
         </div>
       </div>
 
-      <!-- RESTAURANT SELECTOR (6 BUTTONS / CARDS) -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 w-full">
+      <!-- RESTAURANT CATEGORY FILTER BAR -->
+      <div class="flex flex-wrap items-center gap-2 pb-1">
+        <span class="text-xs font-bold text-slate-500 ml-1">סינון מהיר:</span>
+        <button onclick="filterRestaurants('all', this)" class="rest-filter-btn active bg-slate-900 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-slate-700 transition shadow">הכל (12 מסעדות)</button>
+        <button onclick="filterRestaurants('meat', this)" class="rest-filter-btn bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-slate-200 transition">🥩 בשרים ומעשנות</button>
+        <button onclick="filterRestaurants('goulash', this)" class="rest-filter-btn bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-slate-200 transition">🍲 גולאש ואותנטי</button>
+        <button onclick="filterRestaurants('buffet', this)" class="rest-filter-btn bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-slate-200 transition">👑 אכול כפי יכולתך</button>
+        <button onclick="filterRestaurants('italian', this)" class="rest-filter-btn bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-slate-200 transition">🍕 איטלקי וטאבון</button>
+        <button onclick="filterRestaurants('sushi', this)" class="rest-filter-btn bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-slate-200 transition">🍣 סושי יוקרתי</button>
+      </div>
+
+      <!-- RESTAURANT SELECTOR (12 BUTTONS / CARDS) -->
+      <div id="rest-buttons-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3 w-full">
         
         <!-- 1. Fat Mama -->
-        <button onclick="showRestaurant('fatmama')" id="rest-btn-fatmama" class="rest-btn active p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-slate-950 text-white border-amber-400 shadow-lg ring-2 ring-amber-400/50">
+        <button onclick="showRestaurant('fatmama')" id="rest-btn-fatmama" data-cat="meat" class="rest-btn active p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-slate-950 text-white border-amber-400 shadow-lg ring-2 ring-amber-400/50">
           <span class="text-2xl">🔥</span>
           <span class="font-black text-xs sm:text-sm">Fat Mama</span>
           <span class="text-[10px] text-amber-300 font-bold bg-amber-400/20 px-2 py-0.5 rounded-full">מעשנה + תפריט מלא</span>
@@ -476,43 +531,91 @@
         </button>
 
         <!-- 2. Meatology -->
-        <button onclick="showRestaurant('meatology')" id="rest-btn-meatology" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+        <button onclick="showRestaurant('meatology')" id="rest-btn-meatology" data-cat="meat" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
           <span class="text-2xl">🥩</span>
           <span class="font-black text-xs sm:text-sm">Meatology</span>
-          <span class="text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded-full">אסאדו 12 שעות וסטייקים</span>
+          <span class="text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded-full">אסאדו 12 שעות</span>
           <span class="text-[10px] text-slate-500">מול הבזיליקה</span>
         </button>
 
         <!-- 3. Sir Lancelot -->
-        <button onclick="showRestaurant('lancelot')" id="rest-btn-lancelot" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+        <button onclick="showRestaurant('lancelot')" id="rest-btn-lancelot" data-cat="meat" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
           <span class="text-2xl">⚔️</span>
           <span class="font-black text-xs sm:text-sm">Sir Lancelot</span>
-          <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-full">משתה אבירים מימי הביניים</span>
+          <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-full">משתה אבירים</span>
           <span class="text-[10px] text-slate-500">אוכלים בידיים!</span>
         </button>
 
-        <!-- 4. Getto Gulyas -->
-        <button onclick="showRestaurant('getto')" id="rest-btn-getto" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+        <!-- 4. For Sale Pub (From Drive) -->
+        <button onclick="showRestaurant('forsale')" id="rest-btn-forsale" data-cat="meat goulash" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🥜</span>
+          <span class="font-black text-xs sm:text-sm">For Sale Pub</span>
+          <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-full">גולאש 1L ו-1 ק"ג צלעות</span>
+          <span class="text-[10px] text-slate-500">מול השוק המקורה</span>
+        </button>
+
+        <!-- 5. Mama Goulash (From Drive) -->
+        <button onclick="showRestaurant('mamagoulash')" id="rest-btn-mamagoulash" data-cat="goulash" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
           <span class="text-2xl">🍲</span>
+          <span class="font-black text-xs sm:text-sm">Mama Goulash</span>
+          <span class="text-[10px] text-orange-800 font-bold bg-orange-50 px-2 py-0.5 rounded-full">גולאש בכיכר לחם</span>
+          <span class="text-[10px] text-slate-500">4 דק' ברחוב Dob</span>
+        </button>
+
+        <!-- 6. Frici Papa (From Drive) -->
+        <button onclick="showRestaurant('fricipapa')" id="rest-btn-fricipapa" data-cat="goulash" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">👨‍🍳</span>
+          <span class="font-black text-xs sm:text-sm">Frici Papa</span>
+          <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">הונגרי ביתי זול</span>
+          <span class="text-[10px] text-slate-500">6 דק' ברחוב Király</span>
+        </button>
+
+        <!-- 7. Kék Rózsa (From Drive) -->
+        <button onclick="showRestaurant('kekrozsa')" id="rest-btn-kekrozsa" data-cat="goulash" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🌹</span>
+          <span class="font-black text-xs sm:text-sm">Kék Rózsa</span>
+          <span class="text-[10px] text-sky-800 font-bold bg-sky-50 px-2 py-0.5 rounded-full">כבד אווז וקניידלך</span>
+          <span class="text-[10px] text-slate-500">ליד בית הכנסת</span>
+        </button>
+
+        <!-- 8. Gettó Gulyás -->
+        <button onclick="showRestaurant('getto')" id="rest-btn-getto" data-cat="goulash" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🥘</span>
           <span class="font-black text-xs sm:text-sm">Gettó Gulyás</span>
-          <span class="text-[10px] text-purple-800 font-bold bg-purple-50 px-2 py-0.5 rounded-full">גולאש ופקרולט בקר</span>
+          <span class="text-[10px] text-purple-800 font-bold bg-purple-50 px-2 py-0.5 rounded-full">פקרולט בקר</span>
           <span class="text-[10px] text-slate-500">4 דק' הליכה</span>
         </button>
 
-        <!-- 5. Menza -->
-        <button onclick="showRestaurant('menza')" id="rest-btn-menza" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+        <!-- 9. Menza -->
+        <button onclick="showRestaurant('menza')" id="rest-btn-menza" data-cat="meat goulash" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
           <span class="text-2xl">🍽️</span>
           <span class="font-black text-xs sm:text-sm">Menza</span>
           <span class="text-[10px] text-blue-800 font-bold bg-blue-50 px-2 py-0.5 rounded-full">שניצל ענק ושוק אווז</span>
           <span class="text-[10px] text-slate-500">כיכר ליסט פרנץ</span>
         </button>
 
-        <!-- 6. Trofea Grill -->
-        <button onclick="showRestaurant('trofea')" id="rest-btn-trofea" class="rest-btn p-3.5 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+        <!-- 10. Trófea Grill -->
+        <button onclick="showRestaurant('trofea')" id="rest-btn-trofea" data-cat="buffet meat" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
           <span class="text-2xl">👑</span>
           <span class="font-black text-xs sm:text-sm">Trófea Grill</span>
-          <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">אכול כפי יכולתך + שתייה</span>
+          <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">בופה בשרים חופשי</span>
           <span class="text-[10px] text-slate-500">4 דק' ברחוב Király</span>
+        </button>
+
+        <!-- 11. Popolare (From Drive) -->
+        <button onclick="showRestaurant('popolare')" id="rest-btn-popolare" data-cat="italian" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🍕</span>
+          <span class="font-black text-xs sm:text-sm">Popolare</span>
+          <span class="text-[10px] text-rose-800 font-bold bg-rose-50 px-2 py-0.5 rounded-full">איטלקי, בראנץ' וטאבון</span>
+          <span class="text-[10px] text-slate-500">3 דק' ברחוב Király</span>
+        </button>
+
+        <!-- 12. Art of Sushi (From Drive) -->
+        <button onclick="showRestaurant('artofsushi')" id="rest-btn-artofsushi" data-cat="sushi buffet" class="rest-btn p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-between gap-1.5 bg-white text-slate-800 border-slate-200 hover:border-slate-300 shadow-sm">
+          <span class="text-2xl">🍣</span>
+          <span class="font-black text-xs sm:text-sm">Art of Sushi</span>
+          <span class="text-[10px] text-indigo-800 font-bold bg-indigo-50 px-2 py-0.5 rounded-full">סושי פרימיום ללא הגבלה</span>
+          <span class="text-[10px] text-slate-500">ליד הבזיליקה</span>
         </button>
 
       </div>
@@ -1468,6 +1571,367 @@
         </div>
       </div>
 
+    
+      <!-- ==================== RESTAURANT 7 DETAIL: FOR SALE PUB (FROM DRIVE) ==================== -->
+      <div id="rest-detail-forsale" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-amber-500 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">🥜 מוסד מיתולוגי • קדרות גולאש 1L ו-1 ק"ג צלעות</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">For Sale Pub Budapest</h3>
+            <p class="text-amber-100 text-xs sm:text-sm leading-relaxed mb-4">
+              הפאב המפורסם והחווייתי ביותר בבודפשט! <strong>הרצפה מכוסה כולה בקליפות בוטנים</strong> (קערות בוטנים חינם על כל שולחן – מפצחים וזורקים ישר על הרצפה!), והקירות והתקרות מכוסים באלפי פתקים וכרטיסי ביקור של מטיילים מכל העולם. המקום מפורסם במנות ענק מפלצתיות: קדרת גולאש של 1 ליטר שלם שמספיקה ל-2 עד 3 אנשים, ופלטות צלעות ברביקיו של 1 ק"ג!
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-amber-300 font-bold mb-0.5">📍 מיקום ונגישות:</span>
+                <span class="text-white">Vámház körút 2 (מול השוק המקורה הגדול, קו מטרו ישיר M3)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-amber-300 font-bold mb-0.5">⚠️ גודל מנות מטורף:</span>
+                <span class="text-white">להזמין בזהירות! קדרה אחת בקלות מספיקה ל-2-3 סועדים</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-amber-300 font-bold mb-0.5">💰 שירות ומזומן:</span>
+                <span class="text-white">12.5% דמי שירות כלולים בחשבון. מומלץ שיהיה גם מזומן</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://forsalepub.hu" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-amber-100">🌐 אתר For Sale Pub</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=For+Sale+Pub+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=For+Sale+Pub+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- For Sale Pub Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full">מנת הדגל המיתולוגית</span>
+            <h4 class="font-black text-slate-900 text-base">קדרת מרק גולאש ענקית 1 ליטר</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">סיר ברזל לוהט מלא ב-1 ליטר של מרק גולאש בקר עשיר, ירקות שורש ובצקניות. מוגש עם לחם כפרי ורוטב פפריקה חריף. מספיק ל-2-3 סועדים!</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">7,500 Ft (~79 ₪) <span class="text-xs font-normal text-slate-500">| חצי מנה: 5,600 Ft (~59 ₪)</span></div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">לקרניבורים רעבים</span>
+            <h4 class="font-black text-slate-900 text-base">פלטת צלעות ברביקיו 1 ק"ג</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">שדרת צלעות חזיר/בקר ענקית במשקל 1 ק"ג בגלייז ברביקיו מתקתק ומעושן, נמסה מהעצם, מוגשת עם הר צ'יפס וקולסלאו.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">15,800 Ft (~166 ₪) <span class="text-xs font-normal text-slate-500">| חצי מנה: 11,800 Ft (~124 ₪)</span></div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-orange-100 text-orange-800 font-bold px-2.5 py-0.5 rounded-full">קריספי מעושן</span>
+            <h4 class="font-black text-slate-900 text-base">שוק פריכה אפויה בתנור (Knuckle)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">שוק ענקית בצלייה איטית עם מעטה פריך ומתפצח, בשר רך במיוחד, מוגשת על תפוחי אדמה אפויים ובצל מקורמל.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">14,900 Ft (~156 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">משתה לכל המשפחה</span>
+            <h4 class="font-black text-slate-900 text-base">פלטת המשתה הענקית (3-4 איש)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">מגש עץ ענק עמוס בשניצלים וינאיים, צלעות ברביקיו, סטייק עסיסי, נקניקיות כפריות ומגוון תוספות חמות.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">24,900 Ft (~261 ₪ לכל המגש!)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 8 DETAIL: MAMA GOULASH (FROM DRIVE) ==================== -->
+      <div id="rest-detail-mamagoulash" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-amber-800 via-orange-900 to-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-orange-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">🍲 גולאש בכיכר לחם עגולה • 4 דק' מ-7 Seasons</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Mama Goulash Budapest</h3>
+            <p class="text-orange-100 text-xs sm:text-sm leading-relaxed mb-4">
+              בית הגולאש החם והביתי של בודפשט ברחוב Dob utca 31 בלב הרובע היהודי! מפורסם בזכות <strong>מרק הגולאש ההונגרי העשיר שמוגש בתוך כיכר לחם עגולה פריכה שנאפית במיוחד</strong> – טובלים את הלחם במרק ואוכלים את הקערה בסוף. לצד זה תיהנו מפפריקש עוף מסורתי עם נוקדלי ביתי, שניצלים פריכים ומנות נזיד אותנטיות במחירים נוחים במיוחד.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-orange-300 font-bold mb-0.5">📍 מיקום קרוב:</span>
+                <span class="text-white">Dob utca 31 (350 מטר מ-7 Seasons, 4 דק' הליכה)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-orange-300 font-bold mb-0.5">🥖 מנת הדגל:</span>
+                <span class="text-white">גולאש בקר בכיכר לחם עגולה (חובה לצלם!)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-orange-300 font-bold mb-0.5">💰 מחירים עממיים:</span>
+                <span class="text-white">2,700–3,900 Ft (~28–41 ₪ לעיקרית מלאה)</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://mamagoulash.com" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-orange-100">🌐 אתר Mama Goulash</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Mama+Goulash+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Dob+utca+31+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mama Goulash Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-orange-100 text-orange-800 font-bold px-2.5 py-0.5 rounded-full">מנת הדגל</span>
+            <h4 class="font-black text-slate-900 text-base">מרק גולאש בכיכר לחם עגולה</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">כיכר לחם עגולה ופריכה עם תחתית עבה, מלאה במרק גולאש בקר מהביל עם בשר רך וירקות שורש עשירים.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,900 Ft (~41 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">קלאסיקה הונגרית</span>
+            <h4 class="font-black text-slate-900 text-base">פפריקש עוף מסורתי עם נוקדלי</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">שוקי עוף מבושלות ברוטב שמנת חמוצה עשיר ופפריקה מתוקה מובחרת, מוגש עם הר בצקניות נוקדלי ביתיות.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">2,700 Ft (~28 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">פריך ומשביע</span>
+            <h4 class="font-black text-slate-900 text-base">שניצל עוף ענק + פפריקש תפו"א</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">חזה עוף דק ופריך בציפוי זהוב קראנצ'י, מוגש לצד תבשיל תפוחי אדמה חמים עם בצל מטוגן ופפריקה.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,700 Ft (~39 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-0.5 rounded-full">קינוח מסורתי</span>
+            <h4 class="font-black text-slate-900 text-base">עוגת אסטרהאזי (Eszterházy)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">עוגת שכבות מלכותית של בצק אגוזים פריך, קרם חמאה וניל עשיר וציפוי פונדנט שתי-וערב קלאסי.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">2,300 Ft (~24 ₪)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 9 DETAIL: FRICI PAPA (FROM DRIVE) ==================== -->
+      <div id="rest-detail-fricipapa" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-emerald-900 via-teal-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-emerald-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">👨‍🍳 מוסד עממי אגדי • אוכל ביתי מהיר וזול במיוחד</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Frici Papa Kifőzdéje (רחוב Király 55)</h3>
+            <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed mb-4">
+              המוסד ההונגרי הכי מפורסם ברחוב Király! מסעדת מטבח פועלים ביתי ("Kifőzde") שפועלת עשרות שנים ומלאה תמיד במקומיים. הקונספט ייחודי: מזמינים מהמלצר, <strong>והאוכל מגיע מהביל תוך 3 עד 5 דקות ישר מסירי הבישול של השף!</strong> האוכל טעים, מנחם ומדויק, והמחירים הם מהנמוכים ביותר בבודפשט (ארוחה מלאה ב-30 עד 40 ₪!).
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-emerald-300 font-bold mb-0.5">📍 מיקום קרוב:</span>
+                <span class="text-white">Király utca 55 (6 דקות הליכה קלה מ-7 Seasons)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-emerald-300 font-bold mb-0.5">⚡ מהירות שיא:</span>
+                <span class="text-white">מנות מוגשות תוך 3-5 דק' מהסירים הלוהטים</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-emerald-300 font-bold mb-0.5">💰 מחיר ללא תחרות:</span>
+                <span class="text-white">2,199–3,999 Ft (~23–42 ₪ למנה עיקרית!)</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://www.fricipapa.hu/menus" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-emerald-100">🌐 תפריט Frici Papa</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Frici+Papa+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Kiraly+utca+55+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frici Papa Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">מרק הדגל</span>
+            <h4 class="font-black text-slate-900 text-base">מרק גולאש בקר ביתי עשיר</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">מרק גולאש סמיך ועשיר לפי מתכון מסורתי של סבתא הונגרית, עם נתחי בקר רכים, ירקות שורש ובצקניות.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,599 Ft (~38 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">תבשיל בקר ביין</span>
+            <h4 class="font-black text-slate-900 text-base">פוֹרקֶלְט בקר ביין אדום</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">קוביות בקר עסיסיות בבישול ארוך ברוטב יין אדום, שום ופפריקה מתקתקה, מוגש עם הר בצקניות נוקדלי.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,999 Ft (~42 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">מנה מקומית אהובה</span>
+            <h4 class="font-black text-slate-900 text-base">תבשיל בְּרָשׁוֹי שום ותפו"א (Brassói)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">נתחי בקר צלויים במחבת עם המון שום כתוש ופלפל שחור, מעורבבים עם קוביות תפוחי אדמה פריכות.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,799 Ft (~40 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-teal-100 text-teal-800 font-bold px-2.5 py-0.5 rounded-full">מאפה שכבות הונגרי</span>
+            <h4 class="font-black text-slate-900 text-base">מאפה שכבות רקוט קרומפלי</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">קדירת תפוחי אדמה אפויה בתנור עם פרוסות נקניק כפרי מעושן, ביצים קשות, שמנת חמוצה עשירה וציפוי זהוב.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,499 Ft (~37 ₪)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 10 DETAIL: KEK ROZSA (FROM DRIVE) ==================== -->
+      <div id="rest-detail-kekrozsa" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-sky-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-sky-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">🌹 "הוורד הכחול" • כבד אווז צלוי ומרק קניידלך היסטורי</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Kék Rózsa Étterem ("הוורד הכחול")</h3>
+            <p class="text-sky-100 text-xs sm:text-sm leading-relaxed mb-4">
+              מסעדה היסטורית ואותנטית הפועלת עשרות שנים ברחוב Wesselényi utca 9, צעדים ספורים מבית הכנסת הגדול. המקום מציע חוויה הונגרית-יהודית מסורתית חמימה ואינטימית. המומחיות הגדולה ביותר של המקום היא <strong>כבד אווז מובחר צלוי על הגריל עם טבעות בצל פריכות</strong> (מעדן מקומי במחיר הוגן ביותר), לצד מרק עוף זהוב עם קניידלך ענק, כרוב ממולא וגולאש קדרה.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-sky-300 font-bold mb-0.5">📍 מיקום מרכזי:</span>
+                <span class="text-white">Wesselényi u. 9 (5 דק' הליכה מ-7 Seasons, ליד בית הכנסת)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-sky-300 font-bold mb-0.5">🦆 מעדן כבד אווז:</span>
+                <span class="text-white">כבד אווז עסיסי צלוי במידת עשייה מושלמת</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-sky-300 font-bold mb-0.5">📜 דיל תפריט הונגרי:</span>
+                <span class="text-white">ארוחת 3 מנות קומפלט ב-6,900 Ft (~72 ₪ בלבד!)</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://www.kekrozsaetterem.hu" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-sky-100">🌐 אתר Kék Rózsa</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Kek+Rozsa+Etterem+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Wesselenyi+utca+9+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kek Rozsa Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">מעדן פרימיום הונגרי</span>
+            <h4 class="font-black text-slate-900 text-base">כבד אווז צלוי עם טבעות בצל</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">נתחי כבד אווז מובחרים צרובים על הגריל, נמסים בפה, מוגשים עם טבעות בצל פריכות וצ'יפס זהוב.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">9,900 Ft (~104 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-sky-100 text-sky-800 font-bold px-2.5 py-0.5 rounded-full">מסורת יהודית-הונגרית</span>
+            <h4 class="font-black text-slate-900 text-base">מרק עוף צח עם כדור קניידלך</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">מרק עוף זהוב צח ועשיר בירקות שורש, מוגש עם כדור קניידלך מצה ענק ואוורירי לפי מתכון ביתי עתיק.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">1,900 Ft (~20 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">תבשיל מסורתי</span>
+            <h4 class="font-black text-slate-900 text-base">כרוב ממולא בנוסח הונגרי</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">עלי כרוב ממולאים בבשר טחון עסיסי ואורז מתובל, מבושלים עם כרוב כבוש, נתחי בשר מעושן ושמנת חמוצה.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,900 Ft (~41 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-0.5 rounded-full">ארוחה מלאה 3 מנות</span>
+            <h4 class="font-black text-slate-900 text-base">ארוחת תפריט הונגרי קומפלט</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">מרק גולאש בקר מהביל + מנה עיקרית מסורתית לבחירה + קינוח סומלואי גלושקה חם עם שוקולד וקצפת.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">6,900 Ft (~72 ₪ בלבד!)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 11 DETAIL: POPOLARE (FROM DRIVE) ==================== -->
+      <div id="rest-detail-popolare" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-rose-950 via-slate-900 to-red-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-rose-500 text-white text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">🍕 ביסטרו איטלקי מודרני וטאבון נאפוליטני • 3 דק' מ-7 Seasons!</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Popolare Budapest (רחוב Király 36)</h3>
+            <p class="text-rose-100 text-xs sm:text-sm leading-relaxed mb-4">
+              הביסטרו האיטלקי הכי תוסס וטעים באזור, ממוקם <strong>ממש ברחוב Király במרחק 3 דקות הליכה בלבד מהמלון 7 Seasons!</strong> מתמחה בפיצות נאפוליטניות שנאפות בטאבון אבן לוהט ב-450 מעלות עם שוליים תפוחים וקריספיים, פסטות טריות עבודת יד שנעשות מדי בוקר, ותפריט בראנץ' בוקר עשיר הכולל שקשוקות מפנקות, אגס בנדיקט עם סלמון מעושן וקפה איטלקי מובחר.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-rose-300 font-bold mb-0.5">📍 מיקום סופר קרוב:</span>
+                <span class="text-white">Király utca 36 (250 מטר בלבד מ-7 Seasons, 3 דק' ברגל!)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-rose-300 font-bold mb-0.5">🔥 טאבון אבן נאפוליטני:</span>
+                <span class="text-white">פיצות הנאפות תוך 90 שניות בחום 450° עם קמח קאפוטו</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-rose-300 font-bold mb-0.5">☕ בראנץ' בוקר וצהריים:</span>
+                <span class="text-white">שקשוקה ים-תיכונית, אגס בנדיקט, בריוש ופוקאצ'ה</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://www.popolare.hu" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-rose-100">🌐 אתר Popolare</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Popolare+Kiraly+Budapest" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Kiraly+utca+36+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popolare Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">פיצה נאפוליטנית</span>
+            <h4 class="font-black text-slate-900 text-base">פיצה פרושוטו די פארמה ורוקט</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">מוצרלה טרייה, פרוסות פרושוטו פארמה מיושן 24 חודשים, עלי רוקט טריים וגילופי פרמז'ן רג'יאנו איטלקי.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">4,790 Ft (~50 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">פסטה טרייה עבודת יד</span>
+            <h4 class="font-black text-slate-900 text-base">טליאטלה בולונז בקר בבישול ארוך</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">ראגו בקר הונגרי משובח שהתבשל 6 שעות עם יין אדום, ירקות שורש, רוטב עגבניות עשיר וגבינת פרמז'ן.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">4,490 Ft (~47 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">בראנץ' בוקר</span>
+            <h4 class="font-black text-slate-900 text-base">אגס בנדיקט עם סלמון מעושן</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">ביצים עלומות על לחם בריוש חם ופריך, סלמון נורבגי מעושן, תרד מוקפץ ורוטב הולנדייז חמאתי ועשיר.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">3,890 Ft (~41 ₪)</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-0.5 rounded-full">קינוח איטלקי מושלם</span>
+            <h4 class="font-black text-slate-900 text-base">טירמיסו איטלקי מסורתי</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">בישקוטים טבולים באספרסו איטלקי חם, קרם מסקרפונה אוורירי ועשיר עם אבקת קקאו מריר משובחת.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">2,190 Ft (~23 ₪)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RESTAURANT 12 DETAIL: ART OF SUSHI (FROM DRIVE) ==================== -->
+      <div id="rest-detail-artofsushi" class="rest-detail hidden space-y-6">
+        <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-blue-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="max-w-3xl">
+            <span class="bg-indigo-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow mb-2 inline-block">🍣 אכול כפי יכולתך סושי פרימיום • מול הבזיליקה</span>
+            <h3 class="text-2xl sm:text-4xl font-black mb-2">Art of Sushi Budapest (Sas utca 4)</h3>
+            <p class="text-indigo-100 text-xs sm:text-sm leading-relaxed mb-4">
+              חוויית סושי ואוכל אסיאתי יוקרתי ברחוב Sas utca 4, ממש בסמוך לבזיליקת סנט סטפן (כ-8 דקות הליכה מ-7 Seasons). המסעדה פועלת בשיטת <strong>"אכול כפי יכולתך" בהזמנה חופשית לשולחן מהתפריט (À la Carte All-You-Can-Eat)</strong>: לא בופה שממתין בחימום, אלא מנות שמזמינים והשפים מכינים טרי מולכם ומגישים לשולחן! התפריט כולל ניגירי מובחר, רולים מיוחדים, מרקי מיסו, גיוזות, שרימפס טמפורה, נודלס וקינוחי מוצ'י יפניים.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-indigo-300 font-bold mb-0.5">📍 מיקום יוקרתי:</span>
+                <span class="text-white">Sas utca 4, District V (ליד הבזיליקה, 8 דק' מ-7 Seasons)</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-indigo-300 font-bold mb-0.5">🍱 הכל כלול חופשי:</span>
+                <span class="text-white">הזמנה חופשית של מנות שמוכנות טרי במקום ומוגשות לשולחן</span>
+              </div>
+              <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+                <span class="block text-indigo-300 font-bold mb-0.5">💰 מחיר אכול כפי יכולתך:</span>
+                <span class="text-white">מבוגר: 12,999 Ft (~136 ₪ / ~35€) | ילד: 6,999 Ft (~73 ₪) + 15% שירות</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a href="https://artofsushibp.hu/bazilika.html" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold shadow hover:bg-indigo-100">🌐 אתר ותפריט Art of Sushi</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Art+of+Sushi+Budapest+Sas+utca" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">📍 Google Maps</a>
+              <a href="https://waze.com/ul?q=Sas+utca+4+Budapest" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold">🚗 Waze</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Art of Sushi Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2.5 py-0.5 rounded-full">מבחר פרימיום חופשי</span>
+            <h4 class="font-black text-slate-900 text-base">ניגירי פרימיום (סלמון, טונה, צלופח)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">סלמון נורבגי טרי (Sake), טונה אדומה מובחרת (Maguro), שרימפס מבושל (Ebi), וצלופח בטריאקי (Unagi).</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">כלול באכול כפי יכולתך <span class="text-xs text-slate-500">(12,999 Ft / ~136 ₪)</span></div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">רול הדגל המיוחד</span>
+            <h4 class="font-black text-slate-900 text-base">דרגון רול ושרימפס טמפורה</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">שרימפס טמפורה פריך במעטפת סלמון צרוב בלהבה, פרוסות אבוקדו דקיקות, רוטב טריאקי עשיר ושומשום קלוי.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">כלול באכול כפי יכולתך</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">מנות חמות</span>
+            <h4 class="font-black text-slate-900 text-base">גיוזה פריכה ושרימפס טמפורה</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">כיסוני בצק יפניים צרובים במחבת במילוי עוף וירקות, שרימפס טמפורה קראנצ'י עם מיונז מתובל ומרק מיסו.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">כלול באכול כפי יכולתך</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+            <span class="text-xs bg-teal-100 text-teal-800 font-bold px-2.5 py-0.5 rounded-full">קינוח יפני</span>
+            <h4 class="font-black text-slate-900 text-base">מוצ'י יפני במגוון טעמים + גלידה</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">כדורי בצק אורז מוצ'י יפניים מסורתיים במילוי גלידת תה ירוק מאצ'ה, שוקולד בלגי, מנגו ושומשום שחור.</p>
+            <div class="font-mono font-bold text-amber-700 text-sm pt-2 border-t border-slate-100">כלול באכול כפי יכולתך</div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
 
@@ -1511,37 +1975,44 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    const STORAGE_KEY_PACKING = 'budapest_adults_packing_v8';
+    // ==================== REAL-TIME MULTI-DEVICE CLOUD SYNC CONFIG ====================
+    const CLOUD_SYNC_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1da12e6cb2995';
+    const LOCAL_KEY_PACKING_MAP = 'budapest_family_packing_map_v9';
+    const LOCAL_KEY_CUSTOM_ITEMS = 'budapest_family_custom_items_v9';
+    const LOCAL_KEY_SYNC_TIME = 'budapest_family_sync_time_v9';
 
     const defaultPacking = [
-      { id: 'p1', title: 'דרכונים בתוקף מעל 6 חודשים (לכל 4 המבוגרים)', cat: 'docs', done: false },
-      { id: 'p2', title: 'כרטיסי עלייה למטוס באפליקציית אל על (LY2365 / LY2366)', cat: 'docs', done: false },
-      { id: 'p3', title: 'אישור הזמנת 7 Seasons והסעה (w-7647666-1)', cat: 'docs', done: true },
-      { id: 'p4', title: 'פוליסות ביטוח נסיעות לחו"ל כולל הרחבת כבודה וביטול', cat: 'docs', done: false },
-      { id: 'p5', title: 'כרטיסי אשראי בינלאומיים (לוודא שפתוחים לשימוש בחו"ל)', cat: 'docs', done: false },
-      { id: 'p6', title: 'מעט מזומן ביורו לביטחון (50€-100€ לאדם)', cat: 'docs', done: false },
-      { id: 'p7', title: '2 זוגות נעלי הליכה סופר נוחות לכל אחד (להחלפה אם נרטב/לוחץ)', cat: 'clothes', done: false },
-      { id: 'p8', title: 'מעילים חמים דוחי גשם ורוח (טמפ\' 7°-11°C ביום, 4°C בערב!)', cat: 'clothes', done: false },
-      { id: 'p9', title: 'סוודרים, קרדיגנים ועליוניות לשיטת השכבות (בצל)', cat: 'clothes', done: false },
-      { id: 'p10', title: 'צעיפים מחממים, כפפות קלות וכובעי צמר (בערב ליד הנהר קר!)', cat: 'clothes', done: false },
-      { id: 'p11', title: 'בגדים יפים/אלגנטיים לערב למסעדות ולברים', cat: 'clothes', done: false },
-      { id: 'p12', title: 'מטריות מתקפלות קומפקטיות לתיק היום לכל המשפחה', cat: 'clothes', done: false },
-      { id: 'p13', title: 'חבילות eSIM מותקנות בטלפונים עוד בישראל (Airalo/Maya)', cat: 'electronics', done: false },
-      { id: 'p14', title: 'סוללות גיבוי ניידות (Powerbanks חובה! לפחות 10,000mAh לשניים)', cat: 'electronics', done: false },
-      { id: 'p15', title: 'כבלי טעינה לכל הטלפונים + כבלים ארוכים למיטה', cat: 'electronics', done: false },
-      { id: 'p16', title: 'מטעני קיר מהירים (תקע אירופאי רגיל 2 פינים עגולים)', cat: 'electronics', done: false },
-      { id: 'p17', title: 'אוזניות אישיות לטיסה לכל אחד', cat: 'electronics', done: false },
-      { id: 'p18', title: 'משקל דיגיטלי למזוודות (לשקול לפני טיסת החזור של אל על)', cat: 'electronics', done: false },
-      { id: 'p19', title: 'תרופות מרשם קבועות בתיק העלייה למטוס (לא במזוודה הנשלחת!)', cat: 'health', done: false },
-      { id: 'p20', title: 'משככי כאבים (אקמול/נורופן/אופטלגין)', cat: 'health', done: false },
-      { id: 'p21', title: 'כדורים נגד צרבת / קלקול קיבה (חובה אחרי ארוחות בשר עשירות)', cat: 'health', done: false },
-      { id: 'p22', title: 'פלסטרים מיוחדים לשלפוחיות (Compeed - מציל חיים בהליכות)', cat: 'health', done: false },
-      { id: 'p23', title: 'שפתון לחות נגד יובש (האוויר החורפי והרוח מייבשים)', cat: 'health', done: false },
-      { id: 'p24', title: 'תיק מתקפל נוסף בתוך המזוודה (Duffel Bag לקניות של הבגדים)', cat: 'shopping', done: false },
-      { id: 'p25', title: 'פצפצים / גרביים ישנות לעטיפת בקבוקי יין ופפריקה שקונים בשוק', cat: 'shopping', done: false }
+      { id: 'p1', title: 'דרכונים בתוקף מעל 6 חודשים (לכל 4 המבוגרים)', cat: 'docs' },
+      { id: 'p2', title: 'כרטיסי עלייה למטוס באפליקציית אל על (LY2365 / LY2366)', cat: 'docs' },
+      { id: 'p3', title: 'אישור הזמנת 7 Seasons והסעה (w-7647666-1)', cat: 'docs' },
+      { id: 'p4', title: 'פוליסות ביטוח נסיעות לחו"ל כולל הרחבת כבודה וביטול', cat: 'docs' },
+      { id: 'p5', title: 'כרטיסי אשראי בינלאומיים (לוודא שפתוחים לשימוש בחו"ל)', cat: 'docs' },
+      { id: 'p6', title: 'מעט מזומן ביורו לביטחון (50€-100€ לאדם)', cat: 'docs' },
+      { id: 'p7', title: '2 זוגות נעלי הליכה סופר נוחות לכל אחד (להחלפה אם נרטב/לוחץ)', cat: 'clothes' },
+      { id: 'p8', title: 'מעילים חמים דוחי גשם ורוח (טמפ' 7°-11°C ביום, 4°C בערב!)', cat: 'clothes' },
+      { id: 'p9', title: 'סוודרים, קרדיגנים ועליוניות לשיטת השכבות (בצל)', cat: 'clothes' },
+      { id: 'p10', title: 'צעיפים מחממים, כפפות קלות וכובעי צמר (בערב ליד הנהר קר!)', cat: 'clothes' },
+      { id: 'p11', title: 'בגדים יפים/אלגנטיים לערב למסעדות ולברים', cat: 'clothes' },
+      { id: 'p12', title: 'מטריות מתקפלות קומפקטיות לתיק היום לכל המשפחה', cat: 'clothes' },
+      { id: 'p13', title: 'חבילות eSIM מותקנות בטלפונים עוד בישראל (Airalo/Maya)', cat: 'electronics' },
+      { id: 'p14', title: 'סוללות גיבוי ניידות (Powerbanks חובה! לפחות 10,000mAh לשניים)', cat: 'electronics' },
+      { id: 'p15', title: 'כבלי טעינה לכל הטלפונים + כבלים ארוכים למיטה', cat: 'electronics' },
+      { id: 'p16', title: 'מטעני קיר מהירים (תקע אירופאי רגיל 2 פינים עגולים)', cat: 'electronics' },
+      { id: 'p17', title: 'אוזניות אישיות לטיסה לכל אחד', cat: 'electronics' },
+      { id: 'p18', title: 'משקל דיגיטלי למזוודות (לשקול לפני טיסת החזור של אל על)', cat: 'electronics' },
+      { id: 'p19', title: 'תרופות מרשם קבועות בתיק העלייה למטוס (לא במזוודה הנשלחת!)', cat: 'health' },
+      { id: 'p20', title: 'משככי כאבים (אקמול/נורופן/אופטלגין)', cat: 'health' },
+      { id: 'p21', title: 'כדורים נגד צרבת / קלקול קיבה (חובה אחרי ארוחות בשר עשירות)', cat: 'health' },
+      { id: 'p22', title: 'פלסטרים מיוחדים לשלפוחיות (Compeed - מציל חיים בהליכות)', cat: 'health' },
+      { id: 'p23', title: 'שפתון לחות נגד יובש (האוויר החורפי והרוח מייבשים)', cat: 'health' },
+      { id: 'p24', title: 'תיק מתקפל נוסף בתוך המזוודה (Duffel Bag לקניות של הבגדים)', cat: 'shopping' },
+      { id: 'p25', title: 'פצפצים / גרביים ישנות לעטיפת בקבוקי יין ופפריקה שקונים בשוק', cat: 'shopping' }
     ];
 
-    let packing = JSON.parse(localStorage.getItem(STORAGE_KEY_PACKING)) || defaultPacking;
+    let checkedMap = JSON.parse(localStorage.getItem(LOCAL_KEY_PACKING_MAP)) || { 'p3': true };
+    let customItems = JSON.parse(localStorage.getItem(LOCAL_KEY_CUSTOM_ITEMS)) || [];
+    let lastCloudTimestamp = parseInt(localStorage.getItem(LOCAL_KEY_SYNC_TIME)) || 0;
+    let isSyncing = false;
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1875,58 +2346,238 @@
       shopping: { name: 'ציוד שופינג ואריזות', icon: '🛍️' }
     };
 
+    // --- REAL-TIME PACKING FUNCTIONS ---
+    function getAllPackingItems() {
+      const all = defaultPacking.map(p => ({
+        ...p,
+        done: !!checkedMap[p.id],
+        isCustom: false
+      }));
+      customItems.forEach(c => {
+        all.push({
+          ...c,
+          done: !!checkedMap[c.id],
+          isCustom: true
+        });
+      });
+      return all;
+    }
+
     function renderPacking() {
       const container = document.getElementById('packing-container');
       if (!container) return;
       container.innerHTML = '';
 
+      const items = getAllPackingItems();
       const cats = ['docs', 'clothes', 'electronics', 'health', 'shopping'];
-      let totalItems = packing.length;
-      let doneItems = packing.filter(p => p.done).length;
+      let totalItems = items.length;
+      let doneItems = items.filter(p => p.done).length;
 
       const percent = totalItems > 0 ? Math.round((doneItems / totalItems) * 100) : 0;
-      document.getElementById('packing-progress-text').innerText = `${doneItems} מתוך ${totalItems} נארזו`;
-      document.getElementById('packing-progress-bar').style.width = `${percent}%`;
+      const progressText = document.getElementById('packing-progress-text');
+      const progressBar = document.getElementById('packing-progress-bar');
+      if (progressText) progressText.innerText = `${doneItems} מתוך ${totalItems} נארזו`;
+      if (progressBar) progressBar.style.width = `${percent}%`;
 
       cats.forEach(catKey => {
-        const catItems = packing.filter(p => p.cat === catKey);
+        const catItems = items.filter(p => p.cat === catKey);
         if (catItems.length === 0) return;
 
         const catInfo = packingCatNames[catKey] || { name: 'ציוד', icon: '📦' };
         const card = document.createElement('div');
-        card.className = 'bg-white rounded-2xl p-4 shadow-sm border border-slate-200';
+        card.className = 'bg-white rounded-3xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between';
 
         let itemsHtml = catItems.map(item => `
-          <div class="flex items-start gap-2.5 p-1.5 rounded-lg hover:bg-slate-50 transition group ${item.done ? 'opacity-55' : ''}">
-            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="togglePackItem('${item.id}')"
-                   class="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer accent-emerald-600">
-            <span class="text-xs text-slate-800 flex-1 leading-snug ${item.done ? 'line-through text-slate-400' : ''}">
-              ${item.title}
-            </span>
+          <div class="flex items-start justify-between gap-2.5 p-2 rounded-xl hover:bg-slate-50 transition group ${item.done ? 'opacity-55' : ''}">
+            <label class="flex items-start gap-2.5 flex-1 cursor-pointer">
+              <input type="checkbox" ${item.done ? 'checked' : ''} onchange="togglePackItem('${item.id}')"
+                     class="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer accent-emerald-600">
+              <span class="text-xs text-slate-800 leading-snug select-none ${item.done ? 'line-through text-slate-400 font-normal' : 'font-medium'}">
+                ${item.title}
+                ${item.isCustom ? '<span class="mr-1 text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">אישי</span>' : ''}
+              </span>
+            </label>
+            ${item.isCustom ? `
+              <button onclick="deleteCustomItem('${item.id}')" title="מחק פריט אישי זה" class="text-slate-300 hover:text-rose-500 p-0.5 text-xs transition">
+                ✕
+              </button>
+            ` : ''}
           </div>
         `).join('');
 
         card.innerHTML = `
-          <div class="flex items-center gap-2 pb-2 mb-2 border-b border-slate-100">
-            <span class="text-base">${catInfo.icon}</span>
-            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">${catInfo.name}</h3>
-            <span class="text-[10px] bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded-full mr-auto">
-              ${catItems.filter(p => p.done).length}/${catItems.length}
-            </span>
-          </div>
-          <div class="space-y-1">
-            ${itemsHtml}
+          <div>
+            <div class="flex items-center gap-2 pb-2.5 mb-2.5 border-b border-slate-100">
+              <span class="text-lg">${catInfo.icon}</span>
+              <h3 class="font-bold text-slate-900 text-xs sm:text-sm">${catInfo.name}</h3>
+              <span class="text-[10px] bg-slate-100 text-slate-600 font-mono font-bold px-2 py-0.5 rounded-full mr-auto">
+                ${catItems.filter(p => p.done).length}/${catItems.length}
+              </span>
+            </div>
+            <div class="space-y-1">
+              ${itemsHtml}
+            </div>
           </div>
         `;
         container.appendChild(card);
       });
 
-      localStorage.setItem(STORAGE_KEY_PACKING, JSON.stringify(packing));
+      localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
+      localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
     }
 
     function togglePackItem(id) {
-      const item = packing.find(p => p.id === id);
-      if (item) { item.done = !item.done; renderPacking(); }
+      checkedMap[id] = !checkedMap[id];
+      renderPacking();
+    fetchCloudSync(true);
+      pushToCloud();
+    }
+
+    function addCustomItem() {
+      const input = document.getElementById('custom-pack-input');
+      const catSelect = document.getElementById('custom-pack-cat');
+      if (!input || !catSelect) return;
+      const title = input.value.trim();
+      if (!title) return;
+
+      const newId = 'c_' + Date.now();
+      customItems.push({
+        id: newId,
+        title: title,
+        cat: catSelect.value
+      });
+      checkedMap[newId] = false;
+      input.value = '';
+      renderPacking();
+      pushToCloud();
+    }
+
+    function deleteCustomItem(id) {
+      customItems = customItems.filter(c => c.id !== id);
+      delete checkedMap[id];
+      renderPacking();
+      pushToCloud();
+    }
+
+    // --- CLOUD SYNC ENGINE ---
+    async function pushToCloud() {
+      updateSyncStatus('syncing', '🔄 שומר בענן...');
+      const now = Date.now();
+      lastCloudTimestamp = now;
+      localStorage.setItem(LOCAL_KEY_SYNC_TIME, now.toString());
+
+      try {
+        const payload = {
+          name: 'shachar_budapest_sync',
+          data: {
+            version: 2,
+            lastUpdated: now,
+            checkedMap: checkedMap,
+            customItems: customItems
+          }
+        };
+
+        const res = await fetch(CLOUD_SYNC_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          updateSyncStatus('synced', '🟢 נשמר בענן לכל המשפחה!');
+          setTimeout(() => {
+            updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים של משפחת שחר');
+          }, 3500);
+        } else {
+          updateSyncStatus('error', '🟠 שמירה מקומית (נשמר רק במכשיר זה)');
+        }
+      } catch (err) {
+        console.warn('Cloud sync offline:', err);
+        updateSyncStatus('error', '🟠 שמירה מקומית (ללא חיבור רשת)');
+      }
+    }
+
+    async function fetchCloudSync(force = false) {
+      if (isSyncing) return;
+      isSyncing = true;
+      try {
+        const res = await fetch(CLOUD_SYNC_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.data) {
+            const cloudTime = Number(json.data.lastUpdated) || 0;
+            if (force || cloudTime > lastCloudTimestamp) {
+              lastCloudTimestamp = cloudTime;
+              localStorage.setItem(LOCAL_KEY_SYNC_TIME, cloudTime.toString());
+              if (json.data.checkedMap && typeof json.data.checkedMap === 'object') {
+                checkedMap = json.data.checkedMap;
+                localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
+              }
+              if (Array.isArray(json.data.customItems)) {
+                customItems = json.data.customItems;
+                localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
+              }
+              renderPacking();
+              updateSyncStatus('synced', '🟢 סונכרן הרגע מכל המכשירים!');
+              setTimeout(() => {
+                updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים של משפחת שחר');
+              }, 3500);
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Failed background cloud sync:', e);
+      } finally {
+        isSyncing = false;
+      }
+    }
+
+    function updateSyncStatus(state, text) {
+      const badge = document.getElementById('cloud-sync-badge');
+      const dot = document.getElementById('cloud-sync-dot');
+      const label = document.getElementById('cloud-sync-text');
+      if (!badge || !label) return;
+
+      label.innerText = text;
+      if (state === 'syncing') {
+        badge.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 shadow-sm transition-all';
+        if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-500 animate-spin';
+      } else if (state === 'synced' || state === 'ready') {
+        badge.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-sm transition-all';
+        if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+      } else {
+        badge.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-300 shadow-sm transition-all';
+        if (dot) dot.className = 'w-2 h-2 rounded-full bg-rose-500';
+      }
+    }
+
+    // Auto-polling interval: check cloud every 5 seconds
+    setInterval(() => fetchCloudSync(false), 5000);
+    window.addEventListener('focus', () => fetchCloudSync(true));
+
+    // Restaurant Category Filter
+    function filterRestaurants(category, btnElement) {
+      document.querySelectorAll('.rest-filter-btn').forEach(b => {
+        b.classList.remove('active', 'bg-slate-900', 'text-white');
+        b.classList.add('bg-white', 'text-slate-800');
+      });
+      if (btnElement) {
+        btnElement.classList.add('active', 'bg-slate-900', 'text-white');
+        btnElement.classList.remove('bg-white', 'text-slate-800');
+      }
+
+      document.querySelectorAll('#rest-buttons-grid .rest-btn').forEach(btn => {
+        if (category === 'all') {
+          btn.classList.remove('hidden');
+        } else {
+          const cats = (btn.getAttribute('data-cat') || '').split(' ');
+          if (cats.includes(category)) {
+            btn.classList.remove('hidden');
+          } else {
+            btn.classList.add('hidden');
+          }
+        }
+      });
     }
 
     
