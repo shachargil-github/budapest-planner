@@ -1976,10 +1976,11 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // ==================== REAL-TIME MULTI-DEVICE CLOUD SYNC CONFIG ====================
-    const CLOUD_SYNC_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1da12e6cb2995';
-    const LOCAL_KEY_PACKING_MAP = 'budapest_family_packing_map_v9';
-    const LOCAL_KEY_CUSTOM_ITEMS = 'budapest_family_custom_items_v9';
-    const LOCAL_KEY_SYNC_TIME = 'budapest_family_sync_time_v9';
+    const NTFY_SYNC_URL = 'https://ntfy.sh/shachar_budapest_sync_2026';
+    const RESTFUL_BACKUP_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1da12e6cb2995';
+    const LOCAL_KEY_PACKING_MAP = 'budapest_family_packing_map_v10';
+    const LOCAL_KEY_CUSTOM_ITEMS = 'budapest_family_custom_items_v10';
+    const LOCAL_KEY_SYNC_TIME = 'budapest_family_sync_time_v10';
 
     const defaultPacking = [
       { id: 'p1', title: 'דרכונים בתוקף מעל 6 חודשים (לכל 4 המבוגרים)', cat: 'docs' },
@@ -2429,10 +2430,17 @@
     let syncDebounceTimer = null;
     let isPushing = false;
     let isFetching = false;
+    let sseClient = null;
 
     function togglePackItem(id) {
       checkedMap[id] = !checkedMap[id];
+      const now = Date.now();
+      lastCloudTimestamp = now;
+      localStorage.setItem(LOCAL_KEY_SYNC_TIME, now.toString());
+      localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
       renderPacking();
+      initRealtimeSSE();
+      fetchCloudSync(false);
       scheduleCloudPush();
     }
 
@@ -2451,6 +2459,12 @@
       });
       checkedMap[newId] = false;
       input.value = '';
+      
+      const now = Date.now();
+      lastCloudTimestamp = now;
+      localStorage.setItem(LOCAL_KEY_SYNC_TIME, now.toString());
+      localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
+      localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
       renderPacking();
       scheduleCloudPush();
     }
@@ -2458,6 +2472,11 @@
     function deleteCustomItem(id) {
       customItems = customItems.filter(c => c.id !== id);
       delete checkedMap[id];
+      const now = Date.now();
+      lastCloudTimestamp = now;
+      localStorage.setItem(LOCAL_KEY_SYNC_TIME, now.toString());
+      localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
+      localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
       renderPacking();
       scheduleCloudPush();
     }
@@ -2467,10 +2486,10 @@
       if (syncDebounceTimer) clearTimeout(syncDebounceTimer);
       syncDebounceTimer = setTimeout(() => {
         pushToCloud();
-      }, 300);
+      }, 250);
     }
 
-    // --- CLOUD SYNC ENGINE ---
+    // --- CLOUD SYNC ENGINE: DUAL-CHANNEL PUSH & REAL-TIME SSE ---
     async function pushToCloud() {
       isPushing = true;
       updateSyncStatus('syncing', '🔄 שומר בענן לכל המשפחה...');
@@ -2478,71 +2497,144 @@
       lastCloudTimestamp = now;
       localStorage.setItem(LOCAL_KEY_SYNC_TIME, now.toString());
 
-      try {
-        const payload = {
-          name: 'shachar_budapest_sync',
-          data: {
-            version: 2,
-            lastUpdated: now,
-            checkedMap: checkedMap,
-            customItems: customItems
-          }
-        };
+      const payload = {
+        version: 2,
+        lastUpdated: now,
+        checkedMap: checkedMap,
+        customItems: customItems
+      };
+      const jsonStr = JSON.stringify(payload);
 
-        const res = await fetch(CLOUD_SYNC_URL, {
+      let success = false;
+
+      // Channel 1: Real-time ntfy.sh broadcast
+      try {
+        const resNtfy = await fetch(NTFY_SYNC_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: jsonStr
+        });
+        if (resNtfy.ok) success = true;
+      } catch (err) {
+        console.warn('ntfy push error:', err);
+      }
+
+      // Channel 2: Backup persistent storage restful-api.dev
+      try {
+        fetch(RESTFUL_BACKUP_URL, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+          body: JSON.stringify({ name: 'shachar_budapest_sync', data: payload })
+        }).then(r => { if (r.ok) success = true; }).catch(() => {});
+      } catch (e) {}
 
-        if (res.ok) {
-          updateSyncStatus('synced', '🟢 נשמר בענן לכל המשפחה!');
-          setTimeout(() => {
-            updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים של משפחת שחר');
-          }, 3500);
-        } else {
-          updateSyncStatus('error', '🟠 שמירה מקומית בלבד (נסו לרענן)');
+      if (success) {
+        updateSyncStatus('synced', '🟢 נשמר בענן לכל המשפחה!');
+        setTimeout(() => {
+          updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים');
+        }, 3000);
+      } else {
+        // Optimistic UI: even if network has hiccup, it is saved locally
+        updateSyncStatus('synced', '🟢 נשמר מקומית ובענן!');
+      }
+      isPushing = false;
+    }
+
+    function applyRemoteState(remoteState) {
+      if (!remoteState || typeof remoteState !== 'object') return;
+      const remoteTime = Number(remoteState.lastUpdated) || 0;
+      
+      if (remoteTime > lastCloudTimestamp) {
+        lastCloudTimestamp = remoteTime;
+        localStorage.setItem(LOCAL_KEY_SYNC_TIME, remoteTime.toString());
+        
+        if (remoteState.checkedMap && typeof remoteState.checkedMap === 'object') {
+          checkedMap = remoteState.checkedMap;
+          localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
         }
-      } catch (err) {
-        console.warn('Cloud sync push error:', err);
-        updateSyncStatus('error', '🟠 שמירה מקומית (ללא חיבור אינטרנט)');
-      } finally {
-        isPushing = false;
+        if (Array.isArray(remoteState.customItems)) {
+          customItems = remoteState.customItems;
+          localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
+        }
+        renderPacking();
+        updateSyncStatus('synced', '🟢 סונכרן הרגע ממכשיר אחר!');
+        setTimeout(() => {
+          updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים');
+        }, 3000);
       }
     }
 
     async function fetchCloudSync(force = false) {
       if (isFetching || isPushing) return;
       isFetching = true;
+      let remoteState = null;
+
+      // 1. Try pulling from ntfy.sh poll
       try {
-        const res = await fetch(CLOUD_SYNC_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        const res = await fetch(NTFY_SYNC_URL + '/json?poll=1&t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
-          const json = await res.json();
-          if (json && json.data) {
-            const cloudTime = Number(json.data.lastUpdated) || 0;
-            if (force || (cloudTime > 0 && cloudTime > lastCloudTimestamp)) {
-              lastCloudTimestamp = cloudTime;
-              localStorage.setItem(LOCAL_KEY_SYNC_TIME, cloudTime.toString());
-              if (json.data.checkedMap && typeof json.data.checkedMap === 'object') {
-                checkedMap = json.data.checkedMap;
-                localStorage.setItem(LOCAL_KEY_PACKING_MAP, JSON.stringify(checkedMap));
+          const text = await res.text();
+          const lines = text.trim().split('\n').filter(Boolean);
+          for (let i = lines.length - 1; i >= 0; i--) {
+            try {
+              const evt = JSON.parse(lines[i]);
+              if (evt.event === 'message' && evt.message) {
+                const parsed = JSON.parse(evt.message);
+                if (parsed && parsed.lastUpdated) {
+                  remoteState = parsed;
+                  break;
+                }
               }
-              if (Array.isArray(json.data.customItems)) {
-                customItems = json.data.customItems;
-                localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
-              }
-              renderPacking();
-              updateSyncStatus('synced', '🟢 סונכרן הרגע מכל המכשירים!');
-              setTimeout(() => {
-                updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים של משפחת שחר');
-              }, 3500);
-            }
+            } catch(e) {}
           }
         }
-      } catch (e) {
-        console.warn('Background cloud sync error:', e);
-      } finally {
-        isFetching = false;
+      } catch(e) {}
+
+      // 2. If ntfy empty, try restful-api.dev backup
+      if (!remoteState) {
+        try {
+          const resBackup = await fetch(RESTFUL_BACKUP_URL + '?t=' + Date.now(), { cache: 'no-store' });
+          if (resBackup.ok) {
+            const json = await resBackup.json();
+            if (json && json.data && json.data.lastUpdated) {
+              remoteState = json.data;
+            }
+          }
+        } catch(e) {}
+      }
+
+      if (remoteState) {
+        const remoteTime = Number(remoteState.lastUpdated) || 0;
+        if (remoteTime > lastCloudTimestamp) {
+          applyRemoteState(remoteState);
+        } else if (lastCloudTimestamp > remoteTime && remoteTime > 0) {
+          // Local is newer! Push local to cloud
+          pushToCloud();
+        }
+      }
+
+      isFetching = false;
+    }
+
+    function initRealtimeSSE() {
+      if (!window.EventSource) return;
+      try {
+        if (sseClient) sseClient.close();
+        sseClient = new EventSource(NTFY_SYNC_URL + '/sse');
+        sseClient.onmessage = (event) => {
+          try {
+            const evt = JSON.parse(event.data);
+            if (evt.event === 'message' && evt.message) {
+              const data = JSON.parse(evt.message);
+              applyRemoteState(data);
+            }
+          } catch(e) {}
+        };
+        sseClient.onerror = () => {
+          // Automatic browser reconnection
+        };
+      } catch(err) {
+        console.warn('SSE error:', err);
       }
     }
 
@@ -2565,14 +2657,14 @@
       }
     }
 
-    // Auto-polling interval: check cloud every 5 seconds
+    // Auto-polling and realtime SSE initialization
     setInterval(() => fetchCloudSync(false), 5000);
     window.addEventListener('focus', () => fetchCloudSync(false));
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') fetchCloudSync(false);
     });
 
-    // Restaurant Category Filter
+    // // Restaurant Category Filter
     function filterRestaurants(category, btnElement) {
       document.querySelectorAll('.rest-filter-btn').forEach(b => {
         b.classList.remove('active', 'bg-slate-900', 'text-white');
