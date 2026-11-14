@@ -2426,11 +2426,14 @@
       localStorage.setItem(LOCAL_KEY_CUSTOM_ITEMS, JSON.stringify(customItems));
     }
 
+    let syncDebounceTimer = null;
+    let isPushing = false;
+    let isFetching = false;
+
     function togglePackItem(id) {
       checkedMap[id] = !checkedMap[id];
       renderPacking();
-    fetchCloudSync(true);
-      pushToCloud();
+      scheduleCloudPush();
     }
 
     function addCustomItem() {
@@ -2449,19 +2452,28 @@
       checkedMap[newId] = false;
       input.value = '';
       renderPacking();
-      pushToCloud();
+      scheduleCloudPush();
     }
 
     function deleteCustomItem(id) {
       customItems = customItems.filter(c => c.id !== id);
       delete checkedMap[id];
       renderPacking();
-      pushToCloud();
+      scheduleCloudPush();
+    }
+
+    function scheduleCloudPush() {
+      updateSyncStatus('syncing', '🔄 שומר בענן...');
+      if (syncDebounceTimer) clearTimeout(syncDebounceTimer);
+      syncDebounceTimer = setTimeout(() => {
+        pushToCloud();
+      }, 300);
     }
 
     // --- CLOUD SYNC ENGINE ---
     async function pushToCloud() {
-      updateSyncStatus('syncing', '🔄 שומר בענן...');
+      isPushing = true;
+      updateSyncStatus('syncing', '🔄 שומר בענן לכל המשפחה...');
       const now = Date.now();
       lastCloudTimestamp = now;
       localStorage.setItem(LOCAL_KEY_SYNC_TIME, now.toString());
@@ -2489,24 +2501,26 @@
             updateSyncStatus('ready', '🟢 סנכרון ענן פעיל • משותף לכל המכשירים של משפחת שחר');
           }, 3500);
         } else {
-          updateSyncStatus('error', '🟠 שמירה מקומית (נשמר רק במכשיר זה)');
+          updateSyncStatus('error', '🟠 שמירה מקומית בלבד (נסו לרענן)');
         }
       } catch (err) {
-        console.warn('Cloud sync offline:', err);
-        updateSyncStatus('error', '🟠 שמירה מקומית (ללא חיבור רשת)');
+        console.warn('Cloud sync push error:', err);
+        updateSyncStatus('error', '🟠 שמירה מקומית (ללא חיבור אינטרנט)');
+      } finally {
+        isPushing = false;
       }
     }
 
     async function fetchCloudSync(force = false) {
-      if (isSyncing) return;
-      isSyncing = true;
+      if (isFetching || isPushing) return;
+      isFetching = true;
       try {
         const res = await fetch(CLOUD_SYNC_URL + '?t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const json = await res.json();
           if (json && json.data) {
             const cloudTime = Number(json.data.lastUpdated) || 0;
-            if (force || cloudTime > lastCloudTimestamp) {
+            if (force || (cloudTime > 0 && cloudTime > lastCloudTimestamp)) {
               lastCloudTimestamp = cloudTime;
               localStorage.setItem(LOCAL_KEY_SYNC_TIME, cloudTime.toString());
               if (json.data.checkedMap && typeof json.data.checkedMap === 'object') {
@@ -2526,9 +2540,9 @@
           }
         }
       } catch (e) {
-        console.warn('Failed background cloud sync:', e);
+        console.warn('Background cloud sync error:', e);
       } finally {
-        isSyncing = false;
+        isFetching = false;
       }
     }
 
@@ -2553,7 +2567,10 @@
 
     // Auto-polling interval: check cloud every 5 seconds
     setInterval(() => fetchCloudSync(false), 5000);
-    window.addEventListener('focus', () => fetchCloudSync(true));
+    window.addEventListener('focus', () => fetchCloudSync(false));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') fetchCloudSync(false);
+    });
 
     // Restaurant Category Filter
     function filterRestaurants(category, btnElement) {
