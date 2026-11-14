@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>בודפשט ל-4 מבוגרים ✈️ תוכנית יוקרתית, שופינג, בשרים ותקציב מדויק</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+    * { box-sizing: border-box; }
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      font-family: 'Rubik', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.25); border-radius: 8px; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col items-center">
+
+  <!-- TOP HERO BAR -->
+  <header class="w-full bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white shadow-xl sticky top-0 z-50 border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        
+        <!-- Title & Badges -->
+        <div class="flex items-center gap-3 text-center sm:text-right w-full sm:w-auto justify-center sm:justify-start">
+          <div class="w-12 h-12 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-2xl shadow-lg font-black shrink-0">
+            👑
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
+              <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white">בודפשט: 4 מבוגרים</h1>
+              <span class="text-xs bg-emerald-500 text-slate-950 px-2.5 py-0.5 rounded-full font-black shadow-xs flex items-center gap-1">
+                <span>✓</span> הסעה הוזמנה!
+              </span>
+              <span class="text-xs bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-full font-bold">אל על LY2365 / LY2366</span>
+            </div>
+            <p class="text-xs text-slate-300 font-medium flex items-center gap-2 justify-center sm:justify-start mt-0.5">
+              <span>🏨 7 Seasons Apartments</span>
+              <span>•</span>
+              <span>הזמנה: <strong>w-7647666-1</strong></span>
+              <span>•</span>
+              <span>שני עד שישי</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Flight & Print Quick Actions -->
+        <div class="flex items-center gap-2 text-xs flex-wrap justify-center sm:justify-end">
+          <div class="bg-white/10 backdrop-blur px-2.5 py-1.5 rounded-xl border border-white/15 text-center">
+            <span class="block text-sky-300 text-[10px]">הלוך ב' (LY2365)</span>
+            <span class="font-bold text-xs text-white">נחיתה 08:50</span>
+          </div>
+          <div class="bg-amber-400/20 backdrop-blur px-2.5 py-1.5 rounded-xl border border-amber-400/30 text-center">
+            <span class="block text-amber-300 text-[10px]">חזור ו' (LY2366)</span>
+            <span class="font-black text-xs text-amber-300">המראה 09:50 ⚠️</span>
+          </div>
+          <button onclick="window.print()" class="no-print bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-950 font-bold px-3 py-1.5 rounded-xl shadow transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            <span>הדפסה</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- NAVIGATION TABS -->
+      <nav class="flex items-center gap-1 sm:gap-2 mt-3 overflow-x-auto pb-1 custom-scrollbar text-xs font-bold border-t border-white/10 pt-2.5 w-full">
+        <button onclick="switchTab('transfer')" id="tab-btn-transfer" class="tab-btn active px-3.5 py-1.5 rounded-xl whitespace-nowrap transition bg-white text-slate-950 font-black shadow-md flex items-center gap-1.5">
+          <span>🚐</span> פרטי ההסעה המאושרת
+        </button>
+        <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          🗺️ לו"ז מדויק (ב'-ו')
+        </button>
+        <button onclick="switchTab('budget')" id="tab-btn-budget" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          💰 טבלת תקציב ומחירים
+        </button>
+        <button onclick="switchTab('shopping')" id="tab-btn-shopping" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          🛍️ מדריך שופינג ואלקטרוניקה
+        </button>
+        <button onclick="switchTab('packing')" id="tab-btn-packing" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          🧳 צ'קליסט אריזה ענק
+        </button>
+        <button onclick="switchTab('food')" id="tab-btn-food" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          🥩 5 מסעדות הבשר
+        </button>
+        <button onclick="switchTab('fatmama')" id="tab-btn-fatmama" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          🔥 תפריט Fat Mama בשקלים
+        </button>
+        <button onclick="switchTab('sim')" id="tab-btn-sim" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          📱 מדריך סים (eSIM)
+        </button>
+        <button onclick="switchTab('hotel')" id="tab-btn-hotel" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
+          🏨 7 Seasons וסביבתו
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="w-full max-w-6xl px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- ==================== TAB: CONFIRMED TRANSFER DETAILS (ACTIVE DEFAULT) ==================== -->
+    <section id="tab-content-transfer" class="tab-content block space-y-6">
+      
+      <!-- Confirmed Booking Banner -->
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 bg-emerald-400 text-slate-950 px-3 py-1 rounded-full text-xs font-black mb-3 shadow">
+            ✓ Transfer Booked! ההזמנה אושרה בהצלחה
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black tracking-tight mb-2">
+            ההסעה שלכם משוריינת: ראש שקט מלא ל-4 המבוגרים! 🚐
+          </h2>
+          <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-emerald-100 mt-2">
+            <span class="bg-white/15 px-3 py-1 rounded-xl border border-white/20 font-mono">מספר הזמנה: <strong>w-7647666-1</strong></span>
+            <span class="bg-white/15 px-3 py-1 rounded-xl border border-white/20">ספק שירות: <strong>Welcome Pickups / 7 Seasons</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions & Details Card -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
+        
+        <!-- Arrival Guide -->
+        <div class="bg-white rounded-2xl p-6 border-2 border-emerald-400 shadow-sm space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+              <span>🛬</span> יום שני: איסוף מהשדה למלון (LY2365)
+            </h3>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">נחיתה 08:50</span>
+          </div>
+          <ul class="space-y-2 text-slate-700 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-600 font-bold">●</span>
+              <span><strong>מעקב טיסות אוטומטי:</strong> הנהג עוקב בזמן אמת אחרי טיסה LY2365 ויודע להתעדכן אם הטיסה מקדימה או מתעכבת.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-600 font-bold">●</span>
+              <span><strong>איפה הנהג מחכה?</strong> מיד ביציאה מאולם המכס אל <strong>אולם מקבלי הפנים (Arrivals Hall)</strong>, כשהוא מחזיק שלט ברור עם שמכם.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-600 font-bold">●</span>
+              <span><strong>זמן המתנה חינם:</strong> השירות כולל 60 דקות המתנה מלאות מרגע הנחיתה של המטוס – מספיק זמן לאיסוף 4 המזוודות.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-600 font-bold">●</span>
+              <span><strong>יעד הנסיעה:</strong> ישירות לפתח הלובי של <strong>7 Seasons Apartments</strong> (רחוב Király u. 8).</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Departure Guide -->
+        <div class="bg-white rounded-2xl p-6 border-2 border-amber-300 shadow-sm space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+              <span>🛫</span> יום שישי: איסוף לשדה לטיסה LY2366
+            </h3>
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">המראה 09:50</span>
+          </div>
+          <ul class="space-y-2 text-slate-700 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">●</span>
+              <span><strong>שעת האיסוף מהמלון:</strong> <strong>06:15 בבוקר בדיוק!</strong></span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">●</span>
+              <span><strong>נקודת מפגש:</strong> בלובי של 7 Seasons Apartments. הנהג יעזור להעמיס את 4 המזוודות הגדולות.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">●</span>
+              <span><strong>הגעה לשדה ב-06:50:</strong> הגעה מתוזמנת בדיוק 3 שעות לפני ההמראה לתשאול הביטחוני של אל על בטרמינל 2B.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">●</span>
+              <span><strong>בדיקת מייל אישור:</strong> קיבלתם מייל אישור מ-Welcome Pickups הכולל פרטי קשר ישירים של הנהג ביום הנסיעה.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Direct Link Box -->
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">📱</span>
+          <span class="text-slate-600">ניתן לצפות בפרופיל הנסיעה ובפרטי הנהג בכל עת:</span>
+        </div>
+        <a href="https://traveler.transfersforhotels.com/en/budapest/R4J7kArK/thank_you_and_trip_profile?ga_purchase=true" target="_blank" 
+           class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2 rounded-xl transition shadow-xs flex items-center gap-1.5">
+          <span>🔗</span> פתח עמוד אישור הזמנה (Welcome Pickups)
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ==================== TAB 2: 5-DAY ITINERARY ==================== -->
+    <section id="tab-content-itinerary" class="tab-content hidden space-y-6">
+      
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar w-full">
+        <button onclick="showDay(1)" id="day-btn-1" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-700 text-white shadow-sm shrink-0">
+          יום ב' ✈️ 08:50 (איסוף מוזמן! בזיליקה, Meatology)
+        </button>
+        <button onclick="showDay(2)" id="day-btn-2" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
+          יום ג' 🌦️ (ארמון הפרלמנט, השוק הגדול, משתה סר לנסלוט)
+        </button>
+        <button onclick="showDay(3)" id="day-btn-3" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
+          יום ד' 🛍️ (בית הטרור, שופינג WestEnd, בשר ובר Szimpla)
+        </button>
+        <button onclick="showDay(4)" id="day-btn-4" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
+          יום ה' ⛅ (בודה, ואצי אוצה, שייט דנובה, בופה Trófea)
+        </button>
+        <button onclick="showDay(5)" id="day-btn-5" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
+          יום ו' ✈️ 09:50 (איסוף 06:15, שדה ב-06:50, המראה לארץ)
+        </button>
+      </div>
+
+      <div id="day-details-container" class="space-y-4 w-full"></div>
+    </section>
+
+
+    <!-- ==================== TAB: BUDGET & PRICES ==================== -->
+    <section id="tab-content-budget" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-2">
+        <h2 class="text-xl font-black text-slate-900 flex items-center gap-2">
+          <span class="text-emerald-600">💰</span> תכנון תקציב מדויק: מחירי כל המקומות, האטרקציות והארוחות
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          חישוב עלויות ריאלי ומדויק ל-4 מבוגרים (בשקלים, יורו ופורינט). המספרים מבוססים על תעריפי 2026 עדכניים (שער: 1,000 פורינט ≈ 10.5 ₪ / 1 יורו ≈ 4.0 ₪).
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
+          <span class="font-bold text-sm">סיכום עלויות משוערות לכל הטיול (ללא טיסות ומלון)</span>
+          <span class="text-xs bg-emerald-400 text-slate-950 font-black px-2.5 py-0.5 rounded-full">הסעה שולמה/הוזמנה!</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs sm:text-sm text-right">
+            <thead class="bg-slate-50 text-slate-600 border-b border-slate-200">
+              <tr>
+                <th class="p-3.5 font-bold">סעיף</th>
+                <th class="p-3.5 font-bold">פירוט המקומות והשירות</th>
+                <th class="p-3.5 font-bold text-slate-900">מחיר לאדם (₪)</th>
+                <th class="p-3.5 font-bold text-slate-900">סה"כ ל-4 מבוגרים</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr class="bg-emerald-50/50">
+                <td class="p-3.5 font-bold text-emerald-900">🚐 הסעות שדה (הוזמנו!)</td>
+                <td class="p-3.5">הזמנה w-7647666-1 (Welcome Pickups) - מיניוואן פרטי הלוך ושוב</td>
+                <td class="p-3.5 font-bold font-mono">~118 ₪ (29.5€)</td>
+                <td class="p-3.5 font-black text-emerald-900 font-mono">118€ (משוריין!)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-indigo-900">🏛️ אטרקציות</td>
+                <td class="p-3.5">פרלמנט (125 ₪) + שייט ערב (95 ₪) + בית הטרור (42 ₪) + פוניקולר (42 ₪) + בזיליקה (37 ₪)</td>
+                <td class="p-3.5 font-bold font-mono">~341 ₪ (~85€)</td>
+                <td class="p-3.5 font-black text-slate-900 font-mono">~1,364 ₪ (~341€)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-rose-900">🥩 5 מסעדות בשר</td>
+                <td class="p-3.5">Meatology (125 ₪) + סר לנסלוט (150 ₪) + Gettó Gulyás (75 ₪) + Menza (110 ₪) + Trófea Grill בופה חופשי (145 ₪)</td>
+                <td class="p-3.5 font-bold font-mono">~605 ₪ (~151€)</td>
+                <td class="p-3.5 font-black text-slate-900 font-mono">~2,420 ₪ (~605€)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-teal-900">🚇 תחבורה בעיר</td>
+                <td class="p-3.5">כרטיסיית נסיעות במטרו/חשמליות באפליקציית BudapestGO</td>
+                <td class="p-3.5 font-bold font-mono">~45 ₪ (~11€)</td>
+                <td class="p-3.5 font-black text-slate-900 font-mono">~180 ₪ (~45€)</td>
+              </tr>
+              <tr class="bg-amber-50/80 font-black text-slate-900 text-sm">
+                <td class="p-4" colspan="2">⭐ סה"כ תקציב משוער לכל החוויות, האטרקציות והבשרים (ללא קניות שופינג):</td>
+                <td class="p-4 text-emerald-800 font-mono">~1,109 ₪ לאדם</td>
+                <td class="p-4 text-emerald-900 font-mono text-base">~4,436 ₪ (~1,109€) לכולכם</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== TAB: SHOPPING & ELECTRONICS ==================== -->
+    <section id="tab-content-shopping" class="tab-content hidden space-y-6">
+      <div class="bg-gradient-to-r from-amber-600 via-orange-700 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+        <h2 class="text-2xl sm:text-3xl font-black tracking-tight mb-2">
+          שופינג בבודפשט למבוגרים: ביגוד, אלקטרוניקה והחזר מע"מ
+        </h2>
+        <p class="text-amber-100 text-xs sm:text-sm leading-relaxed">
+          דברים שבאמת משתלמים ולא עולים פחות בישראל:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
+        <div class="bg-white rounded-2xl p-5 border-2 border-emerald-400 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-2.5 py-1 rounded-full">✅ שווה ביותר לקנות!</span>
+            <span class="text-emerald-700 font-bold">חיסכון של 25% עד 40%</span>
+          </div>
+          <h3 class="font-black text-slate-900 text-base">בגדים, אופנה, נעליים ומעילי חורף 👗🧥</h3>
+          <p class="text-slate-600 leading-relaxed">
+            רשתות האופנה האירופאיות בבודפשט (<strong>Zara, Massimo Dutti, Pull&Bear, Bershka, Mango, Peek & Cloppenburg</strong>) זולות משמעותית מישראל! מעילי פוך, סוודרים ומגפיים עולים 20% עד 35% פחות ממחירי קניוני ישראל.
+          </p>
+          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-emerald-950 space-y-1">
+            <span class="font-bold block">💡 איפה קונים?</span>
+            <span>1. <strong>קניון WestEnd City Center</strong> (קניון ענק עם 400 חנויות ליד תחנת Nyugati).<br>
+                  2. <strong>מדרחוב ואצי (Váci utca) ו-Fashion Street</strong> (במרחק 5 דקות הליכה מ-7 Seasons!).</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border-2 border-amber-300 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-1 rounded-full">⚠️ אלקטרוניקה: רק עם Tax-Free</span>
+            <span class="text-amber-800 font-bold">מע"מ הונגרי 27%!</span>
+          </div>
+          <h3 class="font-black text-slate-900 text-base">אלקטרוניקה וגאדג'טים (MediaMarkt) 📱🎧</h3>
+          <p class="text-slate-600 leading-relaxed">
+            <strong>האמת הכנה:</strong> מחירי מדף של מוצרי Apple או לפטופים דומים למחירי ישראל ואינם זולים יותר מאילת. שווה לקנות אך ורק אם מבקשים בקופה טופס <strong>Tax-Free</strong> ברכישה מעל 74,001 פורינט (~190€) ומקבלים החזר של כ-14%-18% נטו בשדה!
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== TAB: PACKING CHECKLIST ==================== -->
+    <section id="tab-content-packing" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-black text-slate-900 flex items-center gap-2">
+            <span class="text-emerald-600">🧳</span> צ'קליסט אריזה ענק ומפורט ל-4 מבוגרים
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">סמנו וי – הכל נשמר אוטומטית בדפדפן!</p>
+        </div>
+        <div class="min-w-[220px] bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div class="flex justify-between text-xs font-semibold mb-1.5">
+            <span class="text-slate-600">נארזו במזוודה</span>
+            <span id="packing-progress-text" class="text-emerald-700 font-bold">0 מתוך 0</span>
+          </div>
+          <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+            <div id="packing-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-300 w-0"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="packing-container"></div>
+    </section>
+
+
+    <!-- ==================== TAB: 5 MEAT RESTAURANTS ==================== -->
+    <section id="tab-content-food" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="text-rose-600">🥩</span> 5 מסעדות הבשר הנבחרות – תפריטים, מחירים וניווט
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+          לכל יום שובצה חוויית בשרים ייעודית, משובחת וללא מוצרי חלב.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Meatology -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded-full">ארוחה 1 (ערב יום ב')</span>
+              <span class="text-xs font-bold font-mono text-emerald-800">~105-145 ₪ לסועד</span>
+            </div>
+            <h3 class="font-black text-slate-900 text-lg">Meatology Budapest</h3>
+            <p class="text-xs text-slate-500 mb-2">📍 מול הבזיליקה (5 דק' מ-7 Seasons)</p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              סטייקים מיושנים ועסיסיים (Ribeye, Tenderloin), לחמניות עם אסאדו בקר מפורק בבישול ארוך של 12 שעות, והמבורגרים פרימיום.
+            </p>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-slate-100">
+            <a href="https://meatologybudapest.hu" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר ותפריט</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Meatology+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
+            <a href="https://waze.com/ul?q=Meatology+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
+          </div>
+        </div>
+
+        <!-- Sir Lancelot -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 2 (ערב יום ג')</span>
+              <span class="text-xs font-bold font-mono text-emerald-800">~135-165 ₪ לסועד</span>
+            </div>
+            <h3 class="font-black text-slate-900 text-lg">Sir Lancelot Knights' Tournament</h3>
+            <p class="text-xs text-slate-500 mb-2">📍 Podmaniczky u. 14 (נסיעה של 5 דק' ב-Bolt)</p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              מסעדת מרתף אבירים מימי הביניים. <strong>אוכלים בידיים בלי מזלגות!</strong> פלטות ענק של שוקי אווז, צלעות בקר פריכות, עופות ונקניקיות על חרבות ענק בליווי קרבות אבירים ולהטוטני אש.
+            </p>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-slate-100">
+            <a href="http://www.sirlancelot.hu" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר והזמנה</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Sir+Lancelot+Restaurant+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
+            <a href="https://waze.com/ul?q=Sir+Lancelot+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
+          </div>
+        </div>
+
+        <!-- Getto Gulyas -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs bg-purple-100 text-purple-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 3 (צהרי יום ד')</span>
+              <span class="text-xs font-bold font-mono text-emerald-800">~68-85 ₪ לסועד</span>
+            </div>
+            <h3 class="font-black text-slate-900 text-lg">Gettó Gulyás</h3>
+            <p class="text-xs text-slate-500 mb-2">📍 Wesselényi u. 18 (4 דק' מ-7 Seasons)</p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              תבשיל בקר הונגרי מסורתי (Marhapörkölt) בבישול איטי עם פפריקה עשירה ובצקניות נוקרלי, או מרק שעועית עשיר עם בשר מעושן.
+            </p>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-slate-100">
+            <a href="https://www.facebook.com/Gettogulyas/" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 עמוד המסעדה</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Getto+Gulyas+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
+            <a href="https://waze.com/ul?q=Getto+Gulyas+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
+          </div>
+        </div>
+
+        <!-- Menza -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs bg-blue-100 text-blue-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 4 (ערב יום ד')</span>
+              <span class="text-xs font-bold font-mono text-emerald-800">~95-125 ₪ לסועד</span>
+            </div>
+            <h3 class="font-black text-slate-900 text-lg">Menza Restaurant & Café</h3>
+            <p class="text-xs text-slate-500 mb-2">📍 Liszt Ferenc tér 2 (8 דק' הליכה מהמלון)</p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              שניצל וינאי דק ופריך ענק (הכי טעים בעיר), מרק גולאש בקר הונגרי מנחם, שוק אווז פריכה וסטייק סינטה. חובה להזמין מקום מראש!
+            </p>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-slate-100">
+            <a href="https://www.menzaetterem.hu" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר והזמנה</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Menza+Etterem+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
+            <a href="https://waze.com/ul?q=Menza+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
+          </div>
+        </div>
+
+        <!-- Trofea Grill -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-3 md:col-span-2">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-2.5 py-0.5 rounded-full">ארוחה 5 (ערב סיום יום ה')</span>
+              <span class="text-xs font-black font-mono text-emerald-800">13,999 Ft (~145 ₪ / 35€) מחיר קבוע כולל הכל!</span>
+            </div>
+            <h3 class="font-black text-slate-900 text-lg">Trófea Grill Restaurant (סניף Király utca)</h3>
+            <p class="text-xs text-slate-500 mb-2">📍 Király u. 30-32 (4 דקות הליכה בלבד מ-7 Seasons!)</p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              בופה בשרים פרימיום "אכול כפי יכולתך". בוחרים נתחי אנטרקוט, סינטה, צלעות כבש, שיפודים ונקניקיות – והשף צולה מולכם על הפלנצ'ה. כולל שתייה, יין ובירה חופשיים במחיר אחד קבוע!
+            </p>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-slate-100">
+            <a href="https://trofeagrill.com" target="_blank" class="flex-1 bg-slate-900 text-white text-center py-2 rounded-xl text-xs font-bold">🌐 אתר והזמנת שולחן</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Trofea+Grill+Kiraly+Budapest" target="_blank" class="flex-1 bg-white border border-slate-200 text-slate-800 text-center py-2 rounded-xl text-xs font-bold">📍 Google Maps</a>
+            <a href="https://waze.com/ul?q=Trofea+Grill+Kiraly+Budapest" target="_blank" class="flex-1 bg-sky-500 text-white text-center py-2 rounded-xl text-xs font-bold">🚗 Waze</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB: FAT MAMA TRANSLATED MENU ==================== -->
+    <section id="tab-content-fatmama" class="tab-content hidden space-y-6">
+      
+      <!-- HERO BANNER -->
+      <div class="bg-gradient-to-r from-amber-700 via-orange-800 to-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+        <div class="relative z-10">
+          <div class="inline-flex items-center gap-2 bg-amber-400 text-stone-950 px-3 py-1 rounded-full text-xs font-black mb-3 shadow">
+            🔥 מעשנת בשרים וברביקיו • 4 דקות הליכה בלבד מ-7 Seasons!
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-black tracking-tight mb-2">
+            Fat Mama Budapest — תפריט מלא מתורגם לעברית ובשקלים
+          </h2>
+          <p class="text-amber-100 text-xs sm:text-sm max-w-3xl leading-relaxed mb-4">
+            תפריט ה-À la Carte המלא של מעשנת הבשרים המפורסמת ברובע היהודי (Kazinczy u. 7). הנתחים נצלים ומעושנים במעשנה ענקית, מנות בקר, צלעות, המבורגרים וקינוח מדורה ייחודי.
+          </p>
+
+          <!-- Info Boxes -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs">
+            <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+              <span class="block text-amber-300 font-bold mb-0.5">📍 מיקום ומרחק:</span>
+              <span class="text-white">Kazinczy u. 7 (350 מטרים מ-7 Seasons, 4 דק' הליכה)</span>
+            </div>
+            <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+              <span class="block text-amber-300 font-bold mb-0.5">⚠️ דמי שירות (טיפ):</span>
+              <span class="text-white">מחירי התפריט אינם כוללים 15% דמי שירות שמתווספים לחשבון</span>
+            </div>
+            <div class="bg-black/30 backdrop-blur border border-white/10 rounded-xl p-3">
+              <span class="block text-amber-300 font-bold mb-0.5">💱 שער המרה מחושב:</span>
+              <span class="text-white">100 Ft ≈ 0.97 ₪ | שער מסעדה 1€ = 360 Ft</span>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div class="flex flex-wrap gap-2 text-xs">
+            <a href="https://etlap.fatmama.hu/?lang=en&category=carte" target="_blank" class="bg-white text-stone-950 px-4 py-2 rounded-xl font-bold hover:bg-amber-100 transition shadow">🌐 מקור התפריט באתר המסעדה</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Fat+Mama+Budapest+Kazinczy+u.+7" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20 hover:bg-white/30 transition">📍 Google Maps</a>
+            <a href="https://waze.com/ul?q=Fat+Mama+Budapest+Kazinczy+7" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold hover:bg-sky-400 transition">🚗 Waze</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- HIGHLIGHT: 1KG SMOKER PLATTER -->
+      <div class="bg-gradient-to-r from-red-950 via-amber-950 to-stone-900 border-2 border-amber-500/60 rounded-3xl p-6 text-white shadow-xl">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="bg-amber-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow">👑 גולת הכותרת ל-4 מבוגרים!</span>
+              <span class="text-xs text-amber-300 font-bold">1 ק"ג בשר מעושן מגוון</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-amber-200">
+              מגש המעשנה הענק של פאט מאמא (Fat Mama Smoker Platter)
+            </h3>
+            <p class="text-xs sm:text-sm text-stone-300 leading-relaxed max-w-3xl">
+              מגש חגיגי ענק הכולל מבחר נתחים מעושנים: <strong>בריסקט בקר מעושן בבישול איטי, צלעות חזיר עסיסיות, פילה חזיר, שוקי עוף וכנפי עוף</strong>. מוגש עם תפוחי אדמה מוקפצים במחבת, סלט קולסלאו ביתי וסלט מלפפונים אסיאתי מרענן.
+            </p>
+            <p class="text-[11px] text-amber-400/90 font-medium">
+              💡 מוגדר בתפריט ל-2 סועדים, אך עם 1 ק"ג בשר ותוספות הוא פלטת פתיחה ושיתוף אדירה ומשביעה ל-4 מבוגרים!
+            </p>
+          </div>
+          <div class="shrink-0 bg-black/50 border border-amber-500/40 p-4 rounded-2xl text-center sm:text-left min-w-[200px]">
+            <span class="block text-xs text-stone-400">מחיר רשמי: 25,500 Ft / 70.8€</span>
+            <span class="block text-3xl font-black text-amber-400 my-1 font-mono">~247 ₪</span>
+            <span class="block text-xs text-emerald-400 font-bold">כולל 15% שירות: כ-284 ₪</span>
+            <span class="inline-block mt-2 text-xs bg-amber-400/20 text-amber-300 font-bold px-2 py-0.5 rounded">
+              ~71 ₪ בלבד לאדם ל-4 סועדים!
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: STARTERS & SOUPS -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="text-xl">🍲</span>
+          <h3 class="font-black text-slate-900 text-lg">מרקים ומנות ראשונות (Starters & Soups)</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">מרק גולאש בקר מהמישור ההונגרי</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">3,200 Ft / 8.9€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Great Hungarian Plain beef goulash (יחיד)</p>
+              <p class="text-xs text-slate-600">מרק גולאש בקר הונגרי מסורתי עשיר בירקות שורש, בקר מבושל ופפריקה.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~31 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~36 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">גולאש בקר הונגרי לזוג (2 סועדים)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">6,190 Ft / 17.2€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Hungarian Beef Goulash for 2</p>
+              <p class="text-xs text-slate-600">קדירת גולאש זוגית מוגשת בקערה מרכזית מסורתית לשיתוף.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~60 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~69 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/50 rounded-2xl p-4 border border-amber-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-amber-950 text-sm">גולאש בקר הונגרי ענק ל-4 סועדים!</h4>
+                <span class="text-xs font-mono font-bold text-amber-800">12,390 Ft / 34.4€</span>
+              </div>
+              <p class="text-xs text-amber-700 font-medium mb-1">Hungarian Beef Goulash for 4 (מושלם עבורכם!)</p>
+              <p class="text-xs text-slate-600">סיר גולאש מרכזי ענק לכל 4 המבוגרים עם לחם טרי ותוספות.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-amber-200/50 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-800">~120 ₪ (~30 ₪ לאדם)</span>
+              <span class="text-slate-500 text-[11px]">כולל שירות: ~138 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">מרק קרם עדשים אדומות ופיתה ביתית</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">3,490 Ft / 9.7€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Red lentil cream soup with pita</p>
+              <p class="text-xs text-slate-600">מרק קרמי עשיר מוגש חם עם פיתה טרייה שנאפית במקום.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~34 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~39 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">פלטת מבחר ים-תיכונית</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">3,390 Ft / 9.4€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Mediterranean Selection</p>
+              <p class="text-xs text-slate-600">פיתה ביתית, קרם חצילים, אייבר (ממרח פלפלים), זיתי קלמטה וממותה, חומוס.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~33 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~38 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">שרימפס פיל-פיל עם פיתה תוצרת בית</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">4,390 Ft / 12.2€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Pil Pil Shrimp with House-Made Pita</p>
+              <p class="text-xs text-slate-600">שרימפס מוקפצים בשמן זית, שום ופלפלים חריפים עם פיתה טרייה.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~43 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~49 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">סלט קיסר קלאסי</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">3,390 Ft / 9.4€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Caesar Salad</p>
+              <p class="text-xs text-slate-600">חסה פריכה, רוטב קיסר, קרוטונים וגבינת פרמז'ן מגוררת.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~33 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~38 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">סלט קיסר עם עוף</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">3,990 Ft / 11.1€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Caesar Chicken</p>
+              <p class="text-xs text-slate-600">סלט קיסר קלאסי בתוספת נתחי חזה עוף צלויים ועסיסיים.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~39 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~45 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-2 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">סלט קיסר עם שרימפס</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">4,490 Ft / 12.5€</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium mb-1">Caesar with Shrimps</p>
+              <p class="text-xs text-slate-600">סלט קיסר עשיר בתוספת שרימפס צרובים על הפלנצ'ה.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~44 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~50 ₪</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 2: BURGERS & SANDWICHES -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2 flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🍔</span>
+            <h3 class="font-black text-slate-900 text-lg">המבורגרים וכריכים (Burgers & Sandwiches)</h3>
+          </div>
+          <span class="text-[11px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-bold">
+            ⚠️ מוגש Well Done כברירת מחדל – בקשו מידת עשייה בהזמנה!
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">בורגר פאט מאמא בייקון וצ'דר</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,990 Ft / 16.6€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Fat Mama Bacon-Cheddar + צ'יפס</p>
+              <p class="text-xs text-slate-600">קציצת בקר 150 גרם, בייקון פריך, צ'דר, רוטב הבית, חסה, עגבנייה, מלפפון חמוץ וצ'יפס בצד.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~58 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~67 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/60 rounded-2xl p-4 border border-amber-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-amber-950 text-sm">דאבל בורגר פאט מאמא בייקון-צ'דר</h4>
+                <span class="text-xs font-mono font-bold text-amber-800">6,990 Ft / 19.4€</span>
+              </div>
+              <p class="text-[11px] text-amber-700 mb-1">Double Patty Burger (300g בשר!) + צ'יפס</p>
+              <p class="text-xs text-slate-600">2 קציצות בקר (300 גרם סה"כ!), כפול בייקון וגבינת צ'דר, רוטב בורגר ביתי, ירקות וצ'יפס.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-amber-200/50 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-800">~68 ₪</span>
+              <span class="text-slate-500 text-[11px]">כולל שירות: ~78 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">בורגר עוף עם צ'יפס</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,490 Ft / 15.3€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Chicken Burger with Fries</p>
+              <p class="text-xs text-slate-600">קציצת עוף 150 גרם, צ'דר, רוטב בורגר, חסה, עגבנייה, חמוצים וצ'יפס חם.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~53 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~61 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">בורגר צמחוני עם צ'יפס בטטה</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">6,290 Ft / 17.5€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Veggie Burger with Sweet Potatoes</p>
+              <p class="text-xs text-slate-600">קציצה טבעונית בטעם עוף, חסה, רוטב בורגר, סלט קולסלאו, מלפפון חמוץ וצ'יפס בטטה.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~61 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~70 ₪</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 3: BBQ & SMOKER -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2 flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🥩</span>
+            <h3 class="font-black text-slate-900 text-lg">מעשנה וברביקיו (BBQ & Smoker)</h3>
+          </div>
+          <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-medium">
+            💡 מנות אלו הן בשר נקי ללא תוספת (מומלץ להזמין תוספת בנפרד)
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">צלעות ברביקיו מעושנות (BBQ Ribs)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,390 Ft / 15€</span>
+              </div>
+              <p class="text-xs text-slate-600">צלעות חזיר עסיסיות בגלייז ברביקיו עשיר ומתקתק, מתפרקות מהעצם.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~52 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~60 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">בריסקט בקר מעושן (BBQ Beef Brisket)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">8,600 Ft / 23.9€</span>
+              </div>
+              <p class="text-xs text-slate-600">נתח חזה בקר מובחר בבישול ארוך ואיטי במעשנת העצים, נימוח ועמוק בטעמים.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~83 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~96 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">כתף חזיר ברביקיו (Pork Shoulder)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,090 Ft / 14.1€</span>
+              </div>
+              <p class="text-xs text-slate-600">נתח כתף מעושן לאורך שעות ארוכות בסגנון Pulled Pork קלאסי.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~49 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~57 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">שוק עוף ברביקיו (BBQ Chicken Leg)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">4,390 Ft / 12.2€</span>
+              </div>
+              <p class="text-xs text-slate-600">כרע עוף גדולה מעושנת במעשנה ברוטב ברביקיו עמוק.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~43 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~49 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">כנפי עוף ברביקיו (BBQ Chicken Wings)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">4,090 Ft / 11.4€</span>
+              </div>
+              <p class="text-xs text-slate-600">כנפי עוף פריכות מצופות ברוטב ברביקיו מתובל.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~40 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~46 ₪</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 4: MAIN DISHES -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="text-xl">🍳</span>
+          <h3 class="font-black text-slate-900 text-lg">מנות עיקריות (Main Dishes)</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">סטייק ריב איי (250 גרם)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">10,900 Ft / 30.3€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Rib eye steak & Bordelaise</p>
+              <p class="text-xs text-slate-600">אנטרקוט פרימיום 250 גרם, תפוחי אדמה צלויים ורוטב בורדלז עשיר מיין אדום.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~106 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~122 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">פפריקש עגל עם שפצל'ה</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">7,490 Ft / 20.8€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Veal Paprikash + Spaetzle</p>
+              <p class="text-xs text-slate-600">נתחי עגל רכים ברוטב פפריקה הונגרי קרמי ובצקניות שפצל'ה ביתיות.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~73 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~84 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">חזה ברווז רוזה עם קומפוט תפוחים</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">6,790 Ft / 18.9€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Rosé duck breast + פירה</p>
+              <p class="text-xs text-slate-600">חזה ברווז צרוב במידת עשייה רוזה מדויקת, קומפוט תפוחים חמצמץ ופירה קטיפתי.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~66 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~76 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">צלי צועני הונגרי (Cigánypecsenye)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">6,290 Ft / 17.5€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Gypsy roast + כרוב סגול ופירה בצל</p>
+              <p class="text-xs text-slate-600">צלי מסורתי עם שום ובייקון צרוב, מוגש עם כרוב סגול מבושל ופירה עשיר בבצל.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~61 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~70 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">תבשיל בקר הונגרי עם פתיתי ביצים</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,900 Ft / 16.4€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Beef stew with egg barley (Tarhonya)</p>
+              <p class="text-xs text-slate-600">תבשיל פקרולט בקר הונגרי אותנטי בבישול ארוך עם פתיתי טרהוניה מסורתיים.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~57 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~66 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">פפריקש עוף עם נודלס שמנת מעושנת</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">4,390 Ft / 12.2€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Chicken paprikash</p>
+              <p class="text-xs text-slate-600">שוקי עוף ברוטב פפריקה הונגרי עשיר עם אטריות בשמנת חמוצה מעושנת.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~43 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~49 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">שניצל עוף פריך Blaha Chicken Tender</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,090 Ft / 14.1€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">טנדרס עוף פריכים + צ'יפס וטוסט טקסס</p>
+              <p class="text-xs text-slate-600">אצבעות פילה עוף עסיסיות בציפוי פריך במיוחד, צ'יפס, לחם שום טקסס וקולסלאו.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~49 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~57 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">כרוב ממולא טבעוני</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,800 Ft / 16.1€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Vegan stuffed cabbage</p>
+              <p class="text-xs text-slate-600">עלי כרוב ממולאים באורז ותחליפי בשר מתובלים ברוטב עגבניות הונגרי.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~56 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~65 ₪</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 5: HOMEMADE PASTA & CHILD -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="text-xl">🍝</span>
+          <h3 class="font-black text-slate-900 text-lg">פסטות ביתיות ונשנושים (Pasta & Snacks)</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">קזארצ'ה בולונז בקר</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">5,190 Ft / 14.4€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Bologna casarecce</p>
+              <p class="text-xs text-slate-600">פסטה קזארצ'ה טרייה ברוטב בולונז עשיר מבשר בקר בבישול ארוך ופרמז'ן.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~50 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~58 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">אליו אוליו עם שרימפס</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">4,900 Ft / 13.6€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Aglio e olio garnélával</p>
+              <p class="text-xs text-slate-600">שמן זית כתית, שום קונפי, פלפל צ'ילי, פטרוזיליה טרייה ושרימפס עסיסיים.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~48 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~55 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">טליאטלה דלעת ופטריות יער</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">3,900 Ft / 10.8€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Pumpkin tagliatelle with wild mushrooms</p>
+              <p class="text-xs text-slate-600">פסטה טרייה בקרם דלעת חורפי מתקתק עם פטריות יער צרובות בחמאה ועשבי תיבול.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~38 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~44 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">נאצ'וס עם גבינה וסלסה</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">2,150 Ft / 6€</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mb-1">Bar Snack - Nachos & Salsa</p>
+              <p class="text-xs text-slate-600">טורטייה צ'יפס פריך בליווי רוטב גבינת צ'דר חם וסלסת עגבניות טרייה.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~21 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~24 ₪</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 6: SIDES & SAUCES -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- SIDES -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+            <span class="text-lg">🍟</span>
+            <h4 class="font-black text-slate-900 text-sm">תוספות (Side Dishes)</h4>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">צ'יפס בטטה פריך</span>
+              <span class="font-mono font-bold text-slate-900">1,900 Ft / 5.3€ <span class="text-amber-700 font-black">(~18 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">תפוחי אדמה צלויים במחבת</span>
+              <span class="font-mono font-bold text-slate-900">1,890 Ft / 5.3€ <span class="text-amber-700 font-black">(~18 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">סלט ירקות מעורב טרי</span>
+              <span class="font-mono font-bold text-slate-900">1,890 Ft / 5.3€ <span class="text-amber-700 font-black">(~18 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">פירה תפוחי אדמה קטיפתי</span>
+              <span class="font-mono font-bold text-slate-900">1,650 Ft / 4.6€ <span class="text-amber-700 font-black">(~16 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">כרוב סגול מבושל מתקתק</span>
+              <span class="font-mono font-bold text-slate-900">1,650 Ft / 4.6€ <span class="text-amber-700 font-black">(~16 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">צ'יפס קלאסי פריך</span>
+              <span class="font-mono font-bold text-slate-900">1,450 Ft / 4.0€ <span class="text-amber-700 font-black">(~14 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">סלט קולסלאו (כרוב במיונז)</span>
+              <span class="font-mono font-bold text-slate-900">1,450 Ft / 4.0€ <span class="text-amber-700 font-black">(~14 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">פירה תפוחי אדמה עם בצל מקורמל</span>
+              <span class="font-mono font-bold text-slate-900">1,350 Ft / 3.8€ <span class="text-amber-700 font-black">(~13 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span class="text-slate-700 font-medium">סלט מלפפונים אסיאתי מרענן</span>
+              <span class="font-mono font-bold text-slate-900">1,350 Ft / 3.8€ <span class="text-amber-700 font-black">(~13 ₪)</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAUCES & PICKLES -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+            <span class="text-lg">🌶️</span>
+            <h4 class="font-black text-slate-900 text-sm">רטבים וחמוצים (Sauces & Pickles)</h4>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">רוטב ברביקיו של מאמא (Mama's BBQ)</span>
+              <span class="font-mono font-bold text-slate-900">900 Ft / 2.5€ <span class="text-amber-700 font-black">(~8.7 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">מיונז בייקון מעושן (Bacon Mayo)</span>
+              <span class="font-mono font-bold text-slate-900">900 Ft / 2.5€ <span class="text-amber-700 font-black">(~8.7 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">רוטב גבינת צ'דר וחליפיניו פיקנטי</span>
+              <span class="font-mono font-bold text-slate-900">900 Ft / 2.5€ <span class="text-amber-700 font-black">(~8.7 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">מיונז פיקנטי מתובל</span>
+              <span class="font-mono font-bold text-slate-900">900 Ft / 2.5€ <span class="text-amber-700 font-black">(~8.7 ₪)</span></span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-50">
+              <span class="text-slate-700 font-medium">מיונז / חרדל הונגרי / קטשופ</span>
+              <span class="font-mono font-bold text-slate-500">זמין לבקשה</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span class="text-slate-700 font-medium">מלפפון חמוץ הונגרי קראנצ'י</span>
+              <span class="font-mono font-bold text-slate-900">800 Ft / 2.2€ <span class="text-amber-700 font-black">(~7.8 ₪)</span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECTION 7: DESSERTS & MARSHMALLOW FIRE EXPERIENCE -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="text-xl">🍫</span>
+          <h3 class="font-black text-slate-900 text-lg">קינוחים וחוויית מדורה (Desserts)</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          
+          <!-- Marshmallow Experience -->
+          <div class="bg-gradient-to-br from-amber-900 to-stone-900 text-white rounded-2xl p-4 shadow-md flex flex-col justify-between border border-amber-500/40">
+            <div>
+              <span class="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full inline-block mb-1">חוויה מיוחדת ליד האש! 🔥</span>
+              <h4 class="font-black text-amber-200 text-sm mb-1">סמורס מרשמלו פאט מאמא (Marshmallow)</h4>
+              <p class="text-xs text-stone-200 leading-relaxed mb-2">
+                <strong>קולים בעצמכם ליד האח או ישירות ליד השולחן!</strong> מרשמלו לוהט קלוי בין שני ביסקוויטים של שוקולד, מומס עם סירופ תות עשיר.
+              </p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-white/10 flex justify-between items-center text-xs">
+              <div>
+                <span class="font-mono font-bold text-xs text-stone-300">3,050 Ft / 8.5€</span>
+                <span class="block font-black text-amber-400 text-sm">~30 ₪</span>
+              </div>
+              <span class="text-[11px] text-emerald-300">כולל שירות: ~34 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">עוגת שוקולד צרפתית חמה (פונדנט)</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">2,400 Ft / 6.7€</span>
+              </div>
+              <p class="text-xs text-slate-600">עוגת שוקולד חמה עם לב שוקולד נוזלי, מוגשת בליווי רוטב וניל וקצפת עשירה.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~23 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~27 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">עוגת גבינה אפויה עם רוטב פירות יער</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">2,200 Ft / 6.1€</span>
+              </div>
+              <p class="text-xs text-slate-600">עוגת גבינה עשירה וקרמית בציפוי קולי פירות יער חמצמץ ומרענן.</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~21 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~25 ₪</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start gap-1 mb-1">
+                <h4 class="font-bold text-slate-900 text-sm">פודינג טפיוקה עם מנגו</h4>
+                <span class="text-xs font-mono font-bold text-slate-500">2,050 Ft / 5.7€</span>
+              </div>
+              <p class="text-xs text-slate-600">קינוח קליל ומרענן של פניני טפיוקה בחלב קוקוס עם מחית מנגו טרופית (ללא גלוטן/לקטוז).</p>
+            </div>
+            <div class="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+              <span class="font-black text-amber-700">~20 ₪</span>
+              <span class="text-slate-400 text-[11px]">כולל שירות: ~23 ₪</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ==================== TAB: SIM & ESIM ==================== -->
+    <section id="tab-content-sim" class="tab-content hidden space-y-6">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+        <h2 class="text-2xl sm:text-3xl font-black tracking-tight mb-2">
+          חד משמעית: רוכשים eSIM דיגיטלי בארץ לפני הטיסה! 📱
+        </h2>
+        <p class="text-teal-100 text-xs sm:text-sm leading-relaxed mb-4">
+          כל מבוגר רוכש eSIM של 5GB או 10GB באפליקציית <strong>Airalo</strong> (חבילת 'Szia' להונגריה) בעלות של <strong>10$–15$ בלבד (כ-35–55 ₪)</strong>.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="https://www.airalo.com/hungary-esim" target="_blank" class="bg-white text-slate-950 px-4 py-2 rounded-xl font-bold">🌐 לרכישה ב-Airalo</a>
+          <a href="https://maya.net/esim/hungary" target="_blank" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold border border-white/20">🌐 לרכישה ב-Maya Mobile</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== TAB: HOTEL ==================== -->
+    <section id="tab-content-hotel" class="tab-content hidden space-y-6">
+      <div class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+        <h2 class="text-2xl sm:text-3xl font-black tracking-tight mb-2">
+          הסעת מיניוואן משוריינת (הזמנה: w-7647666-1)
+        </h2>
+        <div class="text-blue-100 text-xs sm:text-sm leading-relaxed space-y-2">
+          <p>
+            ההזמנה אושרה מול Welcome Pickups ו-7 Seasons!
+          </p>
+          <p>
+            <strong>בחזור (יום ו' איסוף ב-06:15 בדיוק!):</strong> מאחר והטיסה ממריאה ב-09:50, המיניוואן ימתין לכם ב-06:15 מחוץ ללובי כדי להגיע לשדה ב-06:50 (3 שעות לפני ההמראה לבידוק אל על).
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    const STORAGE_KEY_PACKING = 'budapest_adults_packing_v8';
+
+    const defaultPacking = [
+      { id: 'p1', title: 'דרכונים בתוקף מעל 6 חודשים (לכל 4 המבוגרים)', cat: 'docs', done: false },
+      { id: 'p2', title: 'כרטיסי עלייה למטוס באפליקציית אל על (LY2365 / LY2366)', cat: 'docs', done: false },
+      { id: 'p3', title: 'אישור הזמנת 7 Seasons והסעה (w-7647666-1)', cat: 'docs', done: true },
+      { id: 'p4', title: 'פוליסות ביטוח נסיעות לחו"ל כולל הרחבת כבודה וביטול', cat: 'docs', done: false },
+      { id: 'p5', title: 'כרטיסי אשראי בינלאומיים (לוודא שפתוחים לשימוש בחו"ל)', cat: 'docs', done: false },
+      { id: 'p6', title: 'מעט מזומן ביורו לביטחון (50€-100€ לאדם)', cat: 'docs', done: false },
+      { id: 'p7', title: '2 זוגות נעלי הליכה סופר נוחות לכל אחד (להחלפה אם נרטב/לוחץ)', cat: 'clothes', done: false },
+      { id: 'p8', title: 'מעילים חמים דוחי גשם ורוח (טמפ\' 7°-11°C ביום, 4°C בערב!)', cat: 'clothes', done: false },
+      { id: 'p9', title: 'סוודרים, קרדיגנים ועליוניות לשיטת השכבות (בצל)', cat: 'clothes', done: false },
+      { id: 'p10', title: 'צעיפים מחממים, כפפות קלות וכובעי צמר (בערב ליד הנהר קר!)', cat: 'clothes', done: false },
+      { id: 'p11', title: 'בגדים יפים/אלגנטיים לערב למסעדות ולברים', cat: 'clothes', done: false },
+      { id: 'p12', title: 'מטריות מתקפלות קומפקטיות לתיק היום לכל המשפחה', cat: 'clothes', done: false },
+      { id: 'p13', title: 'חבילות eSIM מותקנות בטלפונים עוד בישראל (Airalo/Maya)', cat: 'electronics', done: false },
+      { id: 'p14', title: 'סוללות גיבוי ניידות (Powerbanks חובה! לפחות 10,000mAh לשניים)', cat: 'electronics', done: false },
+      { id: 'p15', title: 'כבלי טעינה לכל הטלפונים + כבלים ארוכים למיטה', cat: 'electronics', done: false },
+      { id: 'p16', title: 'מטעני קיר מהירים (תקע אירופאי רגיל 2 פינים עגולים)', cat: 'electronics', done: false },
+      { id: 'p17', title: 'אוזניות אישיות לטיסה לכל אחד', cat: 'electronics', done: false },
+      { id: 'p18', title: 'משקל דיגיטלי למזוודות (לשקול לפני טיסת החזור של אל על)', cat: 'electronics', done: false },
+      { id: 'p19', title: 'תרופות מרשם קבועות בתיק העלייה למטוס (לא במזוודה הנשלחת!)', cat: 'health', done: false },
+      { id: 'p20', title: 'משככי כאבים (אקמול/נורופן/אופטלגין)', cat: 'health', done: false },
+      { id: 'p21', title: 'כדורים נגד צרבת / קלקול קיבה (חובה אחרי ארוחות בשר עשירות)', cat: 'health', done: false },
+      { id: 'p22', title: 'פלסטרים מיוחדים לשלפוחיות (Compeed - מציל חיים בהליכות)', cat: 'health', done: false },
+      { id: 'p23', title: 'שפתון לחות נגד יובש (האוויר החורפי והרוח מייבשים)', cat: 'health', done: false },
+      { id: 'p24', title: 'תיק מתקפל נוסף בתוך המזוודה (Duffel Bag לקניות של הבגדים)', cat: 'shopping', done: false },
+      { id: 'p25', title: 'פצפצים / גרביים ישנות לעטיפת בקבוקי יין ופפריקה שקונים בשוק', cat: 'shopping', done: false }
+    ];
+
+    let packing = JSON.parse(localStorage.getItem(STORAGE_KEY_PACKING)) || defaultPacking;
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-slate-950', 'font-black', 'shadow-md');
+        btn.classList.add('text-white/90', 'hover:bg-white/15');
+      });
+      document.querySelectorAll('.tab-content').forEach(section => {
+        section.classList.add('hidden');
+        section.classList.remove('block');
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'text-slate-950', 'font-black', 'shadow-md');
+        activeBtn.classList.remove('text-white/90', 'hover:bg-white/15');
+      }
+
+      const activeContent = document.getElementById(`tab-content-${tabId}`);
+      if (activeContent) {
+        activeContent.classList.remove('hidden');
+        activeContent.classList.add('block');
+      }
+    }
+
+    // --- 5 DAYS ITINERARY WITH CONFIRMED TRANSFER ---
+    const daysData = [
+      {
+        dayNum: 1,
+        title: "יום שני: נחיתת בוקר (08:50), בראנץ', שוק הבזיליקה וארוחת בשר ב-Meatology",
+        badge: "טיסת אל על LY2365 | נחיתה 08:50 | הסעה מוזמנת (w-7647666-1)",
+        meatRestaurant: "Meatology Budapest (~105-145 ₪)",
+        steps: [
+          {
+            time: "08:50 - 09:30",
+            title: "נחיתה בנמל התעופה (BUD) ומפגש עם הנהג של Welcome Pickups",
+            desc: "טיסת אל על LY2365 נוחתת ב-08:50. הנהג עוקב בזמן אמת אחרי הטיסה וממתין לכם באולם מקבלי הפנים (Arrivals Hall) עם שלט שמכם. מספר הזמנה: w-7647666-1.",
+            price: "הוזמן ושולם מראש!",
+            siteUrl: "https://traveler.transfersforhotels.com/en/budapest/R4J7kArK/thank_you_and_trip_profile?ga_purchase=true",
+            mapQuery: "Budapest+Ferenc+Liszt+International+Airport"
+          },
+          {
+            time: "10:00 - 11:30",
+            title: "הגעה ל-7 Seasons, שמירת מזוודות ובראנץ' מפנק ב-Cirkusz",
+            desc: "מאחסנים את המזוודות בחינם בחדר שמירת החפצים של המלון (צ'ק-אין ב-14:00-15:00). צועדים 3 דקות לבראנץ' מדהים ב-Cirkusz Café.",
+            price: "~4,500 Ft (~45 ₪) לארוחה וקפה",
+            siteUrl: "https://cirkuszbp.hu",
+            mapQuery: "Cirkusz+Cafe+Budapest"
+          },
+          {
+            time: "11:30 - 14:00",
+            title: "בזיליקת סנט סטפן, תצפית הכיפה וסיבוב ראשון",
+            desc: "הליכה של 5 דקות לרחבת הבזיליקה. כניסה למבנה המוזהב והמחומם ועלייה במעלית לכיפה לתצפית 360 מעלות מרהיבה על בודפשט.",
+            price: "3,500 Ft (~37 ₪ / 9€) לכרטיס משולב",
+            siteUrl: "https://www.bazilika.biz",
+            mapQuery: "St.+Stephen%27s+Basilica+Budapest"
+          },
+          {
+            time: "14:00 - 16:30",
+            title: "קבלת הדירה ב-7 Seasons ומנוחת צהריים",
+            desc: "עולים לדירה המרווחת ב-7 Seasons. פריקת ציוד ומנוחת צהריים מפנקת אחרי ההשכמה המוקדמת לטיסה בנתב\"ג.",
+            price: "כלול בהזמנת המלון",
+            siteUrl: "https://www.7seasonsapartments.com",
+            mapQuery: "7+Seasons+Apartments+Budapest"
+          },
+          {
+            time: "17:00 - 18:30",
+            title: "שוק הקריסמס של בזיליקת סנט סטפן (Advent Bazilika)",
+            desc: "ב-17:30 מתחיל מופע לייזרים תלת-ממדי (3D Light Show) מהפנט על חזית הבזיליקה (חוזר כל חצי שעה), עץ אשוח ענק של 12 מטר ודוכני חג.",
+            price: "כניסה חופשית! (0 Ft)",
+            siteUrl: "https://adventbazilika.hu",
+            mapQuery: "Advent+Bazilika+Budapest"
+          },
+          {
+            time: "18:45 - ערב",
+            title: "ארוחת בשרים 1 🥩: מסעדת Meatology Budapest",
+            desc: "מול הבזיליקה. סטייקים מיושנים מובחרים, אסאדו בקר בבישול איטי של 12 שעות, בורגרים מעולים ובירה הונגרית קרה. ללא מוצרי חלב.",
+            price: "~10,000-14,000 Ft (~105-145 ₪) לסועד",
+            siteUrl: "https://meatologybudapest.hu",
+            mapQuery: "Meatology+Budapest"
+          }
+        ]
+      },
+      {
+        dayNum: 2,
+        title: "יום שלישי: ארמון הפרלמנט, השוק המקורה הגדול ומשתה אבירים ב-Sir Lancelot",
+        badge: "יום מקורה חכם | 🌦️ 10°C (ממטרים לפרקים)",
+        meatRestaurant: "Sir Lancelot Knights' Restaurant (~135-165 ₪)",
+        steps: [
+          {
+            time: "10:00 - 12:00",
+            title: "סיור מודרך בארמון הפרלמנט ההונגרי ואנדרטת הנעליים",
+            desc: "המבנה המפואר בעולם – חם ויבש! אולמות זהב, מדרגות שיש וכתר המלוכה המקורי. בסיום, הליכה של 2 דקות לאנדרטת הנעליים על הדנובה.",
+            price: "12,000 Ft (~125 ₪ / 31€) לאזרח לא-אירופאי",
+            siteUrl: "https://jegymester.hu/production/480000/parliament-visit",
+            mapQuery: "Hungarian+Parliament+Building"
+          },
+          {
+            time: "12:30 - 15:30",
+            title: "השוק המקורה הגדול (Great Market Hall) וקניות אוכל",
+            desc: "3 קומות מקורות לחלוטין. קומה 1: דוכני נקניקי סלאמי מובחרים, פפריקה, שוקולדים ויינות טוקאי. קומה 2: מזכרות, בגדים ומאפי לנגוש חמים.",
+            price: "כניסה חינם, קניות אישיות",
+            siteUrl: "https://www.piaconline.hu",
+            mapQuery: "Great+Market+Hall+Budapest"
+          },
+          {
+            time: "16:00 - 18:00",
+            title: "מנוחה בדירה ב-7 Seasons",
+            desc: "חזרה קלה למלון במטרו M3. מנוחה והתארגנות לקראת הערב.",
+            price: "חינם",
+            siteUrl: "https://www.7seasonsapartments.com",
+            mapQuery: "7+Seasons+Apartments+Budapest"
+          },
+          {
+            time: "18:30 - ערב",
+            title: "ארוחת בשרים 2 🥩: משתה אבירים ב-Sir Lancelot",
+            desc: "אוכלים בידיים בלי מזלגות: פלטות ענק של שוקי אווז, צלעות בקר פריכות ונקניקיות על חרבות ענק בליווי קרבות אבירים ולהטוטני אש!",
+            price: "~13,000-16,000 Ft (~135-165 ₪) לסועד",
+            siteUrl: "http://www.sirlancelot.hu",
+            mapQuery: "Sir+Lancelot+Restaurant+Budapest"
+          }
+        ]
+      },
+      {
+        dayNum: 3,
+        title: "יום רביעי: מוזיאון בית הטרור, שופינג ענק ב-WestEnd, בשרים ובר Szimpla",
+        badge: "תרבות, שופינג מבוגרים וחיי לילה | 🌧️ 10°C",
+        meatRestaurant: "Gettó Gulyás (צהריים) + Menza (ערב)",
+        steps: [
+          {
+            time: "10:00 - 12:30",
+            title: "מוזיאון בית הטרור (Terror Háza) בשדרת אנדראשי",
+            desc: "מוזיאון היסטורי עוצמתי במפקדה של המשטר הנאצי והקומוניסטי. תצוגות מולטימדיה מרתקות באנגלית.",
+            price: "4,000 Ft (~42 ₪ / 10€) לכרטיס",
+            siteUrl: "https://www.terrorhaza.hu",
+            mapQuery: "Terror+Haza+Budapest"
+          },
+          {
+            time: "13:00 - 14:30",
+            title: "ארוחת בשרים 3 🥩 (צהריים): תבשילי בקר ב-Gettó Gulyás",
+            desc: "מתחממים ברובע היהודי (4 דקות הליכה מ-7 Seasons) עם תבשיל בקר הונגרי מסורתי (Marhapörkölt) בבישול איטי עם בצקניות נוקרלי.",
+            price: "~6,500-8,000 Ft (~68-85 ₪) לסועד",
+            siteUrl: "https://www.facebook.com/Gettogulyas/",
+            mapQuery: "Getto+Gulyas+Budapest"
+          },
+          {
+            time: "15:00 - 18:30",
+            title: "שופינג ענק בקניון WestEnd City Center (בגדים ואלקטרוניקה)",
+            desc: "הקניון הגדול והמרכזי בבודפשט (400 חנויות!). Zara, Massimo Dutti, H&M, Mango, וסניף ענק של MediaMarkt (טופס Tax-Free ברכישה מעל 74,000 Ft).",
+            price: "כניסה חופשית, תקציב שופינג אישי",
+            siteUrl: "https://westend.hu",
+            mapQuery: "WestEnd+City+Center+Budapest"
+          },
+          {
+            time: "19:00 - 21:00",
+            title: "ארוחת בשרים 4 🥩 (ערב): מסעדת Menza (כיכר ליסט פרנץ)",
+            desc: "שניצל וינאי דק ופריך ענק (הכי טעים בעיר), מרק גולאש בקר הונגרי מנחם, שוק אווז פריכה וסטייק סינטה.",
+            price: "~9,000-12,000 Ft (~95-125 ₪) לסועד",
+            siteUrl: "https://www.menzaetterem.hu",
+            mapQuery: "Menza+Etterem+Budapest"
+          },
+          {
+            time: "21:30 - לילה",
+            title: "דרינק ב-Szimpla Kert (הרואין-בר מס' 1 בעולם!)",
+            desc: "חוויית חובה ל-4 מבוגרים! הרואין-בר המפורסם בעולם, ממוקם בבניין היסטורי נטוש ברובע היהודי (5 דקות הליכה מהמלון).",
+            price: "כניסה חופשית, בירה/יין ~1,500-2,000 Ft (~15-20 ₪)",
+            siteUrl: "https://szimpla.hu",
+            mapQuery: "Szimpla+Kert+Budapest"
+          }
+        ]
+      },
+      {
+        dayNum: 4,
+        title: "יום חמישי: מצודת הדייגים בבודה, שופינג בואצי, שייט דנובה ובופה Trófea",
+        badge: "היום הכי בהיר בשבוע! | ⛅ 11°C (יבש וראות מושלמת)",
+        meatRestaurant: "Trófea Grill Király (בופה גריל בשרים חופשי - 145 ₪)",
+        steps: [
+          {
+            time: "10:00 - 13:30",
+            title: "בודה: גשר השלשלאות, פוניקולר, מצודת הדייגים וכנסיית מתיאש",
+            desc: "עולים בפוניקולר ההיסטורי לגבעת הטירה ומבקרים במצודת הדייגים המשקיפה על כל בודפשט. עצירה לקרמשניט בקפה Ruszwurm.",
+            price: "פוניקולר: 4,000 Ft (~42 ₪), מצודה: חינם",
+            siteUrl: "https://www.bkv.hu/en/buda_castle_funicular_",
+            mapQuery: "Fisherman%27s+Bastion+Budapest"
+          },
+          {
+            time: "14:00 - 16:30",
+            title: "שופינג אופנה במדרחוב ואצי (Váci utca) ו-Fashion Street",
+            desc: "מדרחוב הקניות היוקרתי והמפורסם של בודפשט. חנויות ענק של מותגים מובילים (Zara, Massimo Dutti, COS, Hugo Boss). טופסי Tax-Free מעל 74,000 פורינט.",
+            price: "תקציב שופינג אישי",
+            siteUrl: "https://fashionstreet.hu",
+            mapQuery: "Vaci+utca+Budapest"
+          },
+          {
+            time: "16:45 - 18:00",
+            title: "שוק הקריסמס המרכזי בכיכר וורוסמרטי (Vörösmarty Classic)",
+            desc: "עשרות דוכני עץ מוארים, עץ אשוח ענק, דוכני מלאכת יד, ריחות נפלאים של קינמון ובשרים צלויים.",
+            price: "כניסה חינם",
+            siteUrl: "https://vorosmartyclassicxmas.hu",
+            mapQuery: "Vorosmarty+ter+Budapest"
+          },
+          {
+            time: "18:15 - 19:30",
+            title: "שייט ערב מנצנץ על נהר הדנובה (Legenda / Silverline)",
+            desc: "היום הכי בהיר בשבוע – ראות מושלמת! מפליגים מול בניין הפרלמנט המואר באורות זהב עוצרי נשימה. ספינה מחוממת עם כוס יין/שמפניה כלולה.",
+            price: "9,000 Ft (~95 ₪ / 23€) לאדם",
+            siteUrl: "https://legenda.hu",
+            mapQuery: "Legenda+City+Cruises+Budapest"
+          },
+          {
+            time: "20:00 - ערב",
+            title: "ארוחת בשרים 5 🥩 (ארוחת סיום חגיגית!): בופה Trófea Grill",
+            desc: "4 דקות הליכה בלבד מ-7 Seasons! בופה בשרים פרימיום 'אכול כפי יכולתך'. בוחרים נתחי אנטרקוט, סינטה, צלעות, שיפודים ונקניקיות – והשף צולה מולכם על הפלנצ'ה. כולל שתייה, יין ובירה חופשיים במחיר קבוע!",
+            price: "13,999 Ft (~145 ₪ / 35€) מחיר קבוע כולל הכל",
+            siteUrl: "https://trofeagrill.com",
+            mapQuery: "Trofea+Grill+Kiraly+Budapest"
+          }
+        ]
+      },
+      {
+        dayNum: 5,
+        title: "יום שישי: יציאה ב-06:15, התייצבות בשדה ב-06:50, המראה ב-09:50 בטיסה LY2366",
+        badge: "טיסת חזור אל על LY2366 | המראה 09:50 בבוקר | נחיתה 14:00",
+        meatRestaurant: "ארוחת שישי בבית בישראל",
+        steps: [
+          {
+            time: "05:30 - 06:10",
+            title: "השכמה, קפה מהיר בדירה וצ'ק-אאוט מ-7 Seasons",
+            desc: "השכמה מוקדמת, שתיית קפה/תה בדירה, סגירת 4 המזוודות ומסירת המפתח בקבלה. הנהג של Welcome Pickups ממתין ב-06:10 בלובי.",
+            price: "חינם",
+            siteUrl: "https://www.7seasonsapartments.com",
+            mapQuery: "7+Seasons+Apartments+Budapest"
+          },
+          {
+            time: "06:15 - 06:50",
+            title: "איסוף במיניוואן המלון (הזמנה w-7647666-1) ונסיעה לשדה",
+            desc: "הנהג מעמיס את 4 המזוודות הגדולות ונוסע ישירות לטרמינל 2B. הגעה ב-06:50 בדיוק (3 שעות לפני ההמראה).",
+            price: "משוריין ושולם מראש!",
+            siteUrl: "https://traveler.transfersforhotels.com/en/budapest/R4J7kArK/thank_you_and_trip_profile?ga_purchase=true",
+            mapQuery: "Budapest+Ferenc+Liszt+International+Airport"
+          },
+          {
+            time: "06:50 - 09:50",
+            title: "תשאול אל על, החתמת Tax-Free, דיוטי פרי והמראה ב-09:50",
+            desc: "בידוק ביטחוני קפדני של אל על, מסירת כבודה, החתמת טפסי Tax-Free במכס להחזר כספי על השופינג, ביקורת דרכונים והמראה ב-09:50 בטיסה LY2366.",
+            price: "החזר מע\"מ של 14%-18% על הקניות!",
+            siteUrl: "https://www.elal.com",
+            mapQuery: "Budapest+Airport+Terminal+2B"
+          },
+          {
+            time: "13:55 - 14:15",
+            title: "נחיתה בנמל התעופה בן גוריון (TLV)!",
+            desc: "נחיתה בישראל בשעות הצהריים המוקדמות. חזרה הביתה בנחת זמן רב לפני כניסת שבת ולארוחת שישי משפחתית!",
+            price: "ברוכים השבים הביתה!",
+            siteUrl: "https://www.iaa.gov.il",
+            mapQuery: "Ben+Gurion+Airport"
+          }
+        ]
+      }
+    ];
+
+    function showDay(num) {
+      document.querySelectorAll('.day-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-700', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+      });
+
+      const activeBtn = document.getElementById(`day-btn-${num}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-indigo-700', 'text-white', 'shadow-sm');
+        activeBtn.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+      }
+
+      const day = daysData.find(d => d.dayNum === num);
+      if (!day) return;
+
+      const container = document.getElementById('day-details-container');
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl p-5 mb-4 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">${day.badge}</span>
+              <h3 class="text-lg sm:text-xl font-black text-white mt-0.5">${day.title}</h3>
+            </div>
+            <div class="flex flex-col sm:items-end gap-1">
+              <span class="text-xs bg-rose-600 text-white font-bold px-3 py-1 rounded-xl shadow-xs">
+                🥩 ${day.meatRestaurant}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          ${day.steps.map((step, idx) => `
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded-lg">⏰ ${step.time}</span>
+                  <h4 class="font-black text-slate-900 text-base">${step.title}</h4>
+                </div>
+                <span class="text-xs font-bold font-mono bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-200 self-start sm:self-center">
+                  💵 עלות: ${step.price}
+                </span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${step.desc}</p>
+              
+              <div class="flex items-center gap-2 pt-2 border-t border-slate-100 flex-wrap">
+                <a href="${step.siteUrl}" target="_blank" 
+                   class="bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
+                  <span>🌐</span> אתר רשמי
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(step.mapQuery)}" target="_blank" 
+                   class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1">
+                  <span>📍</span> Google Maps
+                </a>
+                <a href="https://waze.com/ul?q=${encodeURIComponent(step.mapQuery)}" target="_blank" 
+                   class="bg-sky-500 hover:bg-sky-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1">
+                  <span>🚗</span> Waze
+                </a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    const packingCatNames = {
+      docs: { name: 'מסמכים, ארנק וביטחון', icon: '🪪' },
+      clothes: { name: 'ביגוד חורפי והנעלה', icon: '👟' },
+      electronics: { name: 'אלקטרוניקה וטעינה', icon: '📱' },
+      health: { name: 'בריאות ותרופות', icon: '💊' },
+      shopping: { name: 'ציוד שופינג ואריזות', icon: '🛍️' }
+    };
+
+    function renderPacking() {
+      const container = document.getElementById('packing-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const cats = ['docs', 'clothes', 'electronics', 'health', 'shopping'];
+      let totalItems = packing.length;
+      let doneItems = packing.filter(p => p.done).length;
+
+      const percent = totalItems > 0 ? Math.round((doneItems / totalItems) * 100) : 0;
+      document.getElementById('packing-progress-text').innerText = `${doneItems} מתוך ${totalItems} נארזו`;
+      document.getElementById('packing-progress-bar').style.width = `${percent}%`;
+
+      cats.forEach(catKey => {
+        const catItems = packing.filter(p => p.cat === catKey);
+        if (catItems.length === 0) return;
+
+        const catInfo = packingCatNames[catKey] || { name: 'ציוד', icon: '📦' };
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl p-4 shadow-sm border border-slate-200';
+
+        let itemsHtml = catItems.map(item => `
+          <div class="flex items-start gap-2.5 p-1.5 rounded-lg hover:bg-slate-50 transition group ${item.done ? 'opacity-55' : ''}">
+            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="togglePackItem('${item.id}')"
+                   class="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer accent-emerald-600">
+            <span class="text-xs text-slate-800 flex-1 leading-snug ${item.done ? 'line-through text-slate-400' : ''}">
+              ${item.title}
+            </span>
+          </div>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="flex items-center gap-2 pb-2 mb-2 border-b border-slate-100">
+            <span class="text-base">${catInfo.icon}</span>
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">${catInfo.name}</h3>
+            <span class="text-[10px] bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded-full mr-auto">
+              ${catItems.filter(p => p.done).length}/${catItems.length}
+            </span>
+          </div>
+          <div class="space-y-1">
+            ${itemsHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      localStorage.setItem(STORAGE_KEY_PACKING, JSON.stringify(packing));
+    }
+
+    function togglePackItem(id) {
+      const item = packing.find(p => p.id === id);
+      if (item) { item.done = !item.done; renderPacking(); }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      showDay(1);
+      renderPacking();
+    });
+  </script>
+</body>
+</html>
