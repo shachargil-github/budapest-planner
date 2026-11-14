@@ -2574,15 +2574,14 @@
         const res = await fetch(NTFY_SYNC_URL + '/json?poll=1&t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const text = await res.text();
-          const lines = text.trim().split('\n').filter(Boolean);
-          for (let i = lines.length - 1; i >= 0; i--) {
+          const lines = text.split(String.fromCharCode(10)).filter(l => l.trim());
+          for (let i = 0; i < lines.length; i++) {
             try {
               const evt = JSON.parse(lines[i]);
               if (evt.event === 'message' && evt.message) {
                 const parsed = JSON.parse(evt.message);
-                if (parsed && parsed.lastUpdated) {
+                if (parsed && parsed.lastUpdated && (!remoteState || parsed.lastUpdated > remoteState.lastUpdated)) {
                   remoteState = parsed;
-                  break;
                 }
               }
             } catch(e) {}
