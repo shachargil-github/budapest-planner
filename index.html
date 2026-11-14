@@ -69,34 +69,43 @@
         </div>
       </div>
 
-      <!-- NAVIGATION TABS -->
-      <nav class="flex items-center gap-1 sm:gap-2 mt-3 overflow-x-auto pb-1 custom-scrollbar text-xs font-bold border-t border-white/10 pt-2.5 w-full">
-        <button onclick="switchTab('transfer')" id="tab-btn-transfer" class="tab-btn active px-3.5 py-1.5 rounded-xl whitespace-nowrap transition bg-white text-slate-950 font-black shadow-md flex items-center gap-1.5">
-          <span>🚐</span> פרטי ההסעה המאושרת
+      <!-- NAVIGATION TABS: Max 4 buttons per row, wrapped, large text -->
+      <nav class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mt-4 pt-3.5 border-t border-white/15 w-full">
+        <button onclick="switchTab('transfer')" id="tab-btn-transfer" class="tab-btn active py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white text-slate-950 font-black shadow-lg ring-2 ring-amber-400 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🚐</span>
+          <span>פרטי ההסעה המאושרת</span>
         </button>
-        <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          🗺️ לו"ז מדויק (ב'-ו')
+        <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🗺️</span>
+          <span>לו"ז מדויק (ב'-ו')</span>
         </button>
-        <button onclick="switchTab('budget')" id="tab-btn-budget" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          💰 טבלת תקציב ומחירים
+        <button onclick="switchTab('budget')" id="tab-btn-budget" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">💰</span>
+          <span>טבלת תקציב ומחירים</span>
         </button>
-        <button onclick="switchTab('shopping')" id="tab-btn-shopping" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          🛍️ מדריך שופינג ואלקטרוניקה
+        <button onclick="switchTab('shopping')" id="tab-btn-shopping" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🛍️</span>
+          <span>שופינג ואלקטרוניקה</span>
         </button>
-        <button onclick="switchTab('packing')" id="tab-btn-packing" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          🧳 צ'קליסט אריזה ענק
+        <button onclick="switchTab('food')" id="tab-btn-food" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🥩</span>
+          <span>5 מסעדות הבשר</span>
         </button>
-        <button onclick="switchTab('food')" id="tab-btn-food" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          🥩 5 מסעדות הבשר
+        <button onclick="switchTab('fatmama')" id="tab-btn-fatmama" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🔥</span>
+          <span>תפריט Fat Mama בשקלים</span>
         </button>
-        <button onclick="switchTab('fatmama')" id="tab-btn-fatmama" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          🔥 תפריט Fat Mama בשקלים
+        <button onclick="switchTab('packing')" id="tab-btn-packing" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🧳</span>
+          <span>צ'קליסט אריזה ענק</span>
         </button>
-        <button onclick="switchTab('sim')" id="tab-btn-sim" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          📱 מדריך סים (eSIM)
+        <button onclick="switchTab('sim')" id="tab-btn-sim" class="tab-btn py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">📱</span>
+          <span>מדריך סים (eSIM)</span>
         </button>
-        <button onclick="switchTab('hotel')" id="tab-btn-hotel" class="tab-btn px-3.5 py-1.5 rounded-xl whitespace-nowrap transition hover:bg-white/15 text-white/90">
-          🏨 7 Seasons וסביבתו
+        <button onclick="switchTab('hotel')" id="tab-btn-hotel" class="tab-btn col-span-2 md:col-span-4 py-3 px-3 sm:py-3.5 sm:px-4 rounded-2xl transition-all duration-200 bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <span class="text-xl">🏨</span>
+          <span>מלון 7 Seasons וסביבתו</span>
         </button>
       </nav>
     </div>
@@ -202,21 +211,21 @@
     <!-- ==================== TAB 2: 5-DAY ITINERARY ==================== -->
     <section id="tab-content-itinerary" class="tab-content hidden space-y-6">
       
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar w-full">
-        <button onclick="showDay(1)" id="day-btn-1" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-700 text-white shadow-sm shrink-0">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 w-full">
+        <button onclick="showDay(1)" id="day-btn-1" class="day-tab-btn py-3 px-3 rounded-2xl text-xs sm:text-sm font-bold bg-indigo-700 text-white shadow-md text-center">
           יום ב' ✈️ 08:50 (איסוף מוזמן! בזיליקה, Meatology)
         </button>
-        <button onclick="showDay(2)" id="day-btn-2" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
+        <button onclick="showDay(2)" id="day-btn-2" class="day-tab-btn py-3 px-3 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 text-center hover:bg-slate-50">
           יום ג' 🌦️ (ארמון הפרלמנט, השוק הגדול, משתה סר לנסלוט)
         </button>
-        <button onclick="showDay(3)" id="day-btn-3" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
-          יום ד' 🛍️ (בית הטרור, שופינג WestEnd, בשר ובר Szimpla)
+        <button onclick="showDay(3)" id="day-btn-3" class="day-tab-btn py-3 px-3 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 text-center hover:bg-slate-50">
+          יום ד' 🛍️ (בית הטרור, שופינג WestEnd, בשר ו-Szimpla)
         </button>
-        <button onclick="showDay(4)" id="day-btn-4" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
+        <button onclick="showDay(4)" id="day-btn-4" class="day-tab-btn py-3 px-3 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 text-center hover:bg-slate-50">
           יום ה' ⛅ (בודה, ואצי אוצה, שייט דנובה, בופה Trófea)
         </button>
-        <button onclick="showDay(5)" id="day-btn-5" class="day-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 shrink-0">
-          יום ו' ✈️ 09:50 (איסוף 06:15, שדה ב-06:50, המראה לארץ)
+        <button onclick="showDay(5)" id="day-btn-5" class="day-tab-btn py-3 px-3 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 text-center hover:bg-slate-50">
+          יום ו' ✈️ 09:50 (איסוף 06:15, שדה ב-06:50, המראה)
         </button>
       </div>
 
@@ -1278,8 +1287,8 @@
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-white', 'text-slate-950', 'font-black', 'shadow-md');
-        btn.classList.add('text-white/90', 'hover:bg-white/15');
+        btn.classList.remove('bg-white', 'text-slate-950', 'font-black', 'shadow-lg', 'ring-2', 'ring-amber-400');
+        btn.classList.add('bg-white/10', 'text-white', 'hover:bg-white/20', 'border', 'border-white/10');
       });
       document.querySelectorAll('.tab-content').forEach(section => {
         section.classList.add('hidden');
@@ -1288,8 +1297,8 @@
 
       const activeBtn = document.getElementById(`tab-btn-${tabId}`);
       if (activeBtn) {
-        activeBtn.classList.add('bg-white', 'text-slate-950', 'font-black', 'shadow-md');
-        activeBtn.classList.remove('text-white/90', 'hover:bg-white/15');
+        activeBtn.classList.add('bg-white', 'text-slate-950', 'font-black', 'shadow-lg', 'ring-2', 'ring-amber-400');
+        activeBtn.classList.remove('bg-white/10', 'text-white', 'hover:bg-white/20', 'border', 'border-white/10');
       }
 
       const activeContent = document.getElementById(`tab-content-${tabId}`);
