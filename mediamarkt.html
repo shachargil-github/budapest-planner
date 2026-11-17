@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediaMarkt Budapest Arena — אתר מתורגם לעברית</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800;900&display=swap');
+    body {
+      font-family: 'Assistant', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen antialiased flex flex-col">
+
+  <!-- TOP NOTIFICATION BANNER -->
+  <div class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-bold text-amber-300">סניף פעיל:</span>
+        <span>MediaMarkt קניון ארנה (Budapest Arena Plaza, Kerepesi út 9)</span>
+      </div>
+      <div class="flex items-center gap-4 text-[11px] text-slate-300">
+        <span>🕒 פתוח היום: 10:00 - 21:00</span>
+        <span>💱 שער המרה מחושב: 1,000 Ft ≈ 10.5 ₪</span>
+        <span class="bg-rose-600 text-white px-2 py-0.5 rounded font-bold">זכאות להחזר מס (Tax Free) בקנייה מעל 75,000 Ft</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN HEADER (MEDIAMARKT STYLE) -->
+  <header class="bg-[#df0000] text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-between gap-4">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="bg-white text-[#df0000] font-black text-2xl tracking-tighter px-3 py-1 rounded-lg shadow-sm flex items-center">
+            <span>Media</span><span class="font-light text-slate-950">Markt</span>
+          </div>
+          <div class="hidden sm:block text-[11px] leading-tight text-white/90">
+            <span class="font-black block text-amber-300">סניף קניון ארנה</span>
+            <span>קטלוג מתורגם לעברית</span>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-2xl relative">
+          <div class="relative flex items-center">
+            <input 
+              id="search-input" 
+              type="text" 
+              placeholder="חפשו דגם, מותג או מוצר (למשל: JBL, Sony, Marshall, אוזניות, רמקול, AirPods)..."
+              oninput="handleSearch(this.value)"
+              class="w-full bg-white text-slate-900 text-sm rounded-xl py-2.5 pr-10 pl-4 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium placeholder:text-slate-400"
+            />
+            <span class="absolute right-3 text-slate-400 text-lg pointer-events-none">🔍</span>
+            <button 
+              id="clear-search-btn" 
+              onclick="clearSearch()" 
+              class="absolute left-3 text-slate-400 hover:text-slate-700 text-xs hidden font-bold bg-slate-100 rounded-full w-5 h-5 flex items-center justify-center">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Branch & Tax Free Badges -->
+        <div class="hidden md:flex items-center gap-2">
+          <button onclick="openTaxFreeModal()" class="bg-black/30 hover:bg-black/40 text-white px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-white/20">
+            <span>💶</span> מחשבון החזר מס
+          </button>
+        </div>
+
+      </div>
+
+      <!-- MAIN NAVIGATION BAR & MEGA MENU TOGGLE -->
+      <nav class="mt-2.5 pt-2 border-t border-white/20 flex items-center justify-between gap-2 overflow-x-auto text-xs font-bold">
+        <div class="flex items-center gap-1 sm:gap-2">
+          
+          <!-- Mega Menu Trigger Button -->
+          <button 
+            id="all-cats-btn" 
+            onclick="toggleCategoriesMenu()" 
+            class="bg-slate-950 text-white px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-slate-900 transition shadow">
+            <span>☰</span>
+            <span>כל הקטגוריות והתפריטים</span>
+            <span id="all-cats-arrow" class="text-[10px] transition-transform">▼</span>
+          </button>
+
+          <!-- Direct Category Tabs -->
+          <button onclick="selectCategory('audio-portable')" class="cat-nav-btn px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">
+            🔊 רמקולים Bluetooth וניידים
+          </button>
+          <button onclick="selectCategory('headphones-anc')" class="cat-nav-btn px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">
+            🎧 אוזניות קשת ומבטלות רעשים
+          </button>
+          <button onclick="selectCategory('headphones-tws')" class="cat-nav-btn px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">
+            🎵 אוזניות TWS (תוך-אוזן)
+          </button>
+          <button onclick="selectCategory('audio-home')" class="cat-nav-btn px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">
+            📻 רמקולים ביתיים ומקרני קול
+          </button>
+          <button onclick="selectCategory('apple')" class="cat-nav-btn px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">
+            🍏 מתחם Apple & AirPods
+          </button>
+          <button onclick="selectCategory('gaming')" class="cat-nav-btn px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition">
+            🎮 גיימינג וקונסולות
+          </button>
+        </div>
+
+        <div class="shrink-0 text-[11px] text-amber-200">
+          <span>📍 סניף ארנה: פתוח לקנייה במקום</span>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- DROP-DOWN MEGA MENU (OPENS ON "כל הקטגוריות והתפריטים") -->
+  <div id="mega-menu" class="hidden bg-white border-b-2 border-[#df0000] shadow-2xl relative z-40 transition-all">
+    <div class="max-w-7xl mx-auto p-6">
+      
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200">
+        <div>
+          <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
+            <span>📑</span> מפת התפריטים והמחלקות של MediaMarkt — מתורגמת לעברית
+          </h3>
+          <p class="text-xs text-slate-500">לחצו על כל תת-קטגוריה כדי לסנן מיד את המוצרים המוצגים בעמוד</p>
+        </div>
+        <button onclick="toggleCategoriesMenu()" class="text-slate-400 hover:text-slate-700 text-sm font-bold bg-slate-100 px-3 py-1 rounded-lg">
+          סגור תפריט ✕
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-xs">
+        
+        <!-- Column 1: TV & Audio -->
+        <div class="space-y-3">
+          <div class="font-black text-slate-900 text-sm pb-1 border-b-2 border-red-500 flex items-center gap-1.5">
+            <span>🔊</span> TV, אודיו וסאונד
+          </div>
+          <ul class="space-y-1.5 text-slate-600">
+            <li><a href="javascript:void(0)" onclick="filterSubcat('רמקולים ניידים')" class="hover:text-red-600 hover:font-bold transition block">▪ רמקולים ניידים Bluetooth</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('רמקולים למסיבות')" class="hover:text-red-600 hover:font-bold transition block">▪ רמקולים מוגברים למסיבות (PartyBox)</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('רמקולים ביתיים')" class="hover:text-red-600 hover:font-bold transition block">▪ רמקולים יוקרתיים לבית (Marshall / Harman)</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('מקרני קול')" class="hover:text-red-600 hover:font-bold transition block">▪ מקרני קול (Soundbars) לטלוויזיה</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('מערכות סטריאו')" class="hover:text-red-600 hover:font-bold transition block">▪ מערכות מיני סטריאו ו-Hi-Fi</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('טלוויזיות')" class="hover:text-red-600 hover:font-bold transition block">▪ טלוויזיות OLED ו-QLED (Samsung, LG, Sony)</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Headphones -->
+        <div class="space-y-3">
+          <div class="font-black text-slate-900 text-sm pb-1 border-b-2 border-red-500 flex items-center gap-1.5">
+            <span>🎧</span> עולם האוזניות
+          </div>
+          <ul class="space-y-1.5 text-slate-600">
+            <li><a href="javascript:void(0)" onclick="filterSubcat('אוזניות קשת מבטלות רעשים')" class="hover:text-red-600 hover:font-bold transition block">▪ אוזניות קשת מבטלות רעשים (ANC)</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('אוזניות TWS')" class="hover:text-red-600 hover:font-bold transition block">▪ אוזניות TWS אלחוטיות תוך-אוזן</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('אוזניות ספורט')" class="hover:text-red-600 hover:font-bold transition block">▪ אוזניות ספורט עמידות במים וזיעה</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('אוזניות גיימינג')" class="hover:text-red-600 hover:font-bold transition block">▪ אוזניות גיימינג עם מיקרופון</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('אוזניות לילדים')" class="hover:text-red-600 hover:font-bold transition block">▪ אוזניות מוגבלות עוצמה לילדים</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Apple & Smartphones -->
+        <div class="space-y-3">
+          <div class="font-black text-slate-900 text-sm pb-1 border-b-2 border-red-500 flex items-center gap-1.5">
+            <span>📱</span> סמארטפונים ו-Apple
+          </div>
+          <ul class="space-y-1.5 text-slate-600">
+            <li><a href="javascript:void(0)" onclick="filterSubcat('Apple')" class="hover:text-red-600 hover:font-bold transition block">▪ מתחם Apple: iPhone, iPad, Mac</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('AirPods')" class="hover:text-red-600 hover:font-bold transition block">▪ אוזניות AirPods ו-AirPods Max</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('Samsung')" class="hover:text-red-600 hover:font-bold transition block">▪ סמארטפונים Samsung Galaxy</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('Xiaomi')" class="hover:text-red-600 hover:font-bold transition block">▪ מכשירי Xiaomi ו-Redmi</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('סוללות גיבוי')" class="hover:text-red-600 hover:font-bold transition block">▪ סוללות גיבוי ומטענים מהירים (Anker)</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Wearables & Cameras -->
+        <div class="space-y-3">
+          <div class="font-black text-slate-900 text-sm pb-1 border-b-2 border-red-500 flex items-center gap-1.5">
+            <span>⌚</span> שעונים, צילום ורחפנים
+          </div>
+          <ul class="space-y-1.5 text-slate-600">
+            <li><a href="javascript:void(0)" onclick="filterSubcat('Garmin')" class="hover:text-red-600 hover:font-bold transition block">▪ שעוני ספורט חכמים Garmin</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('Apple Watch')" class="hover:text-red-600 hover:font-bold transition block">▪ שעוני Apple Watch Series & Ultra</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('DJI')" class="hover:text-red-600 hover:font-bold transition block">▪ רחפנים ומייצבי גימבל של DJI</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('מצלמות אקסטרים')" class="hover:text-red-600 hover:font-bold transition block">▪ מצלמות אקסטרים GoPro ו-Insta360</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 5: Gaming & Computers -->
+        <div class="space-y-3">
+          <div class="font-black text-slate-900 text-sm pb-1 border-b-2 border-red-500 flex items-center gap-1.5">
+            <span>🎮</span> מחשבים וגיימינג
+          </div>
+          <ul class="space-y-1.5 text-slate-600">
+            <li><a href="javascript:void(0)" onclick="filterSubcat('PlayStation')" class="hover:text-red-600 hover:font-bold transition block">▪ קונסולות Sony PlayStation 5</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('Nintendo')" class="hover:text-red-600 hover:font-bold transition block">▪ קונסולות Nintendo Switch OLED</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('מחשבים ניידים')" class="hover:text-red-600 hover:font-bold transition block">▪ מחשבים ניידים (Asus, Lenovo, Dell)</a></li>
+            <li><a href="javascript:void(0)" onclick="filterSubcat('עכברים ומקלדות')" class="hover:text-red-600 hover:font-bold transition block">▪ עכברי ומקלדות גיימינג Logitech</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Quick Action Inside Menu -->
+      <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl">
+        <div class="flex items-center gap-2 text-xs text-slate-700">
+          <span class="text-base">🏬</span>
+          <span>כל המוצרים המוצגים זמינים לאיסוף מיידי בסניף <strong>MediaMarkt Budapest Arena Mall</strong>.</span>
+        </div>
+        <button onclick="resetFilters()" class="text-xs text-red-600 hover:text-red-800 font-bold underline">
+          איפוס כל הסינונים והצגת כל המוצרים ↺
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAIN BODY LAYOUT -->
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
+
+    <!-- HERO PROMO: ARENA MALL HIGHLIGHTS & TAX-FREE NOTICE -->
+    <div class="bg-gradient-to-r from-red-700 via-rose-800 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+      <div class="max-w-3xl relative z-10 space-y-3">
+        <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 px-3 py-1 rounded-full text-xs font-black shadow">
+          <span>🔥</span> סניף הדגל קניון ארנה בודפשט (Aréna Pláza)
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-black tracking-tight">
+          קטלוג אלקטרוניקה וסאונד — מתורגם לעברית ובשקלים (₪)
+        </h1>
+        <p class="text-xs sm:text-sm text-red-100 leading-relaxed">
+          דפדפו בקלות בין כל מותגי הסאונד המובילים (JBL, Sony, Marshall, Bose, Apple). כל המחירים מומרים אוטומטית לפי שער השוק, כולל בדיקת זמינות מלאי בחנות וחישוב החזר מס (Tax-Free) לתיירים ישראלים!
+        </p>
+
+        <div class="flex flex-wrap gap-3 pt-2 text-xs">
+          <div class="bg-black/40 backdrop-blur border border-white/20 rounded-xl px-3.5 py-2">
+            <span class="text-amber-300 font-bold block">תאימות חשמל:</span>
+            <span>100% מתאים לישראל (230V, תקע אירופי עגול)</span>
+          </div>
+          <div class="bg-black/40 backdrop-blur border border-white/20 rounded-xl px-3.5 py-2">
+            <span class="text-amber-300 font-bold block">החזר מע"מ לתייר:</span>
+            <span>קנייה מעל 75,000 Ft מזכה בהחזר כספי בשדה</span>
+          </div>
+          <div class="bg-black/40 backdrop-blur border border-white/20 rounded-xl px-3.5 py-2">
+            <span class="text-amber-300 font-bold block">מיקום בקניון:</span>
+            <span>קומת הקרקע (Ground Floor), ליד הכניסה הראשית</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER BAR: BRANDS & SORTING -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand Pills -->
+      <div class="flex items-center gap-1.5 flex-wrap text-xs">
+        <span class="font-bold text-slate-500 ml-1">סינון מותג:</span>
+        <button onclick="filterBrand('all')" class="brand-btn active px-3 py-1 rounded-lg bg-slate-900 text-white font-bold transition shadow-sm">הכל</button>
+        <button onclick="filterBrand('JBL')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">JBL</button>
+        <button onclick="filterBrand('Sony')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">Sony</button>
+        <button onclick="filterBrand('Marshall')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">Marshall</button>
+        <button onclick="filterBrand('Apple')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">Apple</button>
+        <button onclick="filterBrand('Bose')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">Bose</button>
+        <button onclick="filterBrand('Sennheiser')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">Sennheiser</button>
+        <button onclick="filterBrand('Xiaomi')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">Xiaomi</button>
+        <button onclick="filterBrand('DJI')" class="brand-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition">DJI</button>
+      </div>
+
+      <!-- Sorting & Counter -->
+      <div class="flex items-center gap-3 text-xs">
+        <span id="product-count" class="font-bold text-slate-500">מציג 18 מוצרים</span>
+        <select id="sort-select" onchange="handleSort(this.value)" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-bold text-slate-700 focus:outline-none">
+          <option value="featured">מומלצים ועממיים</option>
+          <option value="price-asc">מחיר: מהנמוך לגבוה</option>
+          <option value="price-desc">מחיר: מהגבוה לנמוך</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <!-- Products will be dynamically populated here -->
+    </div>
+
+    <!-- NO RESULTS MESSAGE -->
+    <div id="no-results" class="hidden bg-white rounded-3xl p-12 text-center space-y-3 border border-slate-200 shadow-sm">
+      <span class="text-4xl">🔍</span>
+      <h3 class="text-lg font-black text-slate-900">לא נמצאו מוצרים התואמים את החיפוש</h3>
+      <p class="text-xs text-slate-500 max-w-md mx-auto">נסו לחפש מילה אחרת, שם דגם באנגלית (למשל JBL או Sony), או ללחוץ על "הכל".</p>
+      <button onclick="resetFilters()" class="bg-[#df0000] text-white text-xs font-bold px-4 py-2 rounded-xl shadow hover:bg-red-700 transition">
+        הצג את כל המוצרים
+      </button>
+    </div>
+
+  </main>
+
+  <!-- TAX FREE INFO MODAL (POPUP) -->
+  <div id="tax-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4 border border-slate-200">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
+          <span>💶</span> מדריך ומחשבון החזר מס (Tax-Free)
+        </h3>
+        <button onclick="closeTaxFreeModal()" class="text-slate-400 hover:text-slate-700 text-lg font-bold">✕</button>
+      </div>
+      
+      <p class="text-xs text-slate-600 leading-relaxed">
+        בהונגריה שיעור המע"מ הכללי הוא <strong>27%</strong> (מהגבוהים באירופה!). תיירים שאינם תושבי האיחוד האירופי זכאים להחזר מע"מ נקי של כ-<strong>14%–16%</strong> מערך הקנייה.
+      </p>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs space-y-2">
+        <div class="font-bold text-amber-900">תנאי הסף להחזר:</div>
+        <ul class="list-disc list-inside text-amber-800 space-y-1">
+          <li>קנייה בסכום מינימום של <strong>75,001 Ft</strong> (כ-780 ₪) בחשבונית אחת.</li>
+          <li>בקשו מהקופאי ב-MediaMarkt במעמד התשלום: <em>"Tax Free Form please"</em>.</li>
+          <li>בנמל התעופה בודפשט (טרמינל 2B) לפני טיסת אל על: ניגשים לעמדת המכס (Customs) להחתמת הטופס ומקבלים החזר ישירות לכרטיס האשראי או במזומן.</li>
+        </ul>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="closeTaxFreeModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3 rounded-xl transition shadow">
+          הבנתי, תודה!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-[#df0000] text-white font-black text-xl px-2.5 py-0.5 rounded">MediaMarkt</div>
+        <span>סניף קניון ארנה בודפשט (Arena Mall) — תרגום מותאם למשפחת שחר 2026</span>
+      </div>
+      <div class="text-[11px] text-slate-500">
+        המחירים מומרים לפי שער יציג משוער (1,000 Ft = 10.5 ₪). מומלץ לוודא מחירים סופיים בקופה.
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT: CATALOG DATA & LOGIC -->
+  <script>
+    const HUF_TO_ILS = 0.0105; // 1,000 Ft = 10.5 ILS
+
+    // Comprehensive Database of MediaMarkt Arena Mall Sound & Tech Products
+    const products = [
+      // 1. Portable Bluetooth Speakers
+      {
+        id: 'p1',
+        title: 'JBL Charge 5 רמקול Bluetooth עמיד במים ואבק',
+        titleHu: 'JBL Charge 5 Bluetooth hangszóró',
+        brand: 'JBL',
+        category: 'audio-portable',
+        subcat: 'רמקולים ניידים',
+        priceHuf: 59990,
+        rating: 4.9,
+        reviews: 320,
+        stockArena: 'במלאי בסניף ארנה (מדף 14)',
+        image: '🔊',
+        badge: 'רב-מכר עולמי',
+        desc: 'סוללה ל-20 שעות נגינה, פאוורבנק להטענת הטלפון, תקן IP67 עמיד למים ואבק, סאונד עשיר ובאס מודגש.',
+        taxFreeEligible: false
+      },
+      {
+        id: 'p2',
+        title: 'JBL Flip 6 רמקול Bluetooth קומפקטי',
+        titleHu: 'JBL Flip 6 hordozható hangszóró',
+        brand: 'JBL',
+        category: 'audio-portable',
+        subcat: 'רמקולים ניידים',
+        priceHuf: 44990,
+        rating: 4.8,
+        reviews: 245,
+        stockArena: 'במלאי בסניף ארנה (מדף 14)',
+        image: '🔉',
+        badge: 'הכי מומלץ לטיולים',
+        desc: 'רמקול קומפקטי שנכנס לכל תיק יום, 12 שעות סוללה, צליל צלול ועוצמתי, עמיד במים.',
+        taxFreeEligible: false
+      },
+      {
+        id: 'p3',
+        title: 'JBL PartyBox Club 120 רמקול מסיבות מוגבר עם תאורה',
+        titleHu: 'JBL PartyBox Club 120 hangfal',
+        brand: 'JBL',
+        category: 'audio-portable',
+        subcat: 'רמקולים למסיבות',
+        priceHuf: 139990,
+        rating: 4.9,
+        reviews: 84,
+        stockArena: 'במלאי בסניף ארנה (מתחם תצוגה חי)',
+        image: '🪩',
+        badge: 'עוצמת מסיבה מטורפת',
+        desc: '160W עוצמה, מופע אורות מסונכרן לקצב, כניסת מיקרופון וגיטרה, סוללה נשלפת ל-12 שעות.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p4',
+        title: 'Marshall Emberton II רמקול נייד פרימיום בעיצוב רטרו',
+        titleHu: 'Marshall Emberton II hordozható hangszóró',
+        brand: 'Marshall',
+        category: 'audio-portable',
+        subcat: 'רמקולים ניידים',
+        priceHuf: 59990,
+        rating: 4.8,
+        reviews: 140,
+        stockArena: 'במלאי בסניף ארנה (מתחם מרשל)',
+        image: '📻',
+        badge: 'עיצוב רטרו יוקרתי',
+        desc: 'צליל True Stereophonic היקפי ב-360 מעלות, מעל 30 שעות סוללה, עמידות למים בתקן IP67.',
+        taxFreeEligible: false
+      },
+      {
+        id: 'p5',
+        title: 'Bose SoundLink Flex רמקול עמיד במיוחד לצליל צלול',
+        titleHu: 'Bose SoundLink Flex Bluetooth hangszóró',
+        brand: 'Bose',
+        category: 'audio-portable',
+        subcat: 'רמקולים ניידים',
+        priceHuf: 54990,
+        rating: 4.9,
+        reviews: 190,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '🎵',
+        badge: 'צליל צלול ועמוק',
+        desc: 'טכנולוגיית PositionIQ המכוונת את הצליל בהתאם לזווית הרמקול, צף במים אם נופל לבריכה.',
+        taxFreeEligible: false
+      },
+
+      // 2. Premium Home Audio
+      {
+        id: 'p6',
+        title: 'Marshall Stanmore III רמקול ביתי עוצמתי בעיצוב וינטג\'',
+        titleHu: 'Marshall Stanmore III otthoni hangszóró',
+        brand: 'Marshall',
+        category: 'audio-home',
+        subcat: 'רמקולים ביתיים',
+        priceHuf: 139990,
+        rating: 4.9,
+        reviews: 112,
+        stockArena: 'במלאי בסניף ארנה (תצוגת האזנה)',
+        image: '🎛️',
+        badge: 'סאונד במה עשיר',
+        desc: 'במת צליל רחבה במיוחד, בוררי טרבל ובאס אנלוגיים מזהב, חיבור Bluetooth 5.2 ו-AUX, צליל שממלא את כל הסלון.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p7',
+        title: 'Marshall Acton III רמקול ביתי קומפקטי לסלון ולחדר',
+        titleHu: 'Marshall Acton III Bluetooth hangszóró',
+        brand: 'Marshall',
+        category: 'audio-home',
+        subcat: 'רמקולים ביתיים',
+        priceHuf: 99990,
+        rating: 4.8,
+        reviews: 95,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '📻',
+        badge: 'קלאסיקה לסלון',
+        desc: 'הגודל המושלם למדף או לשידת חדר השינה עם איכות הסאונד המפורסמת של מגברי מרשל.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p8',
+        title: 'Harman Kardon Onyx Studio 8 רמקול אלחוטי יוקרתי',
+        titleHu: 'Harman Kardon Onyx Studio 8',
+        brand: 'Harman',
+        category: 'audio-home',
+        subcat: 'רמקולים ביתיים',
+        priceHuf: 79990,
+        rating: 4.7,
+        reviews: 68,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '🪐',
+        badge: 'עיצוב פיסולי',
+        desc: 'ידית אלומיניום מעוצבת בצורת טבעת שבתאי, כיול אוטומטי של הסאונד לפי אקוסטיקת החדר.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p9',
+        title: 'JBL Bar 500 מקרן קול וסאבוופר אלחוטי 10 אינץ\' לקולנוע ביתי',
+        titleHu: 'JBL Bar 500 Pro 5.1 Dolby Atmos Soundbar',
+        brand: 'JBL',
+        category: 'audio-home',
+        subcat: 'מקרני קול',
+        priceHuf: 189990,
+        rating: 4.8,
+        reviews: 52,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '📺',
+        badge: 'Dolby Atmos היקפי',
+        desc: 'עוצמה של 590W, טכנולוגיית MultiBeam ו-Dolby Atmos תלת-ממדי, סאבוופר אלחוטי עם באס מרעיד ספות.',
+        taxFreeEligible: true
+      },
+
+      // 3. Over-Ear Headphones (ANC)
+      {
+        id: 'p10',
+        title: 'Sony WH-1000XM5 אוזניות קשת פרימיום עם ביטול רעשים מוביל',
+        titleHu: 'Sony WH-1000XM5 Vezeték nélküli zajszűrős fejhallgató',
+        brand: 'Sony',
+        category: 'headphones-anc',
+        subcat: 'אוזניות קשת מבטלות רעשים',
+        priceHuf: 134990,
+        rating: 4.9,
+        reviews: 410,
+        stockArena: 'במלאי בסניף ארנה (עמדת התנסות)',
+        image: '🎧',
+        badge: 'מקום 1 בביטול רעשים',
+        desc: 'האוזניות הטובות בעולם לטיסות ונסיעות. 8 מיקרופונים לביטול רעשים מוחלט, 30 שעות סוללה, נוחות חלומית.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p11',
+        title: 'Bose QuietComfort Ultra אוזניות קשת עם צליל מרחבי',
+        titleHu: 'Bose QuietComfort Ultra vezeték nélküli fejhallgató',
+        brand: 'Bose',
+        category: 'headphones-anc',
+        subcat: 'אוזניות קשת מבטלות רעשים',
+        priceHuf: 159990,
+        rating: 4.8,
+        reviews: 180,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '🎧',
+        badge: 'נוחות עילאית',
+        desc: 'טכנולוגיית Bose Immersive Audio המעניקה תחושה של האזנה להופעה חיה, כריות רכות במיוחד.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p12',
+        title: 'Marshall Major IV אוזניות קשת אלחוטיות עם 80 שעות סוללה',
+        titleHu: 'Marshall Major IV Bluetooth fejhallgató',
+        brand: 'Marshall',
+        category: 'headphones-anc',
+        subcat: 'אוזניות קשת מבטלות רעשים',
+        priceHuf: 44990,
+        rating: 4.8,
+        reviews: 290,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '🎧',
+        badge: '80 שעות סוללה!',
+        desc: 'סוללה שמחזיקה שבועות בלי טעינה, כפתור שליטה מוזהב רב-כיווני, תמיכה בטעינה אלחוטית.',
+        taxFreeEligible: false
+      },
+      {
+        id: 'p13',
+        title: 'Apple AirPods Max אוזניות קשת יוקרתיות',
+        titleHu: 'Apple AirPods Max Vezeték nélküli fejhallgató (USB-C)',
+        brand: 'Apple',
+        category: 'apple',
+        subcat: 'AirPods',
+        priceHuf: 229990,
+        rating: 4.7,
+        reviews: 160,
+        stockArena: 'במלאי בסניף ארנה (מתחם iStore)',
+        image: '🎧',
+        badge: 'יוקרת אפל במיטבה',
+        desc: 'מבנה אלומיניום יוקרתי, אודיו מרחבי עם מעקב דינמי אחר תנועות הראש, ביטול רעשים אקטיבי מושלם.',
+        taxFreeEligible: true
+      },
+
+      // 4. In-Ear TWS Earbuds
+      {
+        id: 'p14',
+        title: 'Apple AirPods Pro 2 (מארז USB-C עם שבב H2)',
+        titleHu: 'Apple AirPods Pro 2. generáció (USB-C)',
+        brand: 'Apple',
+        category: 'apple',
+        subcat: 'AirPods',
+        priceHuf: 99990,
+        rating: 4.9,
+        reviews: 580,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '🤍',
+        badge: 'האוזניות הנמכרות בעולם',
+        desc: 'ביטול רעשים פי 2 חזק יותר, מצב שקיפות אדפטיבי, ווליום במגע בהחלקה על הגבעול, עמידות לזיעה ומים.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p15',
+        title: 'Sony WF-1000XM5 אוזניות TWS עם סאונד Hi-Res',
+        titleHu: 'Sony WF-1000XM5 True Wireless fülhallgató',
+        brand: 'Sony',
+        category: 'headphones-tws',
+        subcat: 'אוזניות TWS',
+        priceHuf: 94990,
+        rating: 4.8,
+        reviews: 130,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '🖤',
+        badge: 'סאונד היי-רזולושן',
+        desc: 'מנוע צליל כפול של סוני, ראשי קצף פוליאוריתן אוטמים במיוחד, איכות שיחה צלולה מבוססת AI.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p16',
+        title: 'Xiaomi Redmi Buds 5 Pro אוזניות אלחוטיות עם ANC מתקדם',
+        titleHu: 'Xiaomi Redmi Buds 5 Pro fülhallgató',
+        brand: 'Xiaomi',
+        category: 'headphones-tws',
+        subcat: 'Xiaomi',
+        priceHuf: 26990,
+        rating: 4.7,
+        reviews: 195,
+        stockArena: 'במלאי בסניף ארנה (מתחם שיאומי)',
+        image: '🩶',
+        badge: 'התמורה הכי גבוהה למחיר',
+        desc: 'ביטול רעשים עד 52dB, דרייברים כפולים קואקסיאליים, 38 שעות עבודה עם המארז במחיר מנצח.',
+        taxFreeEligible: false
+      },
+
+      // 5. Smartwatches & Gadgets
+      {
+        id: 'p17',
+        title: 'Apple Watch Series 10 (שעון חכם גוף אלומיניום 46 מ"מ)',
+        titleHu: 'Apple Watch Series 10 GPS 46mm',
+        brand: 'Apple',
+        category: 'apple',
+        subcat: 'Apple Watch',
+        priceHuf: 179990,
+        rating: 4.9,
+        reviews: 140,
+        stockArena: 'במלאי בסניף ארנה',
+        image: '⌚',
+        badge: 'הדגם החדש ביותר',
+        desc: 'מסך OLED רחב ודק יותר, טעינה מהירה מ-0 ל-80% תוך 30 דקות, חיישני בריאות ושינה מתקדמים.',
+        taxFreeEligible: true
+      },
+      {
+        id: 'p18',
+        title: 'DJI Osmo Pocket 3 מצלמת כיס עם גימבל מכני 3 צירים וחיישן 1 אינץ\'',
+        titleHu: 'DJI Osmo Pocket 3 akciókamera',
+        brand: 'DJI',
+        category: 'gaming',
+        subcat: 'DJI',
+        priceHuf: 219990,
+        rating: 4.95,
+        reviews: 210,
+        stockArena: 'במלאי בסניף ארנה (מתחם צילום)',
+        image: '📷',
+        badge: 'להיט הצילום והטיולים',
+        desc: 'חיישן CMOS ענק בגודל 1 אינץ\' לווידאו מדהים בלילה ב-4K 120fps, מסך מסתובב 2 אינץ\', ייצוב מושלם בהליכה.',
+        taxFreeEligible: true
+      }
+    ];
+
+    let currentCategory = 'all';
+    let currentBrand = 'all';
+    let currentSubcat = 'all';
+    let searchQuery = '';
+    let currentSort = 'featured';
+
+    // RENDER PRODUCTS
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const noResults = document.getElementById('no-results');
+      const countEl = document.getElementById('product-count');
+
+      let filtered = products.filter(p => {
+        // Category filter
+        if (currentCategory !== 'all' && p.category !== currentCategory) return false;
+        // Brand filter
+        if (currentBrand !== 'all' && p.brand !== currentBrand) return false;
+        // Subcat filter
+        if (currentSubcat !== 'all' && !p.subcat.includes(currentSubcat) && !p.title.includes(currentSubcat)) return false;
+        // Search filter
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const match = p.title.toLowerCase().includes(q) || 
+                        p.titleHu.toLowerCase().includes(q) || 
+                        p.brand.toLowerCase().includes(q) || 
+                        p.desc.toLowerCase().includes(q) ||
+                        p.subcat.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      // Sorting
+      if (currentSort === 'price-asc') {
+        filtered.sort((a, b) => a.priceHuf - b.priceHuf);
+      } else if (currentSort === 'price-desc') {
+        filtered.sort((a, b) => b.priceHuf - a.priceHuf);
+      }
+
+      countEl.innerText = `מציג ${filtered.length} מוצרים`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      noResults.classList.add('hidden');
+      grid.innerHTML = filtered.map(item => {
+        const priceIls = Math.round(item.priceHuf * HUF_TO_ILS);
+        const approxVatRefund = item.taxFreeEligible ? Math.round(priceIls * 0.15) : 0;
+        
+        return `
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between group">
+            
+            <!-- Top Badges -->
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="text-[11px] font-black bg-red-100 text-[#df0000] px-2.5 py-0.5 rounded-full">
+                  ${item.badge}
+                </span>
+                <span class="text-xs text-slate-400 font-bold">${item.brand}</span>
+              </div>
+
+              <!-- Product Graphic Icon -->
+              <div class="w-full h-36 bg-slate-50 rounded-2xl flex items-center justify-center text-6xl group-hover:scale-105 transition duration-300 relative">
+                ${item.image}
+                ${item.taxFreeEligible ? `
+                  <span class="absolute bottom-2 right-2 text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-md shadow-sm">
+                    זכאי להחזר מס 💶
+                  </span>
+                ` : ''}
+              </div>
+
+              <!-- Title & Hungarian source name -->
+              <div class="mt-3.5 space-y-1">
+                <h3 class="font-black text-slate-900 text-sm leading-snug group-hover:text-[#df0000] transition">
+                  ${item.title}
+                </h3>
+                <p class="text-[10px] text-slate-400 font-mono truncate" title="${item.titleHu}">
+                  בהונגרית: ${item.titleHu}
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed pt-1">
+                  ${item.desc}
+                </p>
+              </div>
+            </div>
+
+            <!-- Bottom Price & Stock Box -->
+            <div class="mt-4 pt-3 border-t border-slate-100 space-y-2">
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <span class="text-xs text-slate-400 font-bold">מחיר מומר לשקלים:</span>
+                  <div class="text-2xl font-black text-[#df0000] font-mono leading-none">
+                    ~${priceIls.toLocaleString()} ₪
+                  </div>
+                </div>
+                <div class="text-left">
+                  <span class="text-[11px] text-slate-400 block font-mono">${item.priceHuf.toLocaleString()} Ft</span>
+                  ${item.taxFreeEligible ? `
+                    <span class="text-[10px] text-emerald-700 font-bold block" title="החזר מס משוער לתייר ישראלי בשדה">
+                      החזר מס: כ-${approxVatRefund} ₪
+                    </span>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Branch Stock Badge -->
+              <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl px-2.5 py-1 text-[11px] flex items-center gap-1.5 font-bold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span>${item.stockArena}</span>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // MEGA MENU TOGGLE
+    function toggleCategoriesMenu() {
+      const menu = document.getElementById('mega-menu');
+      const arrow = document.getElementById('all-cats-arrow');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        menu.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function selectCategory(catKey) {
+      currentCategory = catKey;
+      currentSubcat = 'all';
+      
+      // Update nav styling
+      document.querySelectorAll('.cat-nav-btn').forEach(b => {
+        b.classList.remove('bg-white', 'text-slate-950', 'font-black');
+        b.classList.add('bg-white/10', 'text-white');
+      });
+      
+      renderProducts();
+    }
+
+    function filterBrand(brand) {
+      currentBrand = brand;
+      document.querySelectorAll('.brand-btn').forEach(b => {
+        b.classList.remove('bg-slate-900', 'text-white');
+        b.classList.add('bg-slate-100', 'text-slate-800');
+      });
+      event.target.classList.add('bg-slate-900', 'text-white');
+      event.target.classList.remove('bg-slate-100', 'text-slate-800');
+      renderProducts();
+    }
+
+    function filterSubcat(subcat) {
+      currentSubcat = subcat;
+      toggleCategoriesMenu(); // Close menu after selection
+      renderProducts();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim();
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchQuery) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderProducts();
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      searchQuery = '';
+      document.getElementById('clear-search-btn').classList.add('hidden');
+      renderProducts();
+    }
+
+    function handleSort(val) {
+      currentSort = val;
+      renderProducts();
+    }
+
+    function resetFilters() {
+      currentCategory = 'all';
+      currentBrand = 'all';
+      currentSubcat = 'all';
+      searchQuery = '';
+      document.getElementById('search-input').value = '';
+      document.getElementById('clear-search-btn').classList.add('hidden');
+      document.getElementById('mega-menu').classList.add('hidden');
+      document.getElementById('all-cats-arrow').style.transform = 'rotate(0deg)';
+      
+      document.querySelectorAll('.brand-btn').forEach((b, idx) => {
+        if (idx === 0) {
+          b.classList.add('bg-slate-900', 'text-white');
+          b.classList.remove('bg-slate-100', 'text-slate-800');
+        } else {
+          b.classList.remove('bg-slate-900', 'text-white');
+          b.classList.add('bg-slate-100', 'text-slate-800');
+        }
+      });
+
+      renderProducts();
+    }
+
+    function openTaxFreeModal() {
+      document.getElementById('tax-modal').classList.remove('hidden');
+    }
+
+    function closeTaxFreeModal() {
+      document.getElementById('tax-modal').classList.add('hidden');
+    }
+
+    // INITIAL RENDER
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+    });
+  </script>
+</body>
+</html>
